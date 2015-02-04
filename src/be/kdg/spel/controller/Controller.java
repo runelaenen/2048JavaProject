@@ -13,7 +13,11 @@ public class Controller {
     public static int ZIJDEGROOTTE = 4;
     public static int BORDGROOTTE = ZIJDEGROOTTE*ZIJDEGROOTTE;
 
-    public static void main(String[] args) {
+    public void startSpel(Controller controller){
+        new SpelUI(maakTegels(), controller);
+    }
+
+    private Tegel[] maakTegels(){
         Tegel[] tegels = new Tegel[BORDGROOTTE];
         Random random = new Random();
 
@@ -28,7 +32,23 @@ public class Controller {
             }
         }
 
-        new SpelUI(tegels);
+        return tegels;
+    }
+
+    public void keyUP(){
+
+    }
+
+    public void keyDOWN(){
+
+    }
+
+    public void keyLEFT(){
+
+    }
+
+    public void keyRIGHT(){
+
     }
 
 

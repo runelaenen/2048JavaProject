@@ -6,6 +6,9 @@ import be.kdg.spel.model.Tegel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Created by Rune on 4/02/2015.
@@ -28,13 +31,16 @@ public class SpelUI extends JFrame {
 
     private Controller controller;
 
-    public SpelUI(Tegel[] tegels) {
+    public SpelUI(Tegel[] tegels, Controller controller) {
         super("2048");
-        super.setSize(400,500);
+        super.setSize(400, 500);
+        super.setFocusable(true);
         super.setLocationRelativeTo(null);
+        super.setBackground(new Color(0xfaf8ef));
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.tegels = tegels;
+        this.controller = controller;
 
         this.maakComponenten();
         this.maakLayout();
@@ -120,6 +126,19 @@ public class SpelUI extends JFrame {
 
     private void behandelEvents()
     {
-
+        super.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_UP){
+                    controller.keyUP();
+                } else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                    controller.keyDOWN();
+                } else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                    controller.keyLEFT();
+                } else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                    controller.keyRIGHT();
+                }
+            }
+        });
     }
 }
