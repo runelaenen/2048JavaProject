@@ -1,6 +1,6 @@
 package be.kdg.spel.view;
 
-import be.kdg.spel.controller.SpelController;
+import be.kdg.spel.controller.Controller;
 import be.kdg.spel.model.Tegel;
 
 import javax.swing.*;
@@ -26,11 +26,16 @@ public class SpelUI extends JFrame {
     private JPanel pnlHeaderBest;
     private JPanel pnlSpelbord;
 
+    private Controller controller;
+
     public SpelUI(Tegel[] tegels) {
         super("2048");
         super.setSize(400,500);
         super.setLocationRelativeTo(null);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        this.tegels = tegels;
+
         this.maakComponenten();
         this.maakLayout();
         this.behandelEvents();
@@ -47,6 +52,12 @@ public class SpelUI extends JFrame {
     }
 
     private void maakLayout() {
+        /*
+        *
+        *   header
+        *
+         */
+
         // Panel super aanmaken
         pnlSuper = new JPanel();
         pnlSuper.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -74,15 +85,36 @@ public class SpelUI extends JFrame {
         pnlHeader.add(pnlHeaderScore);
         pnlHeader.add(pnlHeaderBest);
 
+
+
+
+        /*
+        *
+        *   spelbord
+        *
+         */
+
         // Panel spelbord aanmaken en opvullen
         pnlSpelbord = new JPanel();
-        pnlSpelbord.setLayout(new GridLayout(SpelController.BORDGROOTTE, SpelController.BORDGROOTTE));
+        pnlSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE,5,5));
+
+        for(Tegel tegel : tegels){
+            pnlSpelbord.add(new TegelUI(tegel));
+        }
+
+
+        /*
+        *
+        *   pnlSuper
+        *
+         */
 
 
         // Alles aan super toevoegen
         pnlSuper.add(pnlHeader, BorderLayout.NORTH);
         pnlSuper.add(pnlSpelbord, BorderLayout.CENTER);
 
+        // pnlSuper aan super toevoegen
         super.add(pnlSuper, BorderLayout.CENTER);
     }
 
