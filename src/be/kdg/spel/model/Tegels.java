@@ -56,11 +56,17 @@ public class Tegels {
         for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
             Tegel[] gewoneLijn = lijn(i);
             Tegel[] verwerkt = verwerkLijn(gewoneLijn);
-            //TODO: Wissel nieuwe lijn met oude lijn in tegels array
 
+            /*
             for (int j = i*controller.ZIJDEGROOTTE, k=0; j < controller.ZIJDEGROOTTE; j++, k++) {
                 tegels[j] = verwerkt[k];
             }
+            */
+
+            for(int j = i*controller.ZIJDEGROOTTE, k=0; j < (i*controller.ZIJDEGROOTTE)+controller.ZIJDEGROOTTE; j++, k++){
+                tegels[j] = verwerkt[k];
+            }
+
 
             if (!tegelToevoegen && !Arrays.equals(gewoneLijn, verwerkt)) {
                 tegelToevoegen = true;
