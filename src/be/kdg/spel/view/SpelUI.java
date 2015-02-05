@@ -124,18 +124,34 @@ public class SpelUI extends JFrame {
         super.add(pnlSuper, BorderLayout.CENTER);
     }
 
+    public void updateSpelUI(Tegel[] tegels){
+        this.tegels = tegels;
+
+        pnlSpelbord.removeAll();
+        for(Tegel tegel : tegels){
+            pnlSpelbord.add(new TegelUI(tegel));
+        }
+    }
+
+    public void addScore(int score){
+        lblScore.setText(String.valueOf(Integer.valueOf(lblScore.getText())+score));
+    }
+
     private void behandelEvents()
     {
         super.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_UP){
+                    System.out.println("VK_UP");
                     controller.keyUP();
                 } else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                    System.out.println("VK_DOWN");
                     controller.keyDOWN();
                 } else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                    System.out.println("VK_LEFT");
                     controller.keyLEFT();
                 } else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                    System.out.println("VK_RIGHT");
                     controller.keyRIGHT();
                 }
             }

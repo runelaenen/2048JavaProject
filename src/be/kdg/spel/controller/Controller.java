@@ -10,29 +10,28 @@ import java.util.Random;
  * Created by Rune on 4/02/2015.
  */
 public class Controller {
+    private Tegels tegels;
+    private SpelUI spelUI;
+
     public static int ZIJDEGROOTTE = 4;
     public static int BORDGROOTTE = ZIJDEGROOTTE*ZIJDEGROOTTE;
 
-    public void startSpel(Controller controller){
-        new SpelUI(maakTegels(), controller);
+    public Controller(){
+        this.tegels = new Tegels(this);
+        spelUI = new SpelUI(tegels.getTegelArray(), this);
     }
 
-    private Tegel[] maakTegels(){
-        Tegel[] tegels = new Tegel[BORDGROOTTE];
-        Random random = new Random();
+    public void addScore(int score){
+        spelUI.addScore(score);
+    }
 
-        int eersteGetal, tweedeGetal;
-        eersteGetal = random.nextInt(BORDGROOTTE);
-        tweedeGetal = random.nextInt(BORDGROOTTE);
-        for(int i = 0; i<BORDGROOTTE; i++){
-            tegels[i] = new Tegel();
+    public void keyLEFT(){
+        tegels.left();
+        spelUI.updateSpelUI(tegels.getTegelArray());
+    }
 
-            if(i==eersteGetal || i==tweedeGetal){
-                tegels[i].setWaarde(2);
-            }
-        }
+    public void keyRIGHT(){
 
-        return tegels;
     }
 
     public void keyUP(){
@@ -43,13 +42,6 @@ public class Controller {
 
     }
 
-    public void keyLEFT(){
-
-    }
-
-    public void keyRIGHT(){
-
-    }
 
 
 }
