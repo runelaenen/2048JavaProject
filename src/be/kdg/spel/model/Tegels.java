@@ -148,28 +148,7 @@ public class Tegels {
         }
 
         return mergeLijn;
-        /*
 
-        List<Tegel> lijst = new ArrayList<Tegel>(controller.ZIJDEGROOTTE);
-        for (int i = 0; i < controller.ZIJDEGROOTTE && !nieuweLijn.get(i).isLeeg(); i++) {
-            int score = nieuweLijn.get(i).getWaarde();
-            if (i < (controller.ZIJDEGROOTTE-1) && nieuweLijn.get(i).getWaarde() == nieuweLijn.get(i+1).getWaarde()) {
-                score = score*2;
-                controller.addScore(score);
-
-                if (score == 2048) {
-                    //TODO: Gewonnen!
-                }
-                i++;
-            }
-            lijst.add(new Tegel(score));
-        }
-        if (lijst.size() == 0) {
-            return nieuweLijn.toArray(new Tegel[4]);
-        } else {
-            return lijst.toArray(new Tegel[4]);
-        }
-*/
     }
 
     public void roteerBord(int rotaties){
