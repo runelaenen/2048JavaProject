@@ -24,6 +24,7 @@ public class Controller {
     public void addScore(int score){
         spelUI.addScore(score);
     }
+    public int getScore() { return spelUI.getScore(); }
 
     public void keyLEFT(){
         tegels.left();

@@ -137,6 +137,9 @@ public class SpelUI extends JFrame {
     public void addScore(int score){
         lblScore.setText(String.valueOf(Integer.valueOf(lblScore.getText())+score));
     }
+    public int getScore(){
+        return Integer.valueOf(lblScore.getText());
+    }
 
     private void behandelEvents()
     {

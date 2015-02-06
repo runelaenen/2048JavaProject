@@ -68,8 +68,7 @@ public class Tegels {
         }
 
         if (tegelToevoegen) {
-            //voegTegelToe();
-            //TODO: terug uit comments halen
+            voegTegelToe();
         }
     }
 
@@ -137,9 +136,30 @@ public class Tegels {
         }
 
 
-        return nieuweLijn.toArray(new Tegel[4]);
+        //return nieuweLijn.toArray(new Tegel[4]);
 
+        Tegel[] mergeLijn = new Tegel[controller.ZIJDEGROOTTE];
+        for(int i=0; i<controller.ZIJDEGROOTTE; i++){
+
+            if(
+                    i<controller.ZIJDEGROOTTE-1 // als i +1 nog in de array past
+                    && !nieuweLijn.get(i).isLeeg() // en als het vakje i in de nieuwe lijn niet leeg is (0)
+                    ){
+                if(nieuweLijn.get(i).getWaarde() == nieuweLijn.get(i+1).getWaarde()){
+                    // Yay :-D
+                    //controller.addScore(nieuweLijn.get(i).getWaarde()*2);
+                    nieuweLijn.get(i).setWaarde(nieuweLijn.get(i).getWaarde()*2);
+                    nieuweLijn.get(i+1).setWaarde(0);
+
+                }
+
+            }
+            mergeLijn[i] = nieuweLijn.get(i);
+        }
+
+        return mergeLijn;
         /*
+
         List<Tegel> lijst = new ArrayList<Tegel>(controller.ZIJDEGROOTTE);
         for (int i = 0; i < controller.ZIJDEGROOTTE && !nieuweLijn.get(i).isLeeg(); i++) {
             int score = nieuweLijn.get(i).getWaarde();
@@ -159,9 +179,7 @@ public class Tegels {
         } else {
             return lijst.toArray(new Tegel[4]);
         }
-
-        //return nieuweLijn.toArray(new Tegel[4]);
-        */
+*/
     }
 
 
