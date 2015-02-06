@@ -51,9 +51,7 @@ public class Tegels {
         return legetegels;
     }
 
-    public void left(){
-        System.out.println("Left()");
-
+    public void beweegLijn(){
         boolean tegelToevoegen = false;
         for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
             Tegel[] gewoneLijn = lijn(i);
@@ -71,15 +69,45 @@ public class Tegels {
 
         if (tegelToevoegen) {
             //voegTegelToe();
+            //TODO: terug uit comments halen
         }
     }
 
-    public void right(){
-        System.out.println("Richt()");
+    public void left(){
+        System.out.println("Left()");
 
-        //this.rotateBord(3);
-        this.left();
-        this.rotateBord(1);
+        beweegLijn();
+    }
+
+    public void right(){
+        System.out.println("Right()");
+
+        this.roteerBord();
+        this.roteerBord();
+        beweegLijn();
+        this.roteerBord();
+        this.roteerBord();
+    }
+
+    public void up(){
+        System.out.println("Up()");
+
+        this.roteerBord();
+        this.roteerBord();
+        this.roteerBord();
+        beweegLijn();
+        this.roteerBord();
+    }
+
+    public void down(){
+        System.out.println("Down()");
+
+        this.roteerBord();
+        beweegLijn();
+        this.roteerBord();
+        this.roteerBord();
+        this.roteerBord();
+
     }
 
     public Tegel[] lijn(int rij){
@@ -111,7 +139,7 @@ public class Tegels {
 
         return nieuweLijn.toArray(new Tegel[4]);
 
-/*
+        /*
         List<Tegel> lijst = new ArrayList<Tegel>(controller.ZIJDEGROOTTE);
         for (int i = 0; i < controller.ZIJDEGROOTTE && !nieuweLijn.get(i).isLeeg(); i++) {
             int score = nieuweLijn.get(i).getWaarde();
@@ -136,10 +164,11 @@ public class Tegels {
         */
     }
 
-    public void rotateBord(int rotaties){
+
+    public void roteerBord() {
         Tegel[][] tegels2D = new Tegel[controller.ZIJDEGROOTTE][controller.ZIJDEGROOTTE];
 
-        for(int rij = 0; rij<controller.ZIJDEGROOTTE; rij++) {
+        for (int rij = 0; rij < controller.ZIJDEGROOTTE; rij++) {
             for (int kolom = 0; kolom < controller.ZIJDEGROOTTE; kolom++) {
                 tegels2D[rij][kolom] = tegels[(rij * 4) + kolom];
             }
@@ -147,17 +176,15 @@ public class Tegels {
 
         Tegel[][] grTegels = new Tegel[controller.ZIJDEGROOTTE][controller.ZIJDEGROOTTE];
 
-        for(int r = 0; r<rotaties; r++) {
-            for (int i = 0; i < controller.ZIJDEGROOTTE; ++i) {
-                for (int j = 0; j < controller.ZIJDEGROOTTE; ++j) {
-                    grTegels[i][j] = tegels2D[controller.ZIJDEGROOTTE - j - 1][i];
-                }
+        for (int i = 0; i < controller.ZIJDEGROOTTE; ++i) {
+            for (int j = 0; j < controller.ZIJDEGROOTTE; ++j) {
+                grTegels[i][j] = tegels2D[controller.ZIJDEGROOTTE - j - 1][i];
             }
         }
 
 
         // terug in tegels zetten
-        for(int rij = 0; rij<controller.ZIJDEGROOTTE; rij++) {
+        for (int rij = 0; rij < controller.ZIJDEGROOTTE; rij++) {
             for (int kolom = 0; kolom < controller.ZIJDEGROOTTE; kolom++) {
                 tegels[(rij * 4) + kolom] = grTegels[rij][kolom];
             }

@@ -36,11 +36,13 @@ public class Controller {
     }
 
     public void keyUP(){
-
+        tegels.up();
+        spelUI.updateSpelUI(tegels.getTegelArray());
     }
 
     public void keyDOWN(){
-
+        tegels.down();
+        spelUI.updateSpelUI(tegels.getTegelArray());
     }
 
 
