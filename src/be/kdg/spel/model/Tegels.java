@@ -52,16 +52,12 @@ public class Tegels {
     }
 
     public void left(){
+        System.out.println("Left()");
+
         boolean tegelToevoegen = false;
         for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
             Tegel[] gewoneLijn = lijn(i);
             Tegel[] verwerkt = verwerkLijn(gewoneLijn);
-
-            /*
-            for (int j = i*controller.ZIJDEGROOTTE, k=0; j < controller.ZIJDEGROOTTE; j++, k++) {
-                tegels[j] = verwerkt[k];
-            }
-            */
 
             for(int j = i*controller.ZIJDEGROOTTE, k=0; j < (i*controller.ZIJDEGROOTTE)+controller.ZIJDEGROOTTE; j++, k++){
                 tegels[j] = verwerkt[k];
@@ -104,7 +100,31 @@ public class Tegels {
             }
         }
 
+
         return nieuweLijn.toArray(new Tegel[4]);
 
+/*
+        List<Tegel> lijst = new ArrayList<Tegel>(controller.ZIJDEGROOTTE);
+        for (int i = 0; i < controller.ZIJDEGROOTTE && !nieuweLijn.get(i).isLeeg(); i++) {
+            int score = nieuweLijn.get(i).getWaarde();
+            if (i < (controller.ZIJDEGROOTTE-1) && nieuweLijn.get(i).getWaarde() == nieuweLijn.get(i+1).getWaarde()) {
+                score = score*2;
+                controller.addScore(score);
+
+                if (score == 2048) {
+                    //TODO: Gewonnen!
+                }
+                i++;
+            }
+            lijst.add(new Tegel(score));
+        }
+        if (lijst.size() == 0) {
+            return nieuweLijn.toArray(new Tegel[4]);
+        } else {
+            return lijst.toArray(new Tegel[4]);
+        }
+
+        //return nieuweLijn.toArray(new Tegel[4]);
+        */
     }
 }

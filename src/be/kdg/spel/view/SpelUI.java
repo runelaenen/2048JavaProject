@@ -131,6 +131,7 @@ public class SpelUI extends JFrame {
         for(Tegel tegel : tegels){
             pnlSpelbord.add(new TegelUI(tegel));
         }
+        pnlSpelbord.updateUI();
     }
 
     public void addScore(int score){
