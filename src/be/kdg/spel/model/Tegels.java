@@ -70,8 +70,16 @@ public class Tegels {
         }
 
         if (tegelToevoegen) {
-            voegTegelToe();
+            //voegTegelToe();
         }
+    }
+
+    public void right(){
+        System.out.println("Richt()");
+
+        //this.rotateBord(3);
+        this.left();
+        this.rotateBord(1);
     }
 
     public Tegel[] lijn(int rij){
@@ -126,5 +134,33 @@ public class Tegels {
 
         //return nieuweLijn.toArray(new Tegel[4]);
         */
+    }
+
+    public void rotateBord(int rotaties){
+        Tegel[][] tegels2D = new Tegel[controller.ZIJDEGROOTTE][controller.ZIJDEGROOTTE];
+
+        for(int rij = 0; rij<controller.ZIJDEGROOTTE; rij++) {
+            for (int kolom = 0; kolom < controller.ZIJDEGROOTTE; kolom++) {
+                tegels2D[rij][kolom] = tegels[(rij * 4) + kolom];
+            }
+        }
+
+        Tegel[][] grTegels = new Tegel[controller.ZIJDEGROOTTE][controller.ZIJDEGROOTTE];
+
+        for(int r = 0; r<rotaties; r++) {
+            for (int i = 0; i < controller.ZIJDEGROOTTE; ++i) {
+                for (int j = 0; j < controller.ZIJDEGROOTTE; ++j) {
+                    grTegels[i][j] = tegels2D[controller.ZIJDEGROOTTE - j - 1][i];
+                }
+            }
+        }
+
+
+        // terug in tegels zetten
+        for(int rij = 0; rij<controller.ZIJDEGROOTTE; rij++) {
+            for (int kolom = 0; kolom < controller.ZIJDEGROOTTE; kolom++) {
+                tegels[(rij * 4) + kolom] = grTegels[rij][kolom];
+            }
+        }
     }
 }

@@ -31,7 +31,8 @@ public class Controller {
     }
 
     public void keyRIGHT(){
-
+        tegels.right();
+        spelUI.updateSpelUI(tegels.getTegelArray());
     }
 
     public void keyUP(){
