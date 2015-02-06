@@ -73,27 +73,19 @@ public class Tegels {
     }
 
     public void left(){
-        System.out.println("Left()");
-
         beweegLijn();
     }
 
     public void right(){
-        System.out.println("Right()");
-
-        this.roteerBord();
-        this.roteerBord();
+        this.roteerBord(2);
         beweegLijn();
-        this.roteerBord();
-        this.roteerBord();
+        this.roteerBord(2);
     }
 
     public void up(){
         System.out.println("Up()");
 
-        this.roteerBord();
-        this.roteerBord();
-        this.roteerBord();
+        this.roteerBord(3);
         beweegLijn();
         this.roteerBord();
     }
@@ -103,9 +95,7 @@ public class Tegels {
 
         this.roteerBord();
         beweegLijn();
-        this.roteerBord();
-        this.roteerBord();
-        this.roteerBord();
+        this.roteerBord(3);
 
     }
 
@@ -182,7 +172,11 @@ public class Tegels {
 */
     }
 
-
+    public void roteerBord(int rotaties){
+        for(int i =0; i<rotaties; i++){
+            this.roteerBord();
+        }
+    }
     public void roteerBord() {
         Tegel[][] tegels2D = new Tegel[controller.ZIJDEGROOTTE][controller.ZIJDEGROOTTE];
 
