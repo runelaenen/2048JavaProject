@@ -2,6 +2,7 @@ package be.kdg.spel.model;
 
 import be.kdg.spel.controller.Controller;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +68,11 @@ public class Tegels {
             }
         }
 
+        // Check if gameover
+        if(isGameOver()){
+            JOptionPane.showMessageDialog(null, "Game Over");
+        }
+
         if (tegelToevoegen) {
             voegTegelToe();
         }
@@ -107,7 +113,44 @@ public class Tegels {
         return lijn;
     }
 
-    public Tegel[] verwerkLijn(Tegel[] lijn){
+    public boolean isGameOver(){
+        /*
+        Tegel[] backup = new Tegel[controller.BORDGROOTTE];
+
+        for (int i = 0; i < controller.BORDGROOTTE; i++) {
+                backup[i] = tegels[i];
+        }
+
+        beweegLijn();
+        roteerBord();
+        beweegLijn();
+        roteerBord();
+        beweegLijn();
+        roteerBord();
+        beweegLijn();
+        roteerBord();
+
+        boolean isVeranderd = false;
+        for (int i = 0; i < controller.BORDGROOTTE; i++) {
+            if(backup[i] != tegels[i]){
+                isVeranderd = true;
+            }
+        }
+
+        for (int i = 0; i < controller.BORDGROOTTE; i++) {
+            tegels[i] = backup[i];
+        }
+
+        if(isVeranderd){
+            return false;
+        } else {
+            return true;
+        }
+        */
+        return false;
+    }
+
+    public List<Tegel> schuifLijn(Tegel[] lijn){
         List<Tegel> nieuweLijn = new ArrayList<Tegel>(0);
 
         for(int i = 0; i<controller.ZIJDEGROOTTE; i++){
@@ -124,7 +167,12 @@ public class Tegels {
                 kleinerDanVier = false;
             }
         }
+        return nieuweLijn;
+    }
 
+    public Tegel[] verwerkLijn(Tegel[] lijn){
+        List<Tegel> nieuweLijn = new ArrayList<Tegel>(0);
+        nieuweLijn = schuifLijn(lijn);
 
         //return nieuweLijn.toArray(new Tegel[4]);
 
@@ -136,18 +184,16 @@ public class Tegels {
                     && !nieuweLijn.get(i).isLeeg() // en als het vakje i in de nieuwe lijn niet leeg is (0)
                     ){
                 if(nieuweLijn.get(i).getWaarde() == nieuweLijn.get(i+1).getWaarde()){
-                    // Yay :-D
-                    //controller.addScore(nieuweLijn.get(i).getWaarde()*2);
+                    controller.addScore(nieuweLijn.get(i).getWaarde()*2);
                     nieuweLijn.get(i).setWaarde(nieuweLijn.get(i).getWaarde()*2);
                     nieuweLijn.get(i+1).setWaarde(0);
-
                 }
 
             }
             mergeLijn[i] = nieuweLijn.get(i);
         }
 
-        return mergeLijn;
+        return schuifLijn(mergeLijn).toArray(new Tegel[4]);
 
     }
 

@@ -12,6 +12,7 @@ import java.util.Random;
 public class Controller {
     private Tegels tegels;
     private SpelUI spelUI;
+    private Score scores;
 
     public static int ZIJDEGROOTTE = 4;
     public static int BORDGROOTTE = ZIJDEGROOTTE*ZIJDEGROOTTE;
@@ -19,12 +20,14 @@ public class Controller {
     public Controller(){
         this.tegels = new Tegels(this);
         spelUI = new SpelUI(tegels.getTegelArray(), this);
+        scores = new Score();
     }
 
     public void addScore(int score){
-        spelUI.addScore(score);
+        scores.addScore(score);
+        spelUI.setScore(scores.getScore());
     }
-    public int getScore() { return spelUI.getScore(); }
+    public int getScore() { return scores.getScore(); }
 
     public void keyLEFT(){
         tegels.left();
