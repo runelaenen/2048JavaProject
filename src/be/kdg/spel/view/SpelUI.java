@@ -4,9 +4,10 @@ import be.kdg.spel.controller.Controller;
 import be.kdg.spel.model.Tegel;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -22,7 +23,7 @@ public class SpelUI extends JFrame {
 
     private JButton btnMenu;
     private JButton btnRanglijst;
-    private JButton btnOptions;
+    private JButton btnInstelligen;
 
     private JPanel pnlSuper;
     private JPanel pnlLeft;
@@ -35,7 +36,7 @@ public class SpelUI extends JFrame {
 
     private Controller controller;
 
-    public SpelUI(Tegel[] tegels, Controller controller) {
+    public SpelUI(Tegel[] tegels, Controller controller) throws HeadlessException{
         super("2048");
         super.setSize(700, 500);
         super.setFocusable(true);
@@ -58,8 +59,8 @@ public class SpelUI extends JFrame {
         lblBest = new JLabel("Best: \n 0");
         //btn maken
         btnMenu = new JButton("Menu");
-        btnRanglijst = new JButton("Highscores");
-        btnOptions = new JButton("Options");
+        btnRanglijst = new JButton("Ranglijst");
+        btnInstelligen = new JButton("Instellingen");
 
     }
 
@@ -130,7 +131,7 @@ public class SpelUI extends JFrame {
         pnlKnopjes.setLayout(new GridLayout(3, 1, 5, 5));
 
         pnlKnopjes.add(btnMenu, BorderLayout.NORTH);
-        pnlKnopjes.add(btnOptions, BorderLayout.CENTER);
+        pnlKnopjes.add(btnInstelligen, BorderLayout.CENTER);
         pnlKnopjes.add(btnRanglijst, BorderLayout.SOUTH);
 
         pnlLeftTop = new JPanel(new BorderLayout(10,10));
@@ -211,6 +212,12 @@ public class SpelUI extends JFrame {
                     System.out.println("VK_RIGHT");
                     controller.keyRIGHT();
                 }
+            }
+        });
+        btnInstelligen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.instellingen();
             }
         });
     }
