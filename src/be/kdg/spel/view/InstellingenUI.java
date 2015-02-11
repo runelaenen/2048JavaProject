@@ -18,6 +18,7 @@ public class InstellingenUI extends JFrame {
     private JLabel lblThema;
     private JComboBox cboThema;
     private JLabel lblAchtergrondKleur;
+    private Color kleur;
 
 
     public InstellingenUI(Controller controller) throws HeadlessException {
@@ -28,6 +29,7 @@ public class InstellingenUI extends JFrame {
         setVisible(true);
 
         this.controller = controller;
+        this.kleur = controller.getAchtergrondsKleur();
 
         maakComponenten();
         maakLayout();
@@ -82,8 +84,10 @@ public class InstellingenUI extends JFrame {
         btnOpslaan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.opslaan();
+                controller.opslaan(kleur);
                 dispose();
+
+
             }
         });
         btnAnnuleren.addActionListener(new ActionListener() {
@@ -95,8 +99,8 @@ public class InstellingenUI extends JFrame {
         btnKleur.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Color kleur = JColorChooser.showDialog(null, "Kies een kleur voor de achtergrond", controller.getAchtergrondsKleur());
-                controller.setAchtergrondsKleur(kleur);
+                 kleur = JColorChooser.showDialog(null, "Kies een kleur voor de achtergrond", controller.getAchtergrondsKleur());
+
 
             }
         });

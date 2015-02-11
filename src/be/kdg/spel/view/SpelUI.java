@@ -31,24 +31,31 @@ public class SpelUI extends JFrame {
     private JPanel pnlScores;
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
+    private Icon icnLogo;
+    private Icon icnGewonnen;
 
 
-
-    private Color achtergrondKleur = new Color(0xfaf8ef);
+    // private Color achtergrondKleur = new Color(0xfaf8ef);
+    private Color achtergrondKleur;
 
 
     private Controller controller;
 
-    public SpelUI(Tegel[] tegels, Controller controller) throws HeadlessException{
+    public SpelUI(Tegel[] tegels, Controller controller) throws HeadlessException {
         super("2048");
         super.setSize(700, 500);
         super.setFocusable(true);
         super.setLocationRelativeTo(null);
+        this.achtergrondKleur = new Color(0x3A8FF8);
         super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+        this.achtergrondKleur = new Color(0x3A8FF8);
         this.tegels = tegels;
         this.controller = controller;
+
+        icnGewonnen= new ImageIcon("../sources/gewonnen.png");
+        icnLogo = new ImageIcon("../sources/logo.png");
+
 
         this.maakComponenten();
         this.maakLayout();
@@ -93,7 +100,11 @@ public class SpelUI extends JFrame {
         pnlLeft.setOpaque(true);
 
 
-
+        //buttons
+        //hierdoor gaat de focus niet naar de knopjes als er op wordt geklikt
+        btnMenu.setRequestFocusEnabled(false);
+        btnInstelligen.setRequestFocusEnabled(false);
+        btnRanglijst.setRequestFocusEnabled(false);
         //labels
 
         //fonts voor labels
@@ -132,20 +143,20 @@ public class SpelUI extends JFrame {
         pnlScores.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnlScores.add(lblScore, BorderLayout.NORTH);
         pnlScores.add(lblBest, BorderLayout.SOUTH);
-        pnlScores.setBackground(achtergrondKleur);
+        pnlScores.setBackground(Color.WHITE);
         pnlScores.setOpaque(true);
 
 
         //pnlKnopjes
         pnlKnopjes = new JPanel();
         pnlKnopjes.setLayout(new GridLayout(3, 1, 5, 5));
-        pnlKnopjes.setOpaque(true);
+        pnlKnopjes.setBackground(achtergrondKleur);
 
         pnlKnopjes.add(btnMenu, BorderLayout.NORTH);
         pnlKnopjes.add(btnInstelligen, BorderLayout.CENTER);
         pnlKnopjes.add(btnRanglijst, BorderLayout.SOUTH);
 
-        pnlLeftTop = new JPanel(new BorderLayout(10,10));
+        pnlLeftTop = new JPanel(new BorderLayout(10, 10));
         pnlLeftTop.add(lblTitel, BorderLayout.NORTH);
         pnlLeftTop.add(pnlScores, BorderLayout.SOUTH);
         pnlLeftTop.setBackground(achtergrondKleur);
@@ -167,7 +178,7 @@ public class SpelUI extends JFrame {
         // Panel spelbord aanmaken en opvullen
         pnlSpelbord = new JPanel();
         pnlSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE, 5, 5));
-        pnlSpelbord.setBackground(Color.WHITE);
+        pnlSpelbord.setBackground(achtergrondKleur);
         pnlSpelbord.setOpaque(true);
         for (Tegel tegel : tegels) {
             pnlSpelbord.add(new TegelUI(tegel));
@@ -205,6 +216,19 @@ public class SpelUI extends JFrame {
         lblScore.setText("Score: " + String.valueOf(score));
     }
 
+    public void refreshBackground() {
+        pnlSuper.setBackground(achtergrondKleur);
+        pnlSpelbord.setBackground(achtergrondKleur);
+        pnlKnopjes.setBackground(achtergrondKleur);
+        pnlLeft.setBackground(achtergrondKleur);
+        pnlLeftTop.setBackground(achtergrondKleur);
+
+    }
+
+    public void gewonnen() {
+        JOptionPane.showMessageDialog(null, "Je bent gewonnen!", "Je hebt 2048 gehaald", JOptionPane.CLOSED_OPTION,icnGewonnen );
+    }
+
     public int getScore() {
         return Integer.valueOf(lblScore.getText());
     }
@@ -234,6 +258,7 @@ public class SpelUI extends JFrame {
             }
         });
     }
+
 
     public void setAchtergrondsKleur(Color kleur) {
         achtergrondKleur = kleur;

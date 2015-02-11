@@ -17,11 +17,11 @@ public class Tegels {
     private Random random = new Random();
     private Controller controller;
 
-    public Tegels(Controller controller){
+    public Tegels(Controller controller) {
         this.controller = controller;
         this.tegels = new Tegel[controller.BORDGROOTTE];
 
-        for(int i = 0; i<controller.BORDGROOTTE; i++){
+        for (int i = 0; i < controller.BORDGROOTTE; i++) {
             tegels[i] = new Tegel();
         }
 
@@ -29,7 +29,7 @@ public class Tegels {
         voegTegelToe();
     }
 
-    public Tegel[] getTegelArray(){
+    public Tegel[] getTegelArray() {
         return tegels;
     }
 
@@ -42,6 +42,19 @@ public class Tegels {
         }
     }
 
+    //testen of men gewonnen is (dit moet later in model spelregels komen)
+    public boolean isgewonnen() {
+        boolean gewonnen = false;
+        for (Tegel tegel : tegels) {
+            if (tegel.getWaarde() == 32) {
+                gewonnen = true;
+
+            }
+        }
+        return gewonnen;
+    }
+
+
     private List<Tegel> legePlaatsen() {
         List<Tegel> legetegels = new ArrayList<Tegel>(16);
         for (Tegel t : tegels) {
@@ -52,13 +65,13 @@ public class Tegels {
         return legetegels;
     }
 
-    public void beweegLijn(){
+    public void beweegLijn() {
         boolean tegelToevoegen = false;
         for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
             Tegel[] gewoneLijn = lijn(i);
             Tegel[] verwerkt = verwerkLijn(gewoneLijn);
 
-            for(int j = i*controller.ZIJDEGROOTTE, k=0; j < (i*controller.ZIJDEGROOTTE)+controller.ZIJDEGROOTTE; j++, k++){
+            for (int j = i * controller.ZIJDEGROOTTE, k = 0; j < (i * controller.ZIJDEGROOTTE) + controller.ZIJDEGROOTTE; j++, k++) {
                 tegels[j] = verwerkt[k];
             }
 
@@ -69,7 +82,7 @@ public class Tegels {
         }
 
         // Check if gameover
-        if(isGameOver()){
+        if (isGameOver()) {
             JOptionPane.showMessageDialog(null, "Game Over");
         }
 
@@ -78,17 +91,17 @@ public class Tegels {
         }
     }
 
-    public void left(){
+    public void left() {
         beweegLijn();
     }
 
-    public void right(){
+    public void right() {
         this.roteerBord(2);
         beweegLijn();
         this.roteerBord(2);
     }
 
-    public void up(){
+    public void up() {
         System.out.println("Up()");
 
         this.roteerBord(3);
@@ -96,7 +109,7 @@ public class Tegels {
         this.roteerBord();
     }
 
-    public void down(){
+    public void down() {
         System.out.println("Down()");
 
         this.roteerBord();
@@ -105,15 +118,15 @@ public class Tegels {
 
     }
 
-    public Tegel[] lijn(int rij){
+    public Tegel[] lijn(int rij) {
         Tegel[] lijn = new Tegel[controller.ZIJDEGROOTTE];
         for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
-            lijn[i] = tegels[rij*controller.ZIJDEGROOTTE + i];
+            lijn[i] = tegels[rij * controller.ZIJDEGROOTTE + i];
         }
         return lijn;
     }
 
-    public boolean isGameOver(){
+    public boolean isGameOver() {
     /*
         Tegel[] backup = new Tegel[controller.BORDGROOTTE];
 
@@ -146,20 +159,21 @@ public class Tegels {
         } else {
             return true;
         }
-        */ return false;
+        */
+        return false;
     }
 
-    public List<Tegel> schuifLijn(Tegel[] lijn){
+    public List<Tegel> schuifLijn(Tegel[] lijn) {
         List<Tegel> nieuweLijn = new ArrayList<Tegel>(0);
 
-        for(int i = 0; i<controller.ZIJDEGROOTTE; i++){
-            if(!lijn[i].isLeeg()){
+        for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
+            if (!lijn[i].isLeeg()) {
                 nieuweLijn.add(lijn[i]);
             }
         }
 
         boolean kleinerDanVier = true;
-        while(kleinerDanVier) {
+        while (kleinerDanVier) {
             if (nieuweLijn.size() < 4) {
                 nieuweLijn.add(new Tegel(0));
             } else {
@@ -169,23 +183,23 @@ public class Tegels {
         return nieuweLijn;
     }
 
-    public Tegel[] verwerkLijn(Tegel[] lijn){
+    public Tegel[] verwerkLijn(Tegel[] lijn) {
         List<Tegel> nieuweLijn = new ArrayList<Tegel>(0);
         nieuweLijn = schuifLijn(lijn);
 
         //return nieuweLijn.toArray(new Tegel[4]);
 
         Tegel[] mergeLijn = new Tegel[controller.ZIJDEGROOTTE];
-        for(int i=0; i<controller.ZIJDEGROOTTE; i++){
+        for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
 
-            if(
-                    i<controller.ZIJDEGROOTTE-1 // als i +1 nog in de array past
-                    && !nieuweLijn.get(i).isLeeg() // en als het vakje i in de nieuwe lijn niet leeg is (0)
-                    ){
-                if(nieuweLijn.get(i).getWaarde() == nieuweLijn.get(i+1).getWaarde()){
-                    controller.addScore(nieuweLijn.get(i).getWaarde()*2);
-                    nieuweLijn.get(i).setWaarde(nieuweLijn.get(i).getWaarde()*2);
-                    nieuweLijn.get(i+1).setWaarde(0);
+            if (
+                    i < controller.ZIJDEGROOTTE - 1 // als i +1 nog in de array past
+                            && !nieuweLijn.get(i).isLeeg() // en als het vakje i in de nieuwe lijn niet leeg is (0)
+                    ) {
+                if (nieuweLijn.get(i).getWaarde() == nieuweLijn.get(i + 1).getWaarde()) {
+                    controller.addScore(nieuweLijn.get(i).getWaarde() * 2);
+                    nieuweLijn.get(i).setWaarde(nieuweLijn.get(i).getWaarde() * 2);
+                    nieuweLijn.get(i + 1).setWaarde(0);
                 }
 
             }
@@ -196,11 +210,12 @@ public class Tegels {
 
     }
 
-    public void roteerBord(int rotaties){
-        for(int i =0; i<rotaties; i++){
+    public void roteerBord(int rotaties) {
+        for (int i = 0; i < rotaties; i++) {
             this.roteerBord();
         }
     }
+
     public void roteerBord() {
         Tegel[][] tegels2D = new Tegel[controller.ZIJDEGROOTTE][controller.ZIJDEGROOTTE];
 

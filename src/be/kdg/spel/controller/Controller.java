@@ -33,36 +33,51 @@ public class Controller {
     public void keyLEFT(){
         tegels.left();
         spelUI.updateSpelUI(tegels.getTegelArray());
+        if(tegels.isgewonnen()){
+            spelUI.gewonnen();
+        }
     }
 
     public void keyRIGHT(){
         tegels.right();
         spelUI.updateSpelUI(tegels.getTegelArray());
+        if(tegels.isgewonnen()){
+            spelUI.gewonnen();
+        }
     }
 
     public void keyUP(){
         tegels.up();
         spelUI.updateSpelUI(tegels.getTegelArray());
+        if(tegels.isgewonnen()){
+            spelUI.gewonnen();
+        }
     }
 
     public void keyDOWN(){
         tegels.down();
         spelUI.updateSpelUI(tegels.getTegelArray());
+        if(tegels.isgewonnen()){
+            spelUI.gewonnen();
+        }
     }
     public void instellingen(){
         instellingenUI = new InstellingenUI(this);
+
     }
 
 
-    public void opslaan() {
+    public void opslaan(Color kleur) {
+
         JOptionPane.showConfirmDialog(null, "Je instellingen zijn opgeslagen!", "Opslaan gelukt!", JOptionPane.CLOSED_OPTION);
+        spelUI.setAchtergrondsKleur(kleur);
+        spelUI.refreshBackground();
+
 
     }
     public Color getAchtergrondsKleur(){
         return spelUI.getAchtergrondsKleur();
     }
-    public void setAchtergrondsKleur(Color kleur){
-        spelUI.setAchtergrondsKleur(kleur);
-    }
+
 }
 
