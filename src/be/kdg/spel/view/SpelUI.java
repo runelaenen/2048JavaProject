@@ -26,18 +26,21 @@ public class SpelUI extends JFrame {
 
     private JPanel pnlSuper;
     private JPanel pnlLeft;
+    private JPanel pnlLeftTop;
     private JPanel pnlScores;
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
+
+    private Color achtergrondKleur = new Color(0xfaf8ef);
 
     private Controller controller;
 
     public SpelUI(Tegel[] tegels, Controller controller) {
         super("2048");
-        super.setSize(600, 500);
+        super.setSize(700, 500);
         super.setFocusable(true);
         super.setLocationRelativeTo(null);
-        super.setBackground(new Color(0xfaf8ef));
+        super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.tegels = tegels;
@@ -71,20 +74,21 @@ public class SpelUI extends JFrame {
         pnlSuper = new JPanel();
         pnlSuper.setBorder(new EmptyBorder(10, 10, 10, 10));
         pnlSuper.setLayout(new BorderLayout(10, 10));
-        pnlSuper.setBackground(Color.WHITE);
+        pnlSuper.setBackground(achtergrondKleur);
 
 
         // Panel left aanmaken
         pnlLeft = new JPanel();
-        pnlLeft.setLayout(new GridLayout(3, 1, 10, 10));
-        pnlLeft.setBackground(Color.WHITE);
-        pnlLeft.setSize(150, 500);
+        //pnlLeft.setLayout(new GridLayout(3, 1, 10, 10));
+        pnlLeft.setLayout(new BorderLayout(10,10));
+        pnlLeft.setBackground(achtergrondKleur);
+
 
 
         //labels
 
         //fonts voor labels
-        Font fTitel = new Font(Font.SANS_SERIF, Font.PLAIN, 40);
+        Font fTitel = new Font(Font.SANS_SERIF, Font.PLAIN, 52);
         Font fLabel = new Font(Font.SANS_SERIF, Font.PLAIN, 23);
         //lblTitel
         lblTitel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -92,7 +96,11 @@ public class SpelUI extends JFrame {
         lblTitel.setFont(fTitel);
         lblTitel.setVerticalTextPosition(SwingConstants.CENTER);
         lblTitel.setHorizontalAlignment(SwingConstants.CENTER);
-
+        lblTitel.setBackground(new Color(0xedc22e));
+        lblTitel.setOpaque(true);
+        lblTitel.setMinimumSize(new Dimension(200, 200));
+        lblTitel.setMaximumSize(new Dimension(200, 200));
+        lblTitel.setPreferredSize(new Dimension(200, 200));
 
         //lblBest
         lblBest.setFont(fLabel);
@@ -115,7 +123,7 @@ public class SpelUI extends JFrame {
         pnlScores.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnlScores.add(lblScore, BorderLayout.NORTH);
         pnlScores.add(lblBest, BorderLayout.SOUTH);
-        pnlScores.setBackground(Color.WHITE);
+        pnlScores.setBackground(achtergrondKleur);
 
         //pnlKnopjes
         pnlKnopjes = new JPanel();
@@ -124,12 +132,15 @@ public class SpelUI extends JFrame {
         pnlKnopjes.add(btnMenu, BorderLayout.NORTH);
         pnlKnopjes.add(btnOptions, BorderLayout.CENTER);
         pnlKnopjes.add(btnRanglijst, BorderLayout.SOUTH);
-        pnlKnopjes.setSize(250, 75);
+
+        pnlLeftTop = new JPanel(new BorderLayout(10,10));
+        pnlLeftTop.add(lblTitel, BorderLayout.NORTH);
+        pnlLeftTop.add(pnlScores, BorderLayout.SOUTH);
+        pnlLeftTop.setBackground(achtergrondKleur);
 
         //pnlLeft opvullen
-        pnlLeft.add(lblTitel);
-        pnlLeft.add(pnlScores);
-        pnlLeft.add(pnlKnopjes);
+        pnlLeft.add(pnlLeftTop, BorderLayout.NORTH);
+        pnlLeft.add(pnlKnopjes, BorderLayout.SOUTH);
 
         //tijdelijke code om iets te testen
 

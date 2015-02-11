@@ -114,7 +114,7 @@ public class Tegels {
     }
 
     public boolean isGameOver(){
-        /*
+    /*
         Tegel[] backup = new Tegel[controller.BORDGROOTTE];
 
         for (int i = 0; i < controller.BORDGROOTTE; i++) {
@@ -146,8 +146,7 @@ public class Tegels {
         } else {
             return true;
         }
-        */
-        return false;
+        */ return false;
     }
 
     public List<Tegel> schuifLijn(Tegel[] lijn){
