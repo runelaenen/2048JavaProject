@@ -32,7 +32,10 @@ public class SpelUI extends JFrame {
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
 
+
+
     private Color achtergrondKleur = new Color(0xfaf8ef);
+
 
     private Controller controller;
 
@@ -51,6 +54,10 @@ public class SpelUI extends JFrame {
         this.maakLayout();
         this.behandelEvents();
         super.setVisible(true);
+    }
+
+    public Color getAchtergrondsKleur() {
+        return achtergrondKleur;
     }
 
     private void maakComponenten() {
@@ -81,8 +88,9 @@ public class SpelUI extends JFrame {
         // Panel left aanmaken
         pnlLeft = new JPanel();
         //pnlLeft.setLayout(new GridLayout(3, 1, 10, 10));
-        pnlLeft.setLayout(new BorderLayout(10,10));
+        pnlLeft.setLayout(new BorderLayout(10, 10));
         pnlLeft.setBackground(achtergrondKleur);
+        pnlLeft.setOpaque(true);
 
 
 
@@ -125,10 +133,13 @@ public class SpelUI extends JFrame {
         pnlScores.add(lblScore, BorderLayout.NORTH);
         pnlScores.add(lblBest, BorderLayout.SOUTH);
         pnlScores.setBackground(achtergrondKleur);
+        pnlScores.setOpaque(true);
+
 
         //pnlKnopjes
         pnlKnopjes = new JPanel();
         pnlKnopjes.setLayout(new GridLayout(3, 1, 5, 5));
+        pnlKnopjes.setOpaque(true);
 
         pnlKnopjes.add(btnMenu, BorderLayout.NORTH);
         pnlKnopjes.add(btnInstelligen, BorderLayout.CENTER);
@@ -138,12 +149,13 @@ public class SpelUI extends JFrame {
         pnlLeftTop.add(lblTitel, BorderLayout.NORTH);
         pnlLeftTop.add(pnlScores, BorderLayout.SOUTH);
         pnlLeftTop.setBackground(achtergrondKleur);
+        pnlLeftTop.setOpaque(true);
 
         //pnlLeft opvullen
         pnlLeft.add(pnlLeftTop, BorderLayout.NORTH);
         pnlLeft.add(pnlKnopjes, BorderLayout.SOUTH);
 
-        //tijdelijke code om iets te testen
+
 
 
         /*
@@ -156,6 +168,7 @@ public class SpelUI extends JFrame {
         pnlSpelbord = new JPanel();
         pnlSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE, 5, 5));
         pnlSpelbord.setBackground(Color.WHITE);
+        pnlSpelbord.setOpaque(true);
         for (Tegel tegel : tegels) {
             pnlSpelbord.add(new TegelUI(tegel));
         }
@@ -220,5 +233,9 @@ public class SpelUI extends JFrame {
                 controller.instellingen();
             }
         });
+    }
+
+    public void setAchtergrondsKleur(Color kleur) {
+        achtergrondKleur = kleur;
     }
 }
