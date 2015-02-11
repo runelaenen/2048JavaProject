@@ -4,11 +4,11 @@ import be.kdg.spel.controller.Controller;
 import be.kdg.spel.model.Tegel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
  * Created by Rune on 4/02/2015.
@@ -22,18 +22,19 @@ public class SpelUI extends JFrame {
 
     private JButton btnMenu;
     private JButton btnRanglijst;
+    private JButton btnOptions;
 
     private JPanel pnlSuper;
-    private JPanel pnlHeader;
-    private JPanel pnlHeaderScore;
-    private JPanel pnlHeaderBest;
+    private JPanel pnlLeft;
+    private JPanel pnlScores;
+    private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
 
     private Controller controller;
 
     public SpelUI(Tegel[] tegels, Controller controller) {
         super("2048");
-        super.setSize(400, 500);
+        super.setSize(600, 500);
         super.setFocusable(true);
         super.setLocationRelativeTo(null);
         super.setBackground(new Color(0xfaf8ef));
@@ -48,50 +49,89 @@ public class SpelUI extends JFrame {
         super.setVisible(true);
     }
 
-    private void maakComponenten(){
+    private void maakComponenten() {
         lblTitel = new JLabel("2048");
         lblScore = new JLabel("Score: \n 0");
         lblBest = new JLabel("Best: \n 0");
+        //btn maken
+        btnMenu = new JButton("Menu");
+        btnRanglijst = new JButton("Highscores");
+        btnOptions = new JButton("Options");
 
-        btnMenu = new JButton("MENU");
-        btnRanglijst = new JButton("RANGLIJST");
     }
 
     private void maakLayout() {
         /*
         *
-        *   header
+        *   Left header
         *
          */
 
         // Panel super aanmaken
         pnlSuper = new JPanel();
         pnlSuper.setBorder(new EmptyBorder(10, 10, 10, 10));
-        pnlSuper.setLayout(new BorderLayout(10,10));
-
-        // Panel header aanmaken en opvullen
-        pnlHeader = new JPanel();
-        pnlHeader.setLayout(new GridLayout(1,3,10,10));
+        pnlSuper.setLayout(new BorderLayout(10, 10));
+        pnlSuper.setBackground(Color.WHITE);
 
 
-        // Panels in header aanmaken
-        pnlHeaderScore = new JPanel();
-        pnlHeaderScore.setLayout(new BorderLayout(0,5));
-        pnlHeaderBest = new JPanel();
-        pnlHeaderBest.setLayout(new BorderLayout(0,5));
-
-        pnlHeaderScore.add(lblScore, BorderLayout.CENTER);
-        pnlHeaderScore.add(btnMenu, BorderLayout.SOUTH);
-
-        pnlHeaderBest.add(lblBest, BorderLayout.CENTER);
-        pnlHeaderBest.add(btnRanglijst, BorderLayout.SOUTH);
+        // Panel left aanmaken
+        pnlLeft = new JPanel();
+        pnlLeft.setLayout(new GridLayout(3, 1, 10, 10));
+        pnlLeft.setBackground(Color.WHITE);
+        pnlLeft.setSize(150, 500);
 
 
-        pnlHeader.add(lblTitel);
-        pnlHeader.add(pnlHeaderScore);
-        pnlHeader.add(pnlHeaderBest);
+        //labels
+
+        //fonts voor labels
+        Font fTitel = new Font(Font.SANS_SERIF, Font.PLAIN, 40);
+        Font fLabel = new Font(Font.SANS_SERIF, Font.PLAIN, 23);
+        //lblTitel
+        lblTitel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        lblTitel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lblTitel.setFont(fTitel);
+        lblTitel.setVerticalTextPosition(SwingConstants.CENTER);
+        lblTitel.setHorizontalAlignment(SwingConstants.CENTER);
 
 
+        //lblBest
+        lblBest.setFont(fLabel);
+        lblBest.setHorizontalAlignment(SwingConstants.CENTER);
+        lblBest.setVerticalTextPosition(SwingConstants.CENTER);
+
+
+        //lblScore
+        lblScore.setFont(fLabel);
+        lblScore.setHorizontalAlignment(SwingConstants.CENTER);
+        lblScore.setVerticalTextPosition(SwingConstants.CENTER);
+
+        //panels
+
+        //pnlScores
+
+        pnlScores = new JPanel();
+        pnlScores.setBorder(new EmptyBorder(10, 10, 10, 10));
+        pnlScores.setLayout(new GridLayout(2, 1, 5, 5));
+        pnlScores.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        pnlScores.add(lblScore, BorderLayout.NORTH);
+        pnlScores.add(lblBest, BorderLayout.SOUTH);
+        pnlScores.setBackground(Color.WHITE);
+
+        //pnlKnopjes
+        pnlKnopjes = new JPanel();
+        pnlKnopjes.setLayout(new GridLayout(3, 1, 5, 5));
+
+        pnlKnopjes.add(btnMenu, BorderLayout.NORTH);
+        pnlKnopjes.add(btnOptions, BorderLayout.CENTER);
+        pnlKnopjes.add(btnRanglijst, BorderLayout.SOUTH);
+        pnlKnopjes.setSize(250, 75);
+
+        //pnlLeft opvullen
+        pnlLeft.add(lblTitel);
+        pnlLeft.add(pnlScores);
+        pnlLeft.add(pnlKnopjes);
+
+        //tijdelijke code om iets te testen
 
 
         /*
@@ -102,9 +142,9 @@ public class SpelUI extends JFrame {
 
         // Panel spelbord aanmaken en opvullen
         pnlSpelbord = new JPanel();
-        pnlSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE,5,5));
-
-        for(Tegel tegel : tegels){
+        pnlSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE, 5, 5));
+        pnlSpelbord.setBackground(Color.WHITE);
+        for (Tegel tegel : tegels) {
             pnlSpelbord.add(new TegelUI(tegel));
         }
 
@@ -117,44 +157,46 @@ public class SpelUI extends JFrame {
 
 
         // Alles aan super toevoegen
-        pnlSuper.add(pnlHeader, BorderLayout.NORTH);
+        pnlSuper.add(pnlLeft, BorderLayout.WEST);
         pnlSuper.add(pnlSpelbord, BorderLayout.CENTER);
 
         // pnlSuper aan super toevoegen
         super.add(pnlSuper, BorderLayout.CENTER);
+
+
     }
 
-    public void updateSpelUI(Tegel[] tegels){
+    public void updateSpelUI(Tegel[] tegels) {
         this.tegels = tegels;
 
         pnlSpelbord.removeAll();
-        for(Tegel tegel : tegels){
+        for (Tegel tegel : tegels) {
             pnlSpelbord.add(new TegelUI(tegel));
         }
         pnlSpelbord.updateUI();
     }
 
-    public void setScore(int score){
+    public void setScore(int score) {
         lblScore.setText("Score: " + String.valueOf(score));
     }
-    public int getScore(){
+
+    public int getScore() {
         return Integer.valueOf(lblScore.getText());
     }
 
-    private void behandelEvents()
-    {
+    private void behandelEvents() {
         super.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_UP){
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
                     System.out.println("VK_UP");
                     controller.keyUP();
-                } else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     System.out.println("VK_DOWN");
                     controller.keyDOWN();
-                } else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     System.out.println("VK_LEFT");
                     controller.keyLEFT();
-                } else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     System.out.println("VK_RIGHT");
                     controller.keyRIGHT();
                 }
