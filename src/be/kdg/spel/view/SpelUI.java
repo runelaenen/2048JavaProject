@@ -79,7 +79,6 @@ public class SpelUI extends JFrame {
         btnMenu = new JButton("Menu");
         btnRanglijst = new JButton("Ranglijst");
         btnInstelligen = new JButton("Instellingen");
-
     }
 
     private void maakLayout() {
@@ -230,8 +229,54 @@ public class SpelUI extends JFrame {
     }
 
     public void gewonnen() {
+        Thread t = new Thread(new Runnable(){
+            public void run(){
+                Object[] options1 = {"Verder spelen",
+                        "Opnieuw spelen",
+                        "Stop spel"};
 
-        JOptionPane.showMessageDialog(null, "Je bent gewonnen!", "Je hebt 2048 gehaald", JOptionPane.CLOSED_OPTION );
+                int antwoord = JOptionPane.showOptionDialog(null,
+                        "U bent verloren, wat wilt u doen?",
+                        "Verloren!",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        options1,
+                        null);
+
+                if(antwoord == 0){
+                    // Verder spelen, dus niets speciaals doen
+                }else if(antwoord == 1){
+                    controller.opnieuw();
+                }else if(antwoord == 2){
+                    System.exit(0);
+                }
+            }
+        });
+        t.start();
+
+    }
+
+    public void verloren(){
+        Object[] options1 = {"Opnieuw spelen",
+                "Stop spel"};
+
+        int antwoord = JOptionPane.showOptionDialog(null,
+                "U bent verloren, wat wilt u doen?",
+                "Verloren!",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options1,
+                null);
+
+        if(antwoord == 0){
+            //TODO: opnieuw spelen
+            controller.opnieuw();
+
+        }else if(antwoord == 1){
+            System.exit(0);
+        }
     }
 
     public int getScore() {

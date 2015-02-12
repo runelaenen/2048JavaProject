@@ -44,7 +44,6 @@ public class Tegels {
         }
     }
 
-
     private List<Tegel> legePlaatsen() {
         List<Tegel> legetegels = new ArrayList<Tegel>(16);
         for (Tegel t : tegels) {
@@ -71,9 +70,15 @@ public class Tegels {
             }
         }
 
-        // Check if gameover
-        if (isGameOver()) {
-            JOptionPane.showMessageDialog(null, "Game Over");
+        boolean verloren = true;
+        for(Tegel tegel : getTegelArray()){
+            if(tegel.isLeeg()){
+                verloren = false;
+            }
+        }
+        if(verloren){
+            // verloren
+            controller.verloren();
         }
 
         if (tegelToevoegen) {
@@ -116,43 +121,6 @@ public class Tegels {
         return lijn;
     }
 
-    public boolean isGameOver() {
-    /*
-        Tegel[] backup = new Tegel[controller.BORDGROOTTE];
-
-        for (int i = 0; i < controller.BORDGROOTTE; i++) {
-                backup[i] = tegels[i];
-        }
-
-        beweegLijn();
-        roteerBord();
-        beweegLijn();
-        roteerBord();
-        beweegLijn();
-        roteerBord();
-        beweegLijn();
-        roteerBord();
-
-        boolean isVeranderd = false;
-        for (int i = 0; i < controller.BORDGROOTTE; i++) {
-            if(backup[i] != tegels[i]){
-                isVeranderd = true;
-            }
-        }
-
-        for (int i = 0; i < controller.BORDGROOTTE; i++) {
-            tegels[i] = backup[i];
-        }
-
-        if(isVeranderd){
-            return false;
-        } else {
-            return true;
-        }
-        */
-        return false;
-    }
-
     public List<Tegel> schuifLijn(Tegel[] lijn) {
         List<Tegel> nieuweLijn = new ArrayList<Tegel>(0);
 
@@ -193,7 +161,7 @@ public class Tegels {
 
                     if (nieuweLijn.get(i).getWaarde() == 32 && gewonnen==false) {
                         gewonnen = true;
-                        controller.isgewonnen();
+                        controller.gewonnen();
                     }
 
                 }

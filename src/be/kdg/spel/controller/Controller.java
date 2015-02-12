@@ -5,6 +5,7 @@ import be.kdg.spel.view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 /**
  * Created by Rune on 4/02/2015.
@@ -20,19 +21,11 @@ public class Controller {
     public static int ZIJDEGROOTTE = 4;
     public static int BORDGROOTTE = ZIJDEGROOTTE*ZIJDEGROOTTE;
 
-    public int getGebruikteThema() {
-        return gebruikteThema;
-    }
-
-    public void setGebruikteThema(int gebruikteThema) {
-        this.gebruikteThema = gebruikteThema;
-    }
-
-    public Controller(){
+    public Controller() {
         this.tegels = new Tegels(this);
         spelUI = new SpelUI(this);
         scores = new Score();
-        gebruikteThema=1;
+        gebruikteThema = 1;
     }
 
     public Tegel[] getTegelArray() {
@@ -43,14 +36,17 @@ public class Controller {
         scores.addScore(score);
         spelUI.setScore(scores.getScore());
     }
+
+    public void setScore(int score){
+        scores.setScore(score);
+        spelUI.setScore(scores.getScore());
+    }
+
     public int getScore() { return scores.getScore(); }
 
     public void keyLEFT(){
         tegels.left();
         spelUI.updateSpelUI(tegels.getTegelArray());
-
-
-
     }
 
     public void keyRIGHT(){
@@ -74,10 +70,20 @@ public class Controller {
         instellingenUI = new InstellingenUI(this);
 
     }
-    public void isgewonnen(){
-        spelUI.updateSpelUI(tegels.getTegelArray());
+
+    public void gewonnen(){
         spelUI.gewonnen();
     }
+    public void verloren(){
+        spelUI.verloren();
+    }
+
+    public void opnieuw(){
+        this.tegels = new Tegels(this);
+        setScore(0);
+        spelUI.updateSpelUI(tegels.getTegelArray());
+    }
+
 
 
     public void opslaan(Color kleur) {

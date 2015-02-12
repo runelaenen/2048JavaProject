@@ -9,7 +9,14 @@ public class Spelregels {
     public Spelregels() {
         this.gewonnen = false;
     }
-    public void gewonnen() {
 
+
+    public static boolean isVerloren(Tegels tegels) {
+        for(Tegel tegel : tegels.getTegelArray()){
+            if(tegel.isLeeg()){
+                return false;
+            }
+        }
+        return true;
     }
 }
