@@ -10,9 +10,4 @@ public class main {
     public static void main(String[] args) {
         new Controller();
     }
-
-    //problemen opgemerkt
-    // 1) als je focus op een knop zet door er op te klikken kan je niet meer met de pijltjes het spel spel
-    // 2) het spel lijkt precies nooit te eindigen( bord geraakt precies niet vol)
-
 }
