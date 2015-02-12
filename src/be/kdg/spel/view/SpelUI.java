@@ -41,7 +41,7 @@ public class SpelUI extends JFrame {
 
     private Controller controller;
 
-    public SpelUI(Tegel[] tegels, Controller controller) throws HeadlessException {
+    public SpelUI(Controller controller) throws HeadlessException {
         super("2048");
         super.setSize(700, 500);
         super.setFocusable(true);
@@ -50,7 +50,7 @@ public class SpelUI extends JFrame {
         super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.achtergrondKleur = new Color(0x3A8FF8);
-        this.tegels = tegels;
+        this.tegels = controller.getTegelArray();
         this.controller = controller;
 
         icnGewonnen= new ImageIcon("../sources/gewonnen.png");

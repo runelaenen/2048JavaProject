@@ -20,8 +20,12 @@ public class Controller {
 
     public Controller(){
         this.tegels = new Tegels(this);
-        spelUI = new SpelUI(tegels.getTegelArray(), this);
+        spelUI = new SpelUI(this);
         scores = new Score();
+    }
+
+    public Tegel[] getTegelArray() {
+        return tegels.getTegelArray();
     }
 
     public void addScore(int score){
