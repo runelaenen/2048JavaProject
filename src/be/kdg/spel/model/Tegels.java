@@ -16,6 +16,8 @@ public class Tegels {
 
     private Random random = new Random();
     private Controller controller;
+    private boolean gewonnen;
+    private boolean speeltVerder;
 
     public Tegels(Controller controller) {
         this.controller = controller;
@@ -40,18 +42,6 @@ public class Tegels {
             Tegel legeTegel = list.get(index);
             legeTegel.setWaarde(2);
         }
-    }
-
-    //testen of men gewonnen is (dit moet later in model spelregels komen)
-    public boolean isgewonnen() {
-        boolean gewonnen = false;
-        for (Tegel tegel : tegels) {
-            if (tegel.getWaarde() == 32) {
-                gewonnen = true;
-
-            }
-        }
-        return gewonnen;
     }
 
 
@@ -200,6 +190,12 @@ public class Tegels {
                     controller.addScore(nieuweLijn.get(i).getWaarde() * 2);
                     nieuweLijn.get(i).setWaarde(nieuweLijn.get(i).getWaarde() * 2);
                     nieuweLijn.get(i + 1).setWaarde(0);
+
+                    if (nieuweLijn.get(i).getWaarde() == 32 && gewonnen==false) {
+                        gewonnen = true;
+                        controller.isgewonnen();
+                    }
+
                 }
 
             }

@@ -17,7 +17,7 @@ public class TegelUI extends JLabel {
             super.setText("");
         }
 
-        super.setBackground(tegel.Achtergrondkleur());
+        super.setBackground(ThemaUI.Achtergrondkleur(tegel.getWaarde()));
         super.setForeground(tegel.tekstKleur());
 
         super.setOpaque(true);

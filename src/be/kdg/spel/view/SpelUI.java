@@ -33,6 +33,8 @@ public class SpelUI extends JFrame {
     private JPanel pnlSpelbord;
     private Icon icnLogo;
     private Icon icnGewonnen;
+    private ThemasUI thema;
+
 
 
     // private Color achtergrondKleur = new Color(0xfaf8ef);
@@ -46,12 +48,14 @@ public class SpelUI extends JFrame {
         super.setSize(700, 500);
         super.setFocusable(true);
         super.setLocationRelativeTo(null);
-        this.achtergrondKleur = new Color(0x3A8FF8);
+        this.controller = controller;
+        thema= new ThemasUI();
+
+
         super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.achtergrondKleur = new Color(0x3A8FF8);
+        this.achtergrondKleur = new Color(0xfaf8ef);
         this.tegels = controller.getTegelArray();
-        this.controller = controller;
 
         icnGewonnen= new ImageIcon("../sources/gewonnen.png");
         icnLogo = new ImageIcon("../sources/logo.png");
@@ -226,7 +230,8 @@ public class SpelUI extends JFrame {
     }
 
     public void gewonnen() {
-        JOptionPane.showMessageDialog(null, "Je bent gewonnen!", "Je hebt 2048 gehaald", JOptionPane.CLOSED_OPTION,icnGewonnen );
+
+        JOptionPane.showMessageDialog(null, "Je bent gewonnen!", "Je hebt 2048 gehaald", JOptionPane.CLOSED_OPTION );
     }
 
     public int getScore() {

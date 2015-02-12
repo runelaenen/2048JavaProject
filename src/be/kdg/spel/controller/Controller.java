@@ -15,13 +15,24 @@ public class Controller {
     private Score scores;
     private InstellingenUI instellingenUI;
 
+    private int gebruikteThema;
+
     public static int ZIJDEGROOTTE = 4;
     public static int BORDGROOTTE = ZIJDEGROOTTE*ZIJDEGROOTTE;
+
+    public int getGebruikteThema() {
+        return gebruikteThema;
+    }
+
+    public void setGebruikteThema(int gebruikteThema) {
+        this.gebruikteThema = gebruikteThema;
+    }
 
     public Controller(){
         this.tegels = new Tegels(this);
         spelUI = new SpelUI(this);
         scores = new Score();
+        gebruikteThema=1;
     }
 
     public Tegel[] getTegelArray() {
@@ -37,37 +48,35 @@ public class Controller {
     public void keyLEFT(){
         tegels.left();
         spelUI.updateSpelUI(tegels.getTegelArray());
-        if(tegels.isgewonnen()){
-            spelUI.gewonnen();
-        }
+
+
+
     }
 
     public void keyRIGHT(){
         tegels.right();
         spelUI.updateSpelUI(tegels.getTegelArray());
-        if(tegels.isgewonnen()){
-            spelUI.gewonnen();
-        }
+
     }
 
     public void keyUP(){
         tegels.up();
         spelUI.updateSpelUI(tegels.getTegelArray());
-        if(tegels.isgewonnen()){
-            spelUI.gewonnen();
-        }
+
     }
 
     public void keyDOWN(){
         tegels.down();
         spelUI.updateSpelUI(tegels.getTegelArray());
-        if(tegels.isgewonnen()){
-            spelUI.gewonnen();
-        }
+
     }
     public void instellingen(){
         instellingenUI = new InstellingenUI(this);
 
+    }
+    public void isgewonnen(){
+        spelUI.updateSpelUI(tegels.getTegelArray());
+        spelUI.gewonnen();
     }
 
 
