@@ -218,6 +218,9 @@ public class SpelUI extends JFrame {
     public void setScore(int score) {
         lblScore.setText("Score: " + String.valueOf(score));
     }
+    public void setBest(int best){
+        lblBest.setText("Best; "+ String.valueOf(best));
+    }
 
     public void refreshBackground() {
         pnlSuper.setBackground(achtergrondKleur);
@@ -281,6 +284,9 @@ public class SpelUI extends JFrame {
 
     public int getScore() {
         return Integer.valueOf(lblScore.getText());
+    }
+    public int setScore() {
+        return Integer.valueOf(lblBest.getText());
     }
 
     private void behandelEvents() {
