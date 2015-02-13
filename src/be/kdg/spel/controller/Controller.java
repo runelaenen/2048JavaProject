@@ -42,6 +42,7 @@ public class Controller {
         spelUI.setScore(scores.getScore());
     }
 
+
     public int getScore() { return scores.getScore(); }
 
     public void keyLEFT(){
@@ -81,6 +82,7 @@ public class Controller {
     public void opnieuw(){
         this.tegels = new Tegels(this);
         setScore(0);
+        scores.setBest(scores.getScore());
         spelUI.updateSpelUI(tegels.getTegelArray());
     }
 
