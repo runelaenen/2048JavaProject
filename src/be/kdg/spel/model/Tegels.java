@@ -159,7 +159,7 @@ public class Tegels {
                     nieuweLijn.get(i).setWaarde(nieuweLijn.get(i).getWaarde() * 2);
                     nieuweLijn.get(i + 1).setWaarde(0);
 
-                    if (nieuweLijn.get(i).getWaarde() == 32 && gewonnen==false) {
+                    if (nieuweLijn.get(i).getWaarde() == 2048 && gewonnen==false) {
                         gewonnen = true;
                         controller.gewonnen();
                     }

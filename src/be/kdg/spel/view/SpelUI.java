@@ -236,8 +236,8 @@ public class SpelUI extends JFrame {
                         "Stop spel"};
 
                 int antwoord = JOptionPane.showOptionDialog(null,
-                        "U bent verloren, wat wilt u doen?",
-                        "Verloren!",
+                        "U bent gewonnen, wat wilt u doen?",
+                        "Gewonnen!",
                         JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.INFORMATION_MESSAGE,
                         null,
