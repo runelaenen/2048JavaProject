@@ -218,8 +218,8 @@ public class SpelUI extends JFrame {
     public void setScore(int score) {
         lblScore.setText("Score: " + String.valueOf(score));
     }
-    public void setBest(int best){
-        lblBest.setText("Best; "+ String.valueOf(best));
+    public void updateBest(){
+        lblBest.setText("Best: "+ controller.getBest());
     }
 
     public void refreshBackground() {
@@ -273,11 +273,10 @@ public class SpelUI extends JFrame {
                 options1,
                 null);
 
-        if(antwoord == 0){
-            //TODO: opnieuw spelen
-            controller.opnieuw();
 
-        }else if(antwoord == 1){
+        if(antwoord == 0){
+            controller.opnieuw();
+        }else if(antwoord == 1|| antwoord == -1){
             System.exit(0);
         }
     }

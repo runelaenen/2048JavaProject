@@ -24,8 +24,10 @@ public class Controller {
     public Controller() {
         this.tegels = new Tegels(this);
         spelUI = new SpelUI(this);
-        scores = new Score();
+        scores = new Score(this);
         gebruikteThema = 1;
+
+        spelUI.updateBest();
     }
 
     public Tegel[] getTegelArray() {
@@ -81,9 +83,22 @@ public class Controller {
 
     public void opnieuw(){
         this.tegels = new Tegels(this);
+
+        scores.addToHighscore();
         setScore(0);
-        scores.setBest(scores.getScore());
+
         spelUI.updateSpelUI(tegels.getTegelArray());
+    }
+
+    public String gebruikersnaam(){
+        return (String)JOptionPane.showInputDialog(
+                spelUI,
+                "Wat is jouw naam?",
+                "Naam",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                "");
     }
 
 
@@ -100,5 +115,8 @@ public class Controller {
         return spelUI.getAchtergrondsKleur();
     }
 
+    public int getBest() {
+        return scores.getBest();
+    }
 }
 

@@ -18,10 +18,12 @@ public class Tegels {
     private Controller controller;
     private boolean gewonnen;
     private boolean speeltVerder;
+    private boolean checkVerloren;
 
     public Tegels(Controller controller) {
         this.controller = controller;
         this.tegels = new Tegel[controller.BORDGROOTTE];
+        this.checkVerloren = false;
 
         for (int i = 0; i < controller.BORDGROOTTE; i++) {
             tegels[i] = new Tegel();
@@ -70,20 +72,46 @@ public class Tegels {
             }
         }
 
-        boolean verloren = true;
-        for(Tegel tegel : getTegelArray()){
-            if(tegel.isLeeg()){
-                verloren = false;
+        if(checkVerloren == false){
+            if(checkVerloren()){
+                controller.verloren();
             }
-        }
-        if(verloren){
-            // verloren
-            controller.verloren();
         }
 
         if (tegelToevoegen) {
             voegTegelToe();
         }
+    }
+
+    private boolean checkVerloren(){
+        checkVerloren = true;
+
+        Tegel[] kopie = new Tegel[controller.BORDGROOTTE];
+        for(int i=0; i<tegels.length; i++){
+            kopie[i] = new Tegel(tegels[i].getWaarde());
+        }
+
+        left();
+        right();
+        up();
+        down();
+
+        boolean isVeranderd = false;
+        for(int i=0; i<tegels.length; i++){
+            if(kopie[i].getWaarde() != tegels[i].getWaarde()){
+                isVeranderd = true;
+            }
+        }
+
+        for(int i=0; i<tegels.length; i++){
+            tegels[i] = new Tegel(kopie[i].getWaarde());
+        }
+
+        checkVerloren = false;
+
+
+        return !isVeranderd;
+
     }
 
     public void left() {
@@ -97,20 +125,15 @@ public class Tegels {
     }
 
     public void up() {
-        System.out.println("Up()");
-
         this.roteerBord(3);
         beweegLijn();
         this.roteerBord();
     }
 
     public void down() {
-        System.out.println("Down()");
-
         this.roteerBord();
         beweegLijn();
         this.roteerBord(3);
-
     }
 
     public Tegel[] lijn(int rij) {
@@ -122,7 +145,7 @@ public class Tegels {
     }
 
     public List<Tegel> schuifLijn(Tegel[] lijn) {
-        List<Tegel> nieuweLijn = new ArrayList<Tegel>(0);
+        List<Tegel> nieuweLijn = new ArrayList<Tegel>();
 
         for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
             if (!lijn[i].isLeeg()) {
@@ -142,7 +165,7 @@ public class Tegels {
     }
 
     public Tegel[] verwerkLijn(Tegel[] lijn) {
-        List<Tegel> nieuweLijn = new ArrayList<Tegel>(0);
+        List<Tegel> nieuweLijn = new ArrayList<Tegel>();
         nieuweLijn = schuifLijn(lijn);
 
         //return nieuweLijn.toArray(new Tegel[4]);
@@ -155,15 +178,17 @@ public class Tegels {
                             && !nieuweLijn.get(i).isLeeg() // en als het vakje i in de nieuwe lijn niet leeg is (0)
                     ) {
                 if (nieuweLijn.get(i).getWaarde() == nieuweLijn.get(i + 1).getWaarde()) {
-                    controller.addScore(nieuweLijn.get(i).getWaarde() * 2);
-                    nieuweLijn.get(i).setWaarde(nieuweLijn.get(i).getWaarde() * 2);
                     nieuweLijn.get(i + 1).setWaarde(0);
+                    nieuweLijn.get(i).setWaarde(nieuweLijn.get(i).getWaarde() * 2);
+                    
+                    if(!checkVerloren) {
+                        controller.addScore(nieuweLijn.get(i).getWaarde() * 2);
 
-                    if (nieuweLijn.get(i).getWaarde() == 2048 && gewonnen==false) {
-                        gewonnen = true;
-                        controller.gewonnen();
+                        if (nieuweLijn.get(i).getWaarde() == 2048 && gewonnen == false) {
+                            gewonnen = true;
+                            controller.gewonnen();
+                        }
                     }
-
                 }
 
             }
