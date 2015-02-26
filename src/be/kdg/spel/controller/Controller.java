@@ -4,6 +4,7 @@ import be.kdg.spel.model.*;
 import be.kdg.spel.view.*;
 
 import javax.swing.*;
+import java.util.List;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
@@ -15,6 +16,7 @@ public class Controller {
     private SpelUI spelUI;
     private Score scores;
     private InstellingenUI instellingenUI;
+    private RanglijstUI ranglijstUI;
 
     private int gebruikteThema;
 
@@ -83,10 +85,9 @@ public class Controller {
 
     public void opnieuw(){
         this.tegels = new Tegels(this);
-
         scores.addToHighscore();
+        spelUI.updateBest();
         setScore(0);
-
         spelUI.updateSpelUI(tegels.getTegelArray());
     }
 
@@ -111,6 +112,9 @@ public class Controller {
 
 
     }
+    public void ranglijst(){
+        new RanglijstUI(this);
+    }
     public Color getAchtergrondsKleur(){
         return spelUI.getAchtergrondsKleur();
     }
@@ -118,5 +122,9 @@ public class Controller {
     public int getBest() {
         return scores.getBest();
     }
+    public List<String> getHighscoreList(){
+        return scores.getHighscoresList();
+    }
+
 }
 

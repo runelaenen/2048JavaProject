@@ -3,6 +3,9 @@ package be.kdg.spel.model;
 import be.kdg.spel.controller.Controller;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -71,4 +74,28 @@ public class Score {
         }
         return 0;
     }
+
+    public List<String> getHighscoresList(){
+        List<String> highscores= new ArrayList<String>();
+        try {
+            int best = 0;
+
+            String bestand = bs.lees("highscores.txt");
+            StringTokenizer st = new StringTokenizer(bestand, "\n");
+            while(st.hasMoreTokens()){
+                String regel = st.nextToken();
+                if(!regel.isEmpty()){
+                    String[] regelArray = regel.split("[;]");
+                    highscores.add(regelArray[1] + ";"+regelArray[0]);
+                }
+            }
+
+
+
+        } catch (FileNotFoundException e) {
+            //TODO: add file exception error shizzle
+        }
+        Collections.sort(highscores);
+        return highscores;
+}
 }

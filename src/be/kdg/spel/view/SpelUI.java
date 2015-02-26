@@ -36,7 +36,6 @@ public class SpelUI extends JFrame {
     private ThemasUI thema;
 
 
-
     // private Color achtergrondKleur = new Color(0xfaf8ef);
     private Color achtergrondKleur;
 
@@ -49,7 +48,7 @@ public class SpelUI extends JFrame {
         super.setFocusable(true);
         super.setLocationRelativeTo(null);
         this.controller = controller;
-        thema= new ThemasUI();
+        thema = new ThemasUI();
 
 
         super.setBackground(achtergrondKleur);
@@ -57,7 +56,7 @@ public class SpelUI extends JFrame {
         this.achtergrondKleur = new Color(0xfaf8ef);
         this.tegels = controller.getTegelArray();
 
-        icnGewonnen= new ImageIcon("../sources/gewonnen.png");
+        icnGewonnen = new ImageIcon("../sources/gewonnen.png");
         icnLogo = new ImageIcon("../sources/logo.png");
 
 
@@ -218,8 +217,9 @@ public class SpelUI extends JFrame {
     public void setScore(int score) {
         lblScore.setText("Score: " + String.valueOf(score));
     }
-    public void updateBest(){
-        lblBest.setText("Best: "+ controller.getBest());
+
+    public void updateBest() {
+        lblBest.setText("Best: " + controller.getBest());
     }
 
     public void refreshBackground() {
@@ -232,8 +232,8 @@ public class SpelUI extends JFrame {
     }
 
     public void gewonnen() {
-        Thread t = new Thread(new Runnable(){
-            public void run(){
+        Thread t = new Thread(new Runnable() {
+            public void run() {
                 Object[] options1 = {"Verder spelen",
                         "Opnieuw spelen",
                         "Stop spel"};
@@ -247,11 +247,11 @@ public class SpelUI extends JFrame {
                         options1,
                         null);
 
-                if(antwoord == 0){
+                if (antwoord == 0) {
                     // Verder spelen, dus niets speciaals doen
-                }else if(antwoord == 1){
+                } else if (antwoord == 1) {
                     controller.opnieuw();
-                }else if(antwoord == 2){
+                } else if (antwoord == 2) {
                     System.exit(0);
                 }
             }
@@ -260,7 +260,7 @@ public class SpelUI extends JFrame {
 
     }
 
-    public void verloren(){
+    public void verloren() {
         Object[] options1 = {"Opnieuw spelen",
                 "Stop spel"};
 
@@ -274,19 +274,13 @@ public class SpelUI extends JFrame {
                 null);
 
 
-        if(antwoord == 0){
+        if (antwoord == 0) {
             controller.opnieuw();
-        }else if(antwoord == 1|| antwoord == -1){
+        } else if (antwoord == 1 || antwoord == -1) {
             System.exit(0);
         }
     }
 
-    public int getScore() {
-        return Integer.valueOf(lblScore.getText());
-    }
-    public int setScore() {
-        return Integer.valueOf(lblBest.getText());
-    }
 
     private void behandelEvents() {
         super.addKeyListener(new KeyAdapter() {
@@ -304,6 +298,12 @@ public class SpelUI extends JFrame {
                     System.out.println("VK_RIGHT");
                     controller.keyRIGHT();
                 }
+            }
+        });
+        btnRanglijst.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.ranglijst();
             }
         });
         btnInstelligen.addActionListener(new ActionListener() {
