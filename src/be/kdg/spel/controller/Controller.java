@@ -122,7 +122,7 @@ public class Controller {
     public int getBest() {
         return scores.getBest();
     }
-    public List<String> getHighscoreList(){
+    public String[][] getHighscoreList(){
         return scores.getHighscoresList();
     }
 

@@ -3,10 +3,7 @@ package be.kdg.spel.model;
 import be.kdg.spel.controller.Controller;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by Rune on 4/02/2015.
@@ -75,27 +72,39 @@ public class Score {
         return 0;
     }
 
-    public List<String> getHighscoresList(){
-        List<String> highscores= new ArrayList<String>();
+    public String[][] getHighscoresList(){
+        List<String[]> uitbestand = new ArrayList<String[]>();
         try {
-            int best = 0;
-
             String bestand = bs.lees("highscores.txt");
+
             StringTokenizer st = new StringTokenizer(bestand, "\n");
+
             while(st.hasMoreTokens()){
+
                 String regel = st.nextToken();
-                if(!regel.isEmpty()){
-                    String[] regelArray = regel.split("[;]");
-                    highscores.add(regelArray[1] + ";"+regelArray[0]);
+                if (!regel.isEmpty()) {
+                    uitbestand.add(regel.split("[;]"));
                 }
+
             }
-
-
-
         } catch (FileNotFoundException e) {
-            //TODO: add file exception error shizzle
+            //TODO: add file exception error
         }
-        Collections.sort(highscores);
-        return highscores;
-}
+
+        String[][] highscore = new String[uitbestand.size()][2];
+        uitbestand.toArray(highscore);
+
+        Arrays.sort(highscore, new Comparator<String[]>() {
+            @Override
+            public int compare(final String[] een, final String[] twee) {
+                int score1 = Integer.parseInt(een[1]);
+                int score2 = Integer.parseInt(twee[1]);
+                return (score1 > score2 ? -1 : 1);
+            }
+        });
+
+
+
+        return highscore;
+    }
 }
