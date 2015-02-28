@@ -27,6 +27,7 @@ public class Controller {
         instellingen = new Instellingen(this);
 
         instellingen.leesEnActiveerInstellingen();
+
         spelUI.updateBest();
     }
 
@@ -34,43 +35,24 @@ public class Controller {
         return tegels.getTegelArray();
     }
 
-    public void addScore(int score){
-        scores.addScore(score);
-        spelUI.setScore(scores.getScore());
-    }
-
-    public void setScore(int score){
-        scores.setScore(score);
-        spelUI.setScore(scores.getScore());
-    }
-
-
-    public int getScore() { return scores.getScore(); }
-
     public void keyLEFT(){
         tegels.left();
         spelUI.updateSpelUI(tegels.getTegelArray());
     }
-
     public void keyRIGHT(){
         tegels.right();
         spelUI.updateSpelUI(tegels.getTegelArray());
 
     }
-
     public void keyUP(){
         tegels.up();
         spelUI.updateSpelUI(tegels.getTegelArray());
 
     }
-
     public void keyDOWN(){
         tegels.down();
         spelUI.updateSpelUI(tegels.getTegelArray());
 
-    }
-    public void instellingen(){
-        new InstellingenUI(this);
     }
 
     public void gewonnen(){
@@ -79,14 +61,45 @@ public class Controller {
     public void verloren(){
         spelUI.verloren();
     }
-
     public void opnieuw(){
+        try {
+            BestandsSysteem.maakLeeg("gamestate.txt");
+        } catch(Exception ex){
+            System.out.println("NOOOO");
+        }
         this.tegels = new Tegels(this);
-        scores.addToHighscore();
+
         spelUI.updateBest();
         setScore(0);
         spelUI.updateSpelUI(tegels.getTegelArray());
     }
+    public void addScore(int score){
+        scores.addScore(score);
+        spelUI.setScore(scores.getScore());
+    }
+    public void setScore(int score){
+        scores.setScore(score);
+        spelUI.setScore(scores.getScore());
+    }
+    public int getScore() { return scores.getScore(); }
+    public void addToHighscore(){
+        scores.addToHighscore();
+    }
+
+    public void ranglijst(){
+        new RanglijstUI(this);
+    }
+    public void resetHighscore() {
+        scores.resetHighscore();
+        spelUI.updateBest();
+    }
+    public String[][] getHighscoreList(){
+        return scores.getHighscoresList();
+    }
+    public int getBest() {
+        return scores.getBest();
+    }
+
 
     public String gebruikersnaam(){
         return (String)JOptionPane.showInputDialog(
@@ -99,41 +112,27 @@ public class Controller {
                 "");
     }
 
-    public Font getFont(){
-        return spelUI.getFont();
-    }
-
-
 
     public void instellingenOpslaan(Color kleur) {
         instellingen.instellingenOpslaan(kleur);
         instellingen.leesEnActiveerInstellingen();
     }
-    public void ranglijst(){
-        new RanglijstUI(this);
+    public void instellingenDefault() {
+        instellingen.setDefault();
+        instellingen.leesEnActiveerInstellingen();
     }
+    public void instellingen(){
+        new InstellingenUI(this);
+    }
+
     public Color getAchtergrondsKleur(){
         return spelUI.getAchtergrondsKleur();
     }
     public void setAchtergrondsKleur(Color kleur){
         spelUI.setAchtergrondsKleur(kleur);
     }
-
-    public int getBest() {
-        return scores.getBest();
-    }
-    public String[][] getHighscoreList(){
-        return scores.getHighscoresList();
-    }
-
-    public void resetHighscore() {
-        scores.resetHighscore();
-        spelUI.updateBest();
-    }
-
-    public void instellingenDefault() {
-        instellingen.setDefault();
-        instellingen.leesEnActiveerInstellingen();
+    public Font getFont(){
+        return spelUI.getFont();
     }
 }
 

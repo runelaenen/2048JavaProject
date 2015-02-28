@@ -23,7 +23,7 @@ public class SpelUI extends JFrame {
     private JLabel lblScore;
     private JLabel lblBest;
 
-    private JButton btnMenu;
+    private JButton btnHerstart;
     private JButton btnRanglijst;
     private JButton btnInstelligen;
 
@@ -89,7 +89,7 @@ public class SpelUI extends JFrame {
         lblScore = new JLabel("Score: \n 0");
         lblBest = new JLabel("Beste: \n 0");
         //btn maken
-        btnMenu = new JButton("Menu");
+        btnHerstart = new JButton("Herstart");
         btnRanglijst = new JButton("Ranglijst");
         btnInstelligen = new JButton("Instellingen");
     }
@@ -118,7 +118,7 @@ public class SpelUI extends JFrame {
 
         //buttons
         //hierdoor gaat de focus niet naar de knopjes als er op wordt geklikt
-        btnMenu.setRequestFocusEnabled(false);
+        btnHerstart.setRequestFocusEnabled(false);
         btnInstelligen.setRequestFocusEnabled(false);
         btnRanglijst.setRequestFocusEnabled(false);
         //labels
@@ -170,7 +170,7 @@ public class SpelUI extends JFrame {
         pnlKnopjes.setLayout(new GridLayout(3, 1, 5, 5));
         pnlKnopjes.setBackground(achtergrondKleur);
 
-        pnlKnopjes.add(btnMenu, BorderLayout.NORTH);
+        pnlKnopjes.add(btnHerstart, BorderLayout.NORTH);
         pnlKnopjes.add(btnInstelligen, BorderLayout.CENTER);
         pnlKnopjes.add(btnRanglijst, BorderLayout.SOUTH);
 
@@ -291,6 +291,7 @@ public class SpelUI extends JFrame {
 
 
         if (antwoord == 0) {
+            controller.addToHighscore();
             controller.opnieuw();
         } else if (antwoord == 1 || antwoord == -1) {
             System.exit(0);
@@ -334,6 +335,12 @@ public class SpelUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.instellingen();
+            }
+        });
+        btnHerstart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.opnieuw();
             }
         });
     }
