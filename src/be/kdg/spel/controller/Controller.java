@@ -28,6 +28,8 @@ public class Controller {
 
         instellingen.leesEnActiveerInstellingen();
 
+        tegels.loadGameState(); // laad bestaande tegels en scores
+
         spelUI.updateBest();
     }
 
@@ -62,30 +64,26 @@ public class Controller {
         spelUI.verloren();
     }
     public void opnieuw(){
-        try {
-            BestandsSysteem.maakLeeg("gamestate.txt");
-        } catch(Exception ex){
-            System.out.println("NOOOO");
-        }
+        resetGameState();
         this.tegels = new Tegels(this);
 
         spelUI.updateBest();
-        setScore(0);
         spelUI.updateSpelUI(tegels.getTegelArray());
     }
     public void addScore(int score){
         scores.addScore(score);
         spelUI.setScore(scores.getScore());
+        spelUI.updateBest();
     }
     public void setScore(int score){
         scores.setScore(score);
         spelUI.setScore(scores.getScore());
+        spelUI.updateBest();
     }
     public int getScore() { return scores.getScore(); }
     public void addToHighscore(){
         scores.addToHighscore();
     }
-
     public void ranglijst(){
         new RanglijstUI(this);
     }
@@ -133,6 +131,22 @@ public class Controller {
     }
     public Font getFont(){
         return spelUI.getFont();
+    }
+
+    public void newGameState() {
+        tegels.newGameState();
+    }
+    public void loadGameState() {
+        tegels.loadGameState();
+    }
+    public void saveGameState() {
+        tegels.saveGameState();
+    }
+    public void resetGameState(){
+        setScore(0);
+        newGameState();
+        setScore(0);
+        saveGameState();
     }
 }
 

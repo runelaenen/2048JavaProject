@@ -29,8 +29,8 @@ public class Tegels {
         this.tegels = new Tegel[controller.BORDGROOTTE];
         this.checkVerloren = false;
 
-        newGameState(); // start spel
-        loadGameState(); // laad bestaande tegels en scores
+        newGameState();
+        loadGameState();
     }
     public Tegel[] getTegelArray() {
         return tegels;

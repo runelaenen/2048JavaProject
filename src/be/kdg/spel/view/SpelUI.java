@@ -266,8 +266,11 @@ public class SpelUI extends JFrame {
                 if (antwoord == 0) {
                     // Verder spelen, dus niets speciaals doen
                 } else if (antwoord == 1) {
+                    controller.addToHighscore();
                     controller.opnieuw();
                 } else if (antwoord == 2) {
+                    controller.addToHighscore();
+                    controller.resetGameState();
                     System.exit(0);
                 }
             }
@@ -294,6 +297,8 @@ public class SpelUI extends JFrame {
             controller.addToHighscore();
             controller.opnieuw();
         } else if (antwoord == 1 || antwoord == -1) {
+            controller.addToHighscore();
+            controller.resetGameState();
             System.exit(0);
         }
     }

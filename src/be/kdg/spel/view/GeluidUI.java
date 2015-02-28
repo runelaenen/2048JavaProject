@@ -17,9 +17,7 @@ public class GeluidUI {
             public void run() {
                 try {
                     Clip clip = AudioSystem.getClip();
-
                     InputStream thing = GeluidUI.class.getResourceAsStream("../resources/move.wav");
-
                     AudioInputStream inputStream = AudioSystem.getAudioInputStream(thing);
                     clip.open(inputStream);
                     clip.start();
