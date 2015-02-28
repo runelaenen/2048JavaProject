@@ -87,7 +87,7 @@ public class SpelUI extends JFrame {
     private void maakComponenten() {
         lblTitel = new JLabel("2048");
         lblScore = new JLabel("Score: \n 0");
-        lblBest = new JLabel("Best: \n 0");
+        lblBest = new JLabel("Beste: \n 0");
         //btn maken
         btnMenu = new JButton("Menu");
         btnRanglijst = new JButton("Ranglijst");
@@ -235,7 +235,7 @@ public class SpelUI extends JFrame {
     }
 
     public void updateBest() {
-        lblBest.setText("Best: " + controller.getBest());
+        lblBest.setText("Beste: " + controller.getBest());
     }
 
     public void refreshBackground() {
@@ -307,15 +307,19 @@ public class SpelUI extends JFrame {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
                     System.out.println("VK_UP");
+                    GeluidUI.playMove();
                     controller.keyUP();
                 } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     System.out.println("VK_DOWN");
+                    GeluidUI.playMove();
                     controller.keyDOWN();
                 } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     System.out.println("VK_LEFT");
+                    GeluidUI.playMove();
                     controller.keyLEFT();
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     System.out.println("VK_RIGHT");
+                    GeluidUI.playMove();
                     controller.keyRIGHT();
                 }
             }
@@ -337,5 +341,6 @@ public class SpelUI extends JFrame {
 
     public void setAchtergrondsKleur(Color kleur) {
         achtergrondKleur = kleur;
+        refreshBackground();
     }
 }

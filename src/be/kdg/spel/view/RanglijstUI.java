@@ -26,10 +26,11 @@ public class RanglijstUI extends JDialog {
    public RanglijstUI(Controller controller){
        setModal(true);
        setSize(500, 500);
+       setTitle("Ranglijst");
        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
        setLocationRelativeTo(null);
 
-       this.achtergrondKleur = new Color(0xfaf8ef);
+       this.achtergrondKleur = controller.getAchtergrondsKleur();
 
        this.controller = controller;
 
@@ -110,22 +111,22 @@ public class RanglijstUI extends JDialog {
         btnResetten.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    Object[] options1 = {"Ja",
-                            "Nee"};
+                Object[] options1 = {"Ja",
+                        "Nee"};
 
-                    int antwoord = JOptionPane.showOptionDialog(null,
-                            "Wilt u zeker de ranglijst resetten?",
-                            "Reset highscore!",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.PLAIN_MESSAGE,
-                            null,
-                            options1,
-                            null);
+                int antwoord = JOptionPane.showOptionDialog(null,
+                        "Wilt u zeker de ranglijst resetten?",
+                        "Reset highscore!",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        options1,
+                        null);
 
-                    if (antwoord == 0) { // Ja
-                        controller.resetHighscore();
-                        ranglijstDialoog.dispose();
-                    }
+                if (antwoord == 0) { // Ja
+                    controller.resetHighscore();
+                    ranglijstDialoog.dispose();
+                }
             }
         });
     }

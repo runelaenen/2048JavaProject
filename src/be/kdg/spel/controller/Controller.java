@@ -15,10 +15,7 @@ public class Controller {
     private Tegels tegels;
     private SpelUI spelUI;
     private Score scores;
-    private InstellingenUI instellingenUI;
-    private RanglijstUI ranglijstUI;
-
-    private int gebruikteThema;
+    private Instellingen instellingen;
 
     public static int ZIJDEGROOTTE = 4;
     public static int BORDGROOTTE = ZIJDEGROOTTE*ZIJDEGROOTTE;
@@ -27,8 +24,9 @@ public class Controller {
         this.tegels = new Tegels(this);
         spelUI = new SpelUI(this);
         scores = new Score(this);
-        gebruikteThema = 1;
+        instellingen = new Instellingen(this);
 
+        instellingen.leesEnActiveerInstellingen();
         spelUI.updateBest();
     }
 
@@ -72,8 +70,7 @@ public class Controller {
 
     }
     public void instellingen(){
-        instellingenUI = new InstellingenUI(this);
-
+        new InstellingenUI(this);
     }
 
     public void gewonnen(){
@@ -107,19 +104,19 @@ public class Controller {
     }
 
 
-    public void opslaan(Color kleur) {
 
-        JOptionPane.showConfirmDialog(null, "Je instellingen zijn opgeslagen!", "Opslaan gelukt!", JOptionPane.CLOSED_OPTION);
-        spelUI.setAchtergrondsKleur(kleur);
-        spelUI.refreshBackground();
-
-
+    public void instellingenOpslaan(Color kleur) {
+        instellingen.instellingenOpslaan(kleur);
+        instellingen.leesEnActiveerInstellingen();
     }
     public void ranglijst(){
         new RanglijstUI(this);
     }
     public Color getAchtergrondsKleur(){
         return spelUI.getAchtergrondsKleur();
+    }
+    public void setAchtergrondsKleur(Color kleur){
+        spelUI.setAchtergrondsKleur(kleur);
     }
 
     public int getBest() {
@@ -132,6 +129,11 @@ public class Controller {
     public void resetHighscore() {
         scores.resetHighscore();
         spelUI.updateBest();
+    }
+
+    public void instellingenDefault() {
+        instellingen.setDefault();
+        instellingen.leesEnActiveerInstellingen();
     }
 }
 

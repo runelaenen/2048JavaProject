@@ -3,6 +3,7 @@ package be.kdg.spel.view;
 import be.kdg.spel.controller.Controller;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,23 +11,22 @@ import java.awt.event.ActionListener;
 /**
  * Created by Rune on 4/02/2015.
  */
-public class InstellingenUI extends JFrame {
+public class InstellingenUI extends JDialog {
     private Controller controller;
     private JButton btnOpslaan;
+    private JButton btnReset;
     private JButton btnAnnuleren;
     private JButton btnKleur;
-    private JLabel lblThema;
-    private JComboBox cboThema;
     private JLabel lblAchtergrondKleur;
     private Color kleur;
 
 
     public InstellingenUI(Controller controller) throws HeadlessException {
-        super("Instellingen");
+        setTitle("Instellingen");
+        setModal(true);
         setSize(350, 350);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(true);
 
         this.controller = controller;
         this.kleur = controller.getAchtergrondsKleur();
@@ -35,47 +35,49 @@ public class InstellingenUI extends JFrame {
         maakLayout();
         behandelEvents();
 
-
+        setVisible(true);
     }
 
     private void maakComponenten() {
-        //array
-
-
         //buttons
         btnOpslaan = new JButton("Opslaan");
         btnAnnuleren = new JButton("Annuleren");
+        btnReset = new JButton("Reset");
         btnKleur = new JButton("Kies een kleur...");
         //labels
-        lblThema = new JLabel("Thema: ");
         lblAchtergrondKleur = new JLabel("Achergrondskleur: ");
-        //combobox
-        cboThema = new JComboBox();
-
-
     }
 
     private void maakLayout() {
-        JPanel pnlSuper = new JPanel();
+        JPanel pnlSuper = new JPanel(new BorderLayout());
+        JPanel pnlInstellingen = new JPanel(new GridLayout(1, 2, 5, 5));
         JPanel pnlKnoppen = new JPanel(new FlowLayout());
-        JPanel pnlInstellingen = new JPanel(new GridLayout(2, 2, 5, 5));
+
+
+
+
 
 
         //pnlInstellingen
-        pnlInstellingen.add(lblThema);
-        pnlInstellingen.add(cboThema);
+        pnlInstellingen.setBackground(controller.getAchtergrondsKleur());
         pnlInstellingen.add(lblAchtergrondKleur);
         pnlInstellingen.add(btnKleur);
 
         //pnlKnoppen
+        pnlKnoppen.setBackground(controller.getAchtergrondsKleur());
         pnlKnoppen.add(btnOpslaan);
         pnlKnoppen.add(btnAnnuleren);
+        pnlKnoppen.add(btnReset);
 
         //pnlSuper
-        add(pnlInstellingen, BorderLayout.NORTH);
-        add(pnlKnoppen, BorderLayout.SOUTH);
+        pnlSuper.setBorder(new EmptyBorder(10,10,10,10));
+        pnlSuper.setBackground(controller.getAchtergrondsKleur());
 
-        //add(pnlSuper,BorderLayout.CENTER);
+        pnlSuper.add(pnlInstellingen, BorderLayout.NORTH);
+        pnlSuper.add(pnlKnoppen, BorderLayout.SOUTH);
+
+
+        add(pnlSuper, BorderLayout.CENTER);
 
     }
 
@@ -84,10 +86,8 @@ public class InstellingenUI extends JFrame {
         btnOpslaan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.opslaan(kleur);
+                controller.instellingenOpslaan(kleur);
                 dispose();
-
-
             }
         });
         btnAnnuleren.addActionListener(new ActionListener() {
@@ -100,11 +100,29 @@ public class InstellingenUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                  kleur = JColorChooser.showDialog(null, "Kies een kleur voor de achtergrond", controller.getAchtergrondsKleur());
-
-
             }
         });
+        btnReset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] options1 = {"Ja",
+                        "Nee"};
 
+                int antwoord = JOptionPane.showOptionDialog(null,
+                        "Wilt u de instellingen resetten?",
+                        "Reset instellingen!",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        options1,
+                        null);
+
+                if (antwoord == 0) { // Ja
+                    controller.instellingenDefault();
+                    dispose();
+                }
+            }
+        });
 
     }
 

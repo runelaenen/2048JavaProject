@@ -50,7 +50,7 @@ public class BestandsSysteem {
         return result;
     }
 
-    public void maakLeeg(String filename) throws FileNotFoundException {
+    public static void maakLeeg(String filename) throws FileNotFoundException {
 
         Path nieuwBestand = Paths.get("." + File.separator + "files" + File.separator + filename);
         try {
