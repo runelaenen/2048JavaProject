@@ -102,6 +102,9 @@ public class Controller {
                 "");
     }
 
+    public Font getFont(){
+        return spelUI.getFont();
+    }
 
 
     public void opslaan(Color kleur) {
@@ -126,5 +129,9 @@ public class Controller {
         return scores.getHighscoresList();
     }
 
+    public void resetHighscore() {
+        scores.resetHighscore();
+        spelUI.updateBest();
+    }
 }
 

@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Rune on 4/02/2015.
@@ -31,9 +33,11 @@ public class SpelUI extends JFrame {
     private JPanel pnlScores;
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
+    private Font fntLettertype;
     private Icon icnLogo;
     private Icon icnGewonnen;
     private ThemasUI thema;
+
 
 
     // private Color achtergrondKleur = new Color(0xfaf8ef);
@@ -58,6 +62,16 @@ public class SpelUI extends JFrame {
 
         icnGewonnen = new ImageIcon("../sources/gewonnen.png");
         icnLogo = new ImageIcon("../sources/logo.png");
+
+        this.fntLettertype = new Font(Font.SANS_SERIF, Font.PLAIN, 52);;
+        try {
+            InputStream is = SpelUI.class.getResourceAsStream("../resources/Ubuntu-R.ttf");
+            this.fntLettertype = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         this.maakComponenten();
@@ -109,13 +123,15 @@ public class SpelUI extends JFrame {
         btnRanglijst.setRequestFocusEnabled(false);
         //labels
 
-        //fonts voor labels
-        Font fTitel = new Font(Font.SANS_SERIF, Font.PLAIN, 52);
-        Font fLabel = new Font(Font.SANS_SERIF, Font.PLAIN, 23);
+        // Fonts
+        Font fntTitel = fntLettertype.deriveFont(52f);
+        Font fntLabel = fntLettertype.deriveFont(23f);
+
+
         //lblTitel
         lblTitel.setBorder(new EmptyBorder(10, 10, 10, 10));
         lblTitel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        lblTitel.setFont(fTitel);
+        lblTitel.setFont(fntTitel);
         lblTitel.setVerticalTextPosition(SwingConstants.CENTER);
         lblTitel.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitel.setBackground(new Color(0xedc22e));
@@ -125,13 +141,13 @@ public class SpelUI extends JFrame {
         lblTitel.setPreferredSize(new Dimension(200, 200));
 
         //lblBest
-        lblBest.setFont(fLabel);
+        lblBest.setFont(fntLabel);
         lblBest.setHorizontalAlignment(SwingConstants.CENTER);
         lblBest.setVerticalTextPosition(SwingConstants.CENTER);
 
 
         //lblScore
-        lblScore.setFont(fLabel);
+        lblScore.setFont(fntLabel);
         lblScore.setHorizontalAlignment(SwingConstants.CENTER);
         lblScore.setVerticalTextPosition(SwingConstants.CENTER);
 
@@ -281,6 +297,10 @@ public class SpelUI extends JFrame {
         }
     }
 
+    @Override
+    public Font getFont() {
+        return fntLettertype;
+    }
 
     private void behandelEvents() {
         super.addKeyListener(new KeyAdapter() {

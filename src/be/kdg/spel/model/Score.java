@@ -107,4 +107,12 @@ public class Score {
 
         return highscore;
     }
+
+    public void resetHighscore() {
+        try {
+            bs.maakLeeg("highscores.txt");
+        } catch (FileNotFoundException e) {
+            //TODO: add file exception error shizzle
+        }
+    }
 }

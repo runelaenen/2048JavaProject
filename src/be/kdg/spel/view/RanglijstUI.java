@@ -3,14 +3,17 @@ package be.kdg.spel.view;
 import be.kdg.spel.controller.Controller;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Rune on 4/02/2015.
  */
-public class RanglijstUI extends JFrame {
+public class RanglijstUI extends JDialog {
     private Controller controller;
     private Color achtergrondKleur;
 
@@ -21,11 +24,10 @@ public class RanglijstUI extends JFrame {
 
 
    public RanglijstUI(Controller controller){
-       super("Highscores");
+       setModal(true);
        setSize(500, 500);
        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
        setLocationRelativeTo(null);
-       setVisible(true);
 
        this.achtergrondKleur = new Color(0xfaf8ef);
 
@@ -34,6 +36,9 @@ public class RanglijstUI extends JFrame {
        maakComponenten();
        maakLayout();
        behandelEvents();
+
+
+       setVisible(true);
 
    }
     private void maakComponenten() {
@@ -45,36 +50,45 @@ public class RanglijstUI extends JFrame {
 
     private void maakLayout() {
 
-
+        // Panels
         JPanel pnlSuper = new JPanel(new BorderLayout(5,5));
-        super.add(pnlSuper);
-        pnlSuper.add(lblTitel, BorderLayout.NORTH);
-        pnlSuper.setBackground(achtergrondKleur);
-
+        JPanel pnlNaamScores = new JPanel(new BorderLayout(5,5));
         JPanel pnlNamen = new JPanel(new GridLayout(10,1));
         JPanel pnlScores = new JPanel(new GridLayout(10,1));
+
+        pnlSuper.setBackground(achtergrondKleur);
         pnlNamen.setBackground(achtergrondKleur);
         pnlScores.setBackground(achtergrondKleur);
+        pnlNaamScores.setBackground(achtergrondKleur);
+        pnlNaamScores.setBorder(new EmptyBorder(10, 10, 10, 10));
+        pnlNaamScores.add(pnlNamen,BorderLayout.WEST);
+        pnlNaamScores.add(pnlScores,BorderLayout.EAST);
+        pnlSuper.add(pnlNaamScores, BorderLayout.CENTER);
 
-        pnlSuper.setBorder(new EmptyBorder(10, 10, 10, 10));
-        pnlSuper.add(pnlNamen,BorderLayout.WEST);
-        pnlSuper.add(pnlScores,BorderLayout.EAST);
+        super.add(pnlSuper);
 
-        Font fntTitel = new Font(Font.SANS_SERIF, Font.PLAIN, 50);
-        Font fntScore = new Font(Font.SANS_SERIF,Font.PLAIN,30);
+        // Fonts
+        Font fntTitel = controller.getFont().deriveFont(52f);
+        Font fntScore = controller.getFont().deriveFont(23f);
 
-        //lblTitel
-        lblTitel.setText("HIGHSCORES");
+        // Titel
+        lblTitel.setText("RANGLIJST");
         lblTitel.setVerticalAlignment(SwingConstants.CENTER);
         lblTitel.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitel.setFont(fntTitel);
+        lblTitel.setBackground(new Color(0xedc22e));
+        lblTitel.setOpaque(true);
+        pnlSuper.add(lblTitel, BorderLayout.NORTH);
+
+        // resetknop
+        pnlSuper.add(btnResetten, BorderLayout.SOUTH);
 
         //lblNaam en lblScore invullen
         int index=0;
         for(String[] regel: controller.getHighscoreList()){
             if(index<10) {
                 lblNaam[index] = new JLabel(regel[0]);
-                lblScore[index] = new JLabel(regel[1]);
+                lblScore[index] = new JLabel(regel[1], SwingConstants.RIGHT);
 
                 index++;
             }
@@ -85,19 +99,35 @@ public class RanglijstUI extends JFrame {
                 lblNaam[i].setFont(fntScore);
                 lblScore[i].setFont(fntScore);
 
-                lblNaam[i].setHorizontalTextPosition(SwingConstants.LEFT);
-                lblNaam[i].setVerticalAlignment(SwingConstants.CENTER);
                 pnlNamen.add(lblNaam[i]);
-
-                lblScore[i].setHorizontalTextPosition(SwingConstants.RIGHT);
-                lblScore[i].setVerticalAlignment(SwingConstants.CENTER);
                 pnlScores.add(lblScore[i]);
             }
         }
 
     }
     private void behandelEvents() {
+        JDialog ranglijstDialoog = this;
+        btnResetten.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    Object[] options1 = {"Ja",
+                            "Nee"};
 
+                    int antwoord = JOptionPane.showOptionDialog(null,
+                            "Wilt u zeker de ranglijst resetten?",
+                            "Reset highscore!",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.PLAIN_MESSAGE,
+                            null,
+                            options1,
+                            null);
+
+                    if (antwoord == 0) { // Ja
+                        controller.resetHighscore();
+                        ranglijstDialoog.dispose();
+                    }
+            }
+        });
     }
 
 

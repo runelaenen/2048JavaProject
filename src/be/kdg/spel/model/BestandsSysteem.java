@@ -49,4 +49,22 @@ public class BestandsSysteem {
 
         return result;
     }
+
+    public void maakLeeg(String filename) throws FileNotFoundException {
+
+        Path nieuwBestand = Paths.get("." + File.separator + "files" + File.separator + filename);
+        try {
+            if(!Files.exists(nieuwBestand.getParent())){
+                Files.createDirectory(nieuwBestand.getParent());
+            }
+            if(!Files.exists(nieuwBestand)){
+                Files.createFile(nieuwBestand);
+            }
+
+            List<String> gegevens = new ArrayList<String>();
+            Files.write(nieuwBestand, gegevens);
+        } catch(Exception ex){
+            //TODO: exception uitwerken
+        }
+    }
 }
