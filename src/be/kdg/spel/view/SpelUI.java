@@ -25,7 +25,7 @@ public class SpelUI extends JFrame {
 
     private JButton btnHerstart;
     private JButton btnRanglijst;
-    private JButton btnInstelligen;
+    private JButton btnInstellingen;
 
     private JPanel pnlSuper;
     private JPanel pnlLeft;
@@ -37,7 +37,7 @@ public class SpelUI extends JFrame {
     private Icon icnLogo;
     private Icon icnGewonnen;
     private ThemasUI thema;
-
+    private InstellingenUI instellingenUI;
 
 
     // private Color achtergrondKleur = new Color(0xfaf8ef);
@@ -53,7 +53,7 @@ public class SpelUI extends JFrame {
         super.setLocationRelativeTo(null);
         this.controller = controller;
         thema = new ThemasUI();
-
+        GeluidUI.playMusic();
 
         super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -63,7 +63,8 @@ public class SpelUI extends JFrame {
         icnGewonnen = new ImageIcon("../sources/gewonnen.png");
         icnLogo = new ImageIcon("../sources/logo.png");
 
-        this.fntLettertype = new Font(Font.SANS_SERIF, Font.PLAIN, 52);;
+        this.fntLettertype = new Font(Font.SANS_SERIF, Font.PLAIN, 52);
+        ;
         try {
             InputStream is = SpelUI.class.getResourceAsStream("../resources/Ubuntu-R.ttf");
             this.fntLettertype = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -91,7 +92,7 @@ public class SpelUI extends JFrame {
         //btn maken
         btnHerstart = new JButton("Herstart");
         btnRanglijst = new JButton("Ranglijst");
-        btnInstelligen = new JButton("Instellingen");
+        btnInstellingen = new JButton("Instellingen");
     }
 
     private void maakLayout() {
@@ -119,7 +120,7 @@ public class SpelUI extends JFrame {
         //buttons
         //hierdoor gaat de focus niet naar de knopjes als er op wordt geklikt
         btnHerstart.setRequestFocusEnabled(false);
-        btnInstelligen.setRequestFocusEnabled(false);
+        btnInstellingen.setRequestFocusEnabled(false);
         btnRanglijst.setRequestFocusEnabled(false);
         //labels
 
@@ -171,7 +172,7 @@ public class SpelUI extends JFrame {
         pnlKnopjes.setBackground(achtergrondKleur);
 
         pnlKnopjes.add(btnHerstart, BorderLayout.NORTH);
-        pnlKnopjes.add(btnInstelligen, BorderLayout.CENTER);
+        pnlKnopjes.add(btnInstellingen, BorderLayout.CENTER);
         pnlKnopjes.add(btnRanglijst, BorderLayout.SOUTH);
 
         pnlLeftTop = new JPanel(new BorderLayout(10, 10));
@@ -336,7 +337,7 @@ public class SpelUI extends JFrame {
                 controller.ranglijst();
             }
         });
-        btnInstelligen.addActionListener(new ActionListener() {
+        btnInstellingen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.instellingen();

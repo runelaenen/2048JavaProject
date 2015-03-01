@@ -19,6 +19,11 @@ public class InstellingenUI extends JDialog {
     private JButton btnKleur;
     private JLabel lblAchtergrondKleur;
     private Color kleur;
+    private JLabel lblGeluid;
+    private JCheckBox cboGeluid;
+    private JLabel lblMuziek;
+    private JCheckBox cboMuziek;
+
 
 
     public InstellingenUI(Controller controller) throws HeadlessException {
@@ -37,6 +42,12 @@ public class InstellingenUI extends JDialog {
 
         setVisible(true);
     }
+    public boolean geluidAan(){
+        if(cboGeluid.isSelected()){
+            return true;
+        }
+        return false;
+    }
 
     private void maakComponenten() {
         //buttons
@@ -46,11 +57,18 @@ public class InstellingenUI extends JDialog {
         btnKleur = new JButton("Kies een kleur...");
         //labels
         lblAchtergrondKleur = new JLabel("Achergrondskleur: ");
+        lblGeluid = new JLabel("Geluid");
+        lblMuziek = new JLabel("Muziek");
+
+        //checkboxes
+        cboGeluid = new JCheckBox();
+        cboMuziek = new JCheckBox();
+
     }
 
     private void maakLayout() {
         JPanel pnlSuper = new JPanel(new BorderLayout());
-        JPanel pnlInstellingen = new JPanel(new GridLayout(1, 2, 5, 5));
+        JPanel pnlInstellingen = new JPanel(new GridLayout(3, 2, 5, 5));
         JPanel pnlKnoppen = new JPanel(new FlowLayout());
 
 
@@ -62,6 +80,10 @@ public class InstellingenUI extends JDialog {
         pnlInstellingen.setBackground(controller.getAchtergrondsKleur());
         pnlInstellingen.add(lblAchtergrondKleur);
         pnlInstellingen.add(btnKleur);
+        pnlInstellingen.add(lblGeluid);
+        pnlInstellingen.add(cboGeluid);
+        pnlInstellingen.add(lblMuziek);
+        pnlInstellingen.add(cboMuziek);
 
         //pnlKnoppen
         pnlKnoppen.setBackground(controller.getAchtergrondsKleur());
@@ -78,8 +100,13 @@ public class InstellingenUI extends JDialog {
 
 
         add(pnlSuper, BorderLayout.CENTER);
+        //checkboxen
+        cboGeluid.setSelected(true);
+        cboMuziek.setSelected(true);
+
 
     }
+
 
     private void behandelEvents() {
 
