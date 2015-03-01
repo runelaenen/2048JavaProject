@@ -21,6 +21,10 @@ public class Controller {
     public static int ZIJDEGROOTTE = 4;
     public static int BORDGROOTTE = ZIJDEGROOTTE*ZIJDEGROOTTE;
 
+    public static void main(String[] args) {
+        new Controller();
+    }
+
     public Controller() {
         this.tegels = new Tegels(this);
         geluidUI = new GeluidUI(this);
