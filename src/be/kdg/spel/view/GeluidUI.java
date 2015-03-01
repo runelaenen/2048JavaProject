@@ -57,7 +57,7 @@ public class GeluidUI {
                         while (achtergrondMuziek.isRunning()) {
                             Thread.sleep(100);
                         }
-                        achtergrondMuziek = null;
+                        //achtergrondMuziek = null;
                     } catch (Exception e) {
                         System.out.println("Error met playMusic()");
                         e.printStackTrace();
