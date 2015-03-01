@@ -101,14 +101,26 @@ public class Controller {
 
 
     public String gebruikersnaam(){
-        return (String)JOptionPane.showInputDialog(
-                spelUI,
-                "Wat is jouw naam?",
-                "Naam",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                null,
-                "");
+        //TODO: bij het cancelen van de optionPane komt er een error
+        boolean TweedeKeerVragen=false;
+        String naam="";
+        while (naam.equals("")){
+            if(!TweedeKeerVragen){
+                naam =(String)JOptionPane.showInputDialog(
+                        spelUI,
+                        "Wat is jouw naam?",
+                        "Naam",
+                        JOptionPane.WARNING_MESSAGE);
+            }else{
+                naam =(String)JOptionPane.showInputDialog(
+                        spelUI,
+                        "Wat is jouw naam?\n Gelieve u naam in te vullen!",
+                        "Naam",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+        return naam;
     }
 
 

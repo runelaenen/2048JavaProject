@@ -295,7 +295,8 @@ public class SpelUI extends JFrame {
             controller.addToHighscore();
             controller.opnieuw();
         } else if (antwoord == 1 || antwoord == -1) {
-            controller.addToHighscore();
+
+           controller.addToHighscore();
             controller.resetGameState();
             System.exit(0);
         }
