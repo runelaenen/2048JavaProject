@@ -36,7 +36,6 @@ public class SpelUI extends JFrame {
     private Font fntLettertype;
     private Icon icnLogo;
     private Icon icnGewonnen;
-    private ThemasUI thema;
     private InstellingenUI instellingenUI;
 
 
@@ -52,8 +51,6 @@ public class SpelUI extends JFrame {
         super.setFocusable(true);
         super.setLocationRelativeTo(null);
         this.controller = controller;
-        thema = new ThemasUI();
-        GeluidUI.playMusic();
 
         super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -314,19 +311,19 @@ public class SpelUI extends JFrame {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
                     System.out.println("VK_UP");
-                    GeluidUI.playMove();
+                    controller.geluid().playMove();
                     controller.keyUP();
                 } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     System.out.println("VK_DOWN");
-                    GeluidUI.playMove();
+                    controller.geluid().playMove();
                     controller.keyDOWN();
                 } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     System.out.println("VK_LEFT");
-                    GeluidUI.playMove();
+                    controller.geluid().playMove();
                     controller.keyLEFT();
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     System.out.println("VK_RIGHT");
-                    GeluidUI.playMove();
+                    controller.geluid().playMove();
                     controller.keyRIGHT();
                 }
             }

@@ -58,7 +58,7 @@ public class Score {
             StringTokenizer st = new StringTokenizer(bestand, "\n");
             while(st.hasMoreTokens()){
                 String regel = st.nextToken();
-                if(!regel.isEmpty()){
+                if(regel != ""){
                     String[] regelArray = regel.split("[;]");
                     if(Integer.parseInt(regelArray[1]) > best){
                         best = Integer.parseInt(regelArray[1]);

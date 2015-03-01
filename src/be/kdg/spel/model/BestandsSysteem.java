@@ -44,7 +44,6 @@ public class BestandsSysteem {
                 result += regel + "\n";
             }
         }catch(IOException ex){
-            //result = "ERROR: FILE NOT FOUND";
         }
 
         return result;

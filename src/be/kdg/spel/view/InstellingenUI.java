@@ -42,12 +42,6 @@ public class InstellingenUI extends JDialog {
 
         setVisible(true);
     }
-    public boolean geluidAan(){
-        if(cboGeluid.isSelected()){
-            return true;
-        }
-        return false;
-    }
 
     private void maakComponenten() {
         //buttons
@@ -100,11 +94,14 @@ public class InstellingenUI extends JDialog {
 
 
         add(pnlSuper, BorderLayout.CENTER);
+
         //checkboxen
-        cboGeluid.setSelected(true);
-        cboMuziek.setSelected(true);
-
-
+        if(controller.geluid().isGeluid()) {
+            cboGeluid.setSelected(true);
+        }
+        if(controller.geluid().isMuziek()) {
+            cboMuziek.setSelected(true);
+        }
     }
 
 
@@ -113,7 +110,7 @@ public class InstellingenUI extends JDialog {
         btnOpslaan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.instellingenOpslaan(kleur);
+                controller.instellingenOpslaan(kleur, cboGeluid.isSelected(), cboMuziek.isSelected());
                 dispose();
             }
         });

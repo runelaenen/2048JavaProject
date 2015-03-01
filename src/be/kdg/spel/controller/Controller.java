@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
  */
 public class Controller {
     private Tegels tegels;
+    private GeluidUI geluidUI;
     private SpelUI spelUI;
     private Score scores;
     private Instellingen instellingen;
@@ -22,12 +23,12 @@ public class Controller {
 
     public Controller() {
         this.tegels = new Tegels(this);
+        geluidUI = new GeluidUI(this);
         spelUI = new SpelUI(this);
         scores = new Score(this);
         instellingen = new Instellingen(this);
 
-        instellingen.leesEnActiveerInstellingen();
-
+        //geluid().playMusic();
         tegels.loadGameState(); // laad bestaande tegels en scores
 
         spelUI.updateBest();
@@ -111,8 +112,8 @@ public class Controller {
     }
 
 
-    public void instellingenOpslaan(Color kleur) {
-        instellingen.instellingenOpslaan(kleur);
+    public void instellingenOpslaan(Color kleur, boolean geluid, boolean muziek) {
+        instellingen.instellingenOpslaan(kleur, geluid, muziek);
         instellingen.leesEnActiveerInstellingen();
     }
     public void instellingenDefault() {
@@ -121,6 +122,10 @@ public class Controller {
     }
     public void instellingen(){
         new InstellingenUI(this);
+    }
+
+    public GeluidUI geluid(){
+        return geluidUI;
     }
 
     public Color getAchtergrondsKleur(){
