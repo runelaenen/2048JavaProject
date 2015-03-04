@@ -4,6 +4,8 @@ import be.kdg.spel.model.*;
 import be.kdg.spel.view.*;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -17,6 +19,7 @@ public class Controller {
     private SpelUI spelUI;
     private Score scores;
     private Instellingen instellingen;
+    private Font fntLettertype;
 
     public static int ZIJDEGROOTTE = 4;
     public static int BORDGROOTTE = ZIJDEGROOTTE*ZIJDEGROOTTE;
@@ -26,6 +29,8 @@ public class Controller {
     }
 
     public Controller() {
+        loadFont();
+
         this.tegels = new Tegels(this);
         geluidUI = new GeluidUI(this);
         spelUI = new SpelUI(this);
@@ -36,6 +41,20 @@ public class Controller {
         tegels.loadGameState(); // laad bestaande tegels en scores
 
         spelUI.updateBest();
+    }
+
+    private void loadFont() {
+        // font initialiseren
+        this.fntLettertype = new Font(Font.SANS_SERIF, Font.PLAIN, 52);
+
+        try {
+            InputStream is = SpelUI.class.getResourceAsStream("../resources/Ubuntu-R.ttf");
+            this.fntLettertype = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Tegel[] getTegelArray() {
@@ -149,7 +168,7 @@ public class Controller {
         spelUI.setAchtergrondsKleur(kleur);
     }
     public Font getFont(){
-        return spelUI.getFont();
+        return fntLettertype;
     }
 
     public void newGameState() {

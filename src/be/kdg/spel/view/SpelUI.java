@@ -33,7 +33,7 @@ public class SpelUI extends JFrame {
     private JPanel pnlScores;
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
-    private Font fntLettertype;
+    private JPanel pnlEchtSpelbord;
     private InstellingenUI instellingenUI;
 
 
@@ -54,18 +54,6 @@ public class SpelUI extends JFrame {
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.achtergrondKleur = new Color(0xfaf8ef);
         this.tegels = controller.getTegelArray();
-
-        this.fntLettertype = new Font(Font.SANS_SERIF, Font.PLAIN, 52);
-        ;
-        try {
-            InputStream is = SpelUI.class.getResourceAsStream("../resources/Ubuntu-R.ttf");
-            this.fntLettertype = Font.createFont(Font.TRUETYPE_FONT, is);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
 
         this.maakComponenten();
         this.maakLayout();
@@ -117,8 +105,8 @@ public class SpelUI extends JFrame {
         //labels
 
         // Fonts
-        Font fntTitel = fntLettertype.deriveFont(52f);
-        Font fntLabel = fntLettertype.deriveFont(23f);
+        Font fntTitel = controller.getFont().deriveFont(52f);
+        Font fntLabel = controller.getFont().deriveFont(23f);
 
 
         //lblTitel
@@ -187,14 +175,17 @@ public class SpelUI extends JFrame {
          */
 
         // Panel spelbord aanmaken en opvullen
-        pnlSpelbord = new JPanel();
-        pnlSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE, 5, 5));
+        pnlSpelbord = new JPanel(new GridBagLayout());
+        pnlEchtSpelbord = new SquarePanel();
+        pnlEchtSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE, 5, 5));
         pnlSpelbord.setBackground(achtergrondKleur);
+        pnlEchtSpelbord.setBackground(achtergrondKleur);
         pnlSpelbord.setOpaque(true);
+        pnlEchtSpelbord.setOpaque(true);
         for (Tegel tegel : tegels) {
-            pnlSpelbord.add(new TegelUI(tegel));
+            pnlEchtSpelbord.add(new TegelUI(tegel, controller));
         }
-
+        pnlSpelbord.add(pnlEchtSpelbord);
 
         /*
         *
@@ -216,11 +207,11 @@ public class SpelUI extends JFrame {
     public void updateSpelUI(Tegel[] tegels) {
         this.tegels = tegels;
 
-        pnlSpelbord.removeAll();
+        pnlEchtSpelbord.removeAll();
         for (Tegel tegel : tegels) {
-            pnlSpelbord.add(new TegelUI(tegel));
+            pnlEchtSpelbord.add(new TegelUI(tegel, controller));
         }
-        pnlSpelbord.updateUI();
+        pnlEchtSpelbord.updateUI();
     }
 
     public void setScore(int score) {
@@ -297,11 +288,6 @@ public class SpelUI extends JFrame {
         }
     }
 
-    @Override
-    public Font getFont() {
-        return fntLettertype;
-    }
-
     private void behandelEvents() {
         super.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
@@ -349,4 +335,6 @@ public class SpelUI extends JFrame {
         achtergrondKleur = kleur;
         refreshBackground();
     }
+
+
 }
