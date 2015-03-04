@@ -105,14 +105,24 @@ public class Controller {
 
 
     public String gebruikersnaam(){
-        return (String)JOptionPane.showInputDialog(
-                spelUI,
-                "Wat is jouw naam?",
-                "Naam",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                null,
-                "");
+        boolean vragen = true;
+        String antwoord = "";
+        while(vragen){
+            antwoord = (String)JOptionPane.showInputDialog(
+                    spelUI,
+                    "Wat is jouw naam?",
+                    "Naam",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    "");
+            if(antwoord != null){
+                if(!antwoord.isEmpty()){
+                    vragen = false;
+                }
+            }
+        }
+        return antwoord;
     }
 
 
