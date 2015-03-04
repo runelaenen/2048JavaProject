@@ -29,7 +29,7 @@ public class InstellingenUI extends JDialog {
     public InstellingenUI(Controller controller) throws HeadlessException {
         setTitle("Instellingen");
         setModal(true);
-        setSize(350, 350);
+        setSize(350, 200);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -78,6 +78,9 @@ public class InstellingenUI extends JDialog {
         pnlInstellingen.add(cboGeluid);
         pnlInstellingen.add(lblMuziek);
         pnlInstellingen.add(cboMuziek);
+
+        cboMuziek.setBackground(controller.getAchtergrondsKleur());
+        cboGeluid.setBackground(controller.getAchtergrondsKleur());
 
         //pnlKnoppen
         pnlKnoppen.setBackground(controller.getAchtergrondsKleur());

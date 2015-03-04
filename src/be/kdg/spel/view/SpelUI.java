@@ -97,7 +97,7 @@ public class SpelUI extends JFrame {
         //labels
 
         // Fonts
-        Font fntTitel = controller.getFont().deriveFont(52f);
+        Font fntTitel = controller.getFont().deriveFont(64f);
         Font fntLabel = controller.getFont().deriveFont(23f);
 
 
