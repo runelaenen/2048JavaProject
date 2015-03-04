@@ -54,7 +54,6 @@ public class BestandsSysteem {
                 }
                 result += regel + "\n";
             }
-
         }catch(Exception ex){
             //TODO: exception uitwerken
             ex.printStackTrace();

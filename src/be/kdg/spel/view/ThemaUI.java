@@ -3,10 +3,6 @@ package be.kdg.spel.view;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * @author Alex Buze
- * @version 1.0 12/02/2015 11:10
- */
 public class ThemaUI {
     private String naam;
     private Color achtergrondKleur;

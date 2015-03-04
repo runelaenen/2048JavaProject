@@ -10,16 +10,17 @@ import java.awt.*;
 public class SplashScreen extends JWindow {
     public SplashScreen(){
         JLabel lblSplachscreen = new JLabel(new ImageIcon(SplashScreen.class.getResource("/be/kdg/spel/resources/splash.png")));
-        JLabel lblCredits = new JLabel("@2015 Rune Laenen & Alex Buze. All rights reserved.");
-        JPanel splash = new JPanel();
-        splash.add(lblSplachscreen, BorderLayout.NORTH);
-        splash.add(lblCredits,BorderLayout.SOUTH);
+        JLabel lblCredits = new JLabel("© 2015 Rune Laenen & Alex Buze. All rights reserved.");
+        JPanel splash = new JPanel(new BorderLayout());
+        splash.add(lblSplachscreen, BorderLayout.CENTER);
+        splash.add(lblCredits, BorderLayout.SOUTH);
         super.add(splash);
 
         setSize(400, 400);
+        pack();
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
-        pack();
+
         setVisible(true);
         try {
             Thread.sleep(3000); // 3 sec pauzeren
