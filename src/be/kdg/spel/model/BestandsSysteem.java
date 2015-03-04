@@ -8,10 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by Rune on 12/02/2015.
@@ -19,8 +16,14 @@ import java.util.StringTokenizer;
 public class BestandsSysteem {
 
     public static void schrijf(String filename, String inhoud) throws FileNotFoundException {
-        Path nieuwBestand = Paths.get("." + File.separator + "files" + File.separator + filename);
         try {
+            Path nieuwBestand = Paths.get("." + File.separator + "files" + File.separator + filename);
+
+            // dan de inhoud encrypteren adhv de key;
+            // is gewoon base64, dus makkelijk te reversen maar niet gewoon in elke text editor
+            inhoud = new String(Base64.getEncoder().encode(inhoud.getBytes()));
+
+            // enkele checks doen
             if(!Files.exists(nieuwBestand.getParent())){
                 Files.createDirectory(nieuwBestand.getParent());
             }
@@ -28,22 +31,33 @@ public class BestandsSysteem {
                 Files.createFile(nieuwBestand);
             }
 
+            // en het bestand wegschrijven
             List<String> gegevens = new ArrayList<String>();
             gegevens.add(inhoud);
             Files.write(nieuwBestand, gegevens, StandardOpenOption.APPEND);
         } catch(Exception ex){
             //TODO: exception uitwerken
+            ex.printStackTrace();
         }
     }
 
     public static String lees(String filename) throws FileNotFoundException {
+        // eerst geencrypteerde bestand uitlezen
         String result = "";
         try(Scanner sc = new Scanner(Paths.get("." + File.separator + "files" + File.separator + filename))){
             while (sc.hasNext()) {
                 String regel = sc.nextLine();
+                if(!regel.isEmpty()){
+                    regel = new String(Base64.getDecoder().decode(regel.getBytes()));
+                } else {
+                    regel = "";
+                }
                 result += regel + "\n";
             }
-        }catch(IOException ex){
+
+        }catch(Exception ex){
+            //TODO: exception uitwerken
+            ex.printStackTrace();
         }
 
         return result;
@@ -64,6 +78,7 @@ public class BestandsSysteem {
             Files.write(nieuwBestand, gegevens);
         } catch(Exception ex){
             //TODO: exception uitwerken
+            ex.printStackTrace();
         }
     }
 }
