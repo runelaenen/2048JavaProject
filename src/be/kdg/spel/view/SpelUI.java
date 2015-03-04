@@ -83,31 +83,56 @@ public class SpelUI extends JFrame {
 
         // Panel left aanmaken
         pnlLeft = new JPanel();
-        //pnlLeft.setLayout(new GridLayout(3, 1, 10, 10));
         pnlLeft.setLayout(new BorderLayout(10, 10));
         pnlLeft.setBackground(achtergrondKleur);
         pnlLeft.setOpaque(true);
 
+
+        // Fonts
+        Font fntTitel = controller.getFont().deriveFont(Font.BOLD).deriveFont(64f);
+        Font fntLabel = controller.getFont().deriveFont(23f);
+        Font fntButton = controller.getFont().deriveFont(Font.BOLD).deriveFont(16f);
 
         //buttons
         //hierdoor gaat de focus niet naar de knopjes als er op wordt geklikt
         btnHerstart.setRequestFocusEnabled(false);
         btnInstellingen.setRequestFocusEnabled(false);
         btnRanglijst.setRequestFocusEnabled(false);
+
+        btnHerstart.setBackground(new Color(0xed995b));
+        btnInstellingen.setBackground(new Color(0xed995b));
+        btnRanglijst.setBackground(new Color(0xed995b));
+
+        btnHerstart.setForeground(Color.WHITE);
+        btnInstellingen.setForeground(Color.WHITE);
+        btnRanglijst.setForeground(Color.WHITE);
+
+        btnHerstart.setFont(fntButton);
+        btnInstellingen.setFont(fntButton);
+        btnRanglijst.setFont(fntButton);
+
+        btnHerstart.setBorder(new EmptyBorder(5,5,5,5));
+        btnHerstart.setBackground(new Color(0xEEE4DA));
+        btnHerstart.setForeground(new Color(0xed995b));
+
+        btnInstellingen.setBorder(new EmptyBorder(5,5,5,5));
+        btnInstellingen.setBackground(new Color(0xEEE4DA));
+        btnInstellingen.setForeground(new Color(0xed995b));
+
+        btnRanglijst.setBorder(new EmptyBorder(5,5,5,5));
+        btnRanglijst.setBackground(new Color(0xEEE4DA));
+        btnRanglijst.setForeground(new Color(0xed995b));
         //labels
-
-        // Fonts
-        Font fntTitel = controller.getFont().deriveFont(64f);
-        Font fntLabel = controller.getFont().deriveFont(23f);
-
 
         //lblTitel
         lblTitel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        lblTitel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lblTitel.setBorder(BorderFactory.createLineBorder(new Color(0x7a8a99)));
+
         lblTitel.setFont(fntTitel);
         lblTitel.setVerticalTextPosition(SwingConstants.CENTER);
         lblTitel.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitel.setBackground(new Color(0xedc22e));
+        lblTitel.setForeground(Color.WHITE);
         lblTitel.setOpaque(true);
         lblTitel.setMinimumSize(new Dimension(200, 200));
         lblTitel.setMaximumSize(new Dimension(200, 200));
@@ -115,12 +140,14 @@ public class SpelUI extends JFrame {
 
         //lblBest
         lblBest.setFont(fntLabel);
+        //lblBest.setForeground(new Color(0xf5f5f5));
         lblBest.setHorizontalAlignment(SwingConstants.CENTER);
         lblBest.setVerticalTextPosition(SwingConstants.CENTER);
 
 
         //lblScore
         lblScore.setFont(fntLabel);
+        //lblScore.setForeground(new Color(0xf5f5f5));
         lblScore.setHorizontalAlignment(SwingConstants.CENTER);
         lblScore.setVerticalTextPosition(SwingConstants.CENTER);
 
@@ -129,11 +156,11 @@ public class SpelUI extends JFrame {
         //pnlScores
 
         pnlScores = new JPanel();
-        pnlScores.setBorder(new EmptyBorder(10, 10, 10, 10));
         pnlScores.setLayout(new GridLayout(2, 1, 5, 5));
-        pnlScores.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        pnlScores.setBorder(BorderFactory.createLineBorder(new Color(0x7a8a99)));
         pnlScores.add(lblScore, BorderLayout.NORTH);
         pnlScores.add(lblBest, BorderLayout.SOUTH);
+        //pnlScores.setBackground(new Color(0xbbada0));
         pnlScores.setBackground(Color.WHITE);
         pnlScores.setOpaque(true);
 
@@ -169,9 +196,13 @@ public class SpelUI extends JFrame {
         // Panel spelbord aanmaken en opvullen
         pnlSpelbord = new JPanel(new GridBagLayout());
         pnlEchtSpelbord = new SquarePanel();
-        pnlEchtSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE, 5, 5));
+        pnlEchtSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE, 9, 9));
+        pnlEchtSpelbord.setBorder(new EmptyBorder(9,9,9,9));
+
+
         pnlSpelbord.setBackground(achtergrondKleur);
-        pnlEchtSpelbord.setBackground(achtergrondKleur);
+        pnlEchtSpelbord.setBackground(new Color(0xBCAEA1));
+
         pnlSpelbord.setOpaque(true);
         pnlEchtSpelbord.setOpaque(true);
         for (Tegel tegel : tegels) {
