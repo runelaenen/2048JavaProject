@@ -1,6 +1,7 @@
 package be.kdg.spel.view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
@@ -12,19 +13,20 @@ public class SplashScreen extends JWindow {
 
         //progressbar
         JProgressBar progressBar = new JProgressBar();
-        progressBar.setMaximum(0);
+        progressBar.setMinimum(0);
         progressBar.setMaximum(100);
         progressBar.setBorderPainted(false);
-        progressBar.setForeground(Color.blue);
+        progressBar.setForeground(Color.BLACK);
+        progressBar.setStringPainted(true);
+        progressBar.setString("© 2015 Rune Laenen & Alex Buze. All rights reserved.");
 
         //labels
-        JLabel lblSplachscreen = new JLabel(new ImageIcon(getClass().getResource("/be/kdg/spel/resources/splash.png")));
-        JLabel lblCredits = new JLabel("© 2015 Rune Laenen & Alex Buze. All rights reserved.");
+        JLabel lblSplashscreen = new JLabel(new ImageIcon(getClass().getResource("/be/kdg/spel/resources/splash.png")));
+
         //panel
         JPanel splash = new JPanel(new BorderLayout());
-        splash.add(progressBar, BorderLayout.NORTH);
-        splash.add(lblSplachscreen, BorderLayout.CENTER);
-        splash.add(lblCredits, BorderLayout.SOUTH);
+        splash.add(lblSplashscreen, BorderLayout.CENTER);
+        splash.add(progressBar, BorderLayout.SOUTH);
         super.add(splash);
 
         setSize(400, 400);
@@ -33,10 +35,10 @@ public class SplashScreen extends JWindow {
         setAlwaysOnTop(true);
         setVisible(true);
 
-        for (int i = 1; i < 5; i++) {
-            progressBar.setValue(25 * i);
+        for (int i = 1; i < 21; i++) {
+            progressBar.setValue(5 * i);
             try {
-                Thread.sleep(750);
+                Thread.sleep((int)((Math.random() * 101) + 50));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
