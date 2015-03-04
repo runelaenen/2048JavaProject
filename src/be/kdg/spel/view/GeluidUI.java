@@ -6,6 +6,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.InputStream;
 
@@ -22,35 +23,38 @@ public class GeluidUI {
         this.controller = controller;
     }
 
-    //TODO: kan dit niet beter een model worden, het is niet eecht een ui he!
-    //Antwoord: nietecht, het hoort eerder bij User Interface dan bij 'het berekenen van game logica'
-    public void playMove(){
-        if(geluid) {
+    public void playMove() {
+        if (geluid) {
             new Thread(new Runnable() {
                 public void run() {
                     try {
                         Clip clip = AudioSystem.getClip();
-                        InputStream thing = GeluidUI.class.getResourceAsStream("/be/kdg/spel/resources/move2.wav");
-                        AudioInputStream inputStream = AudioSystem.getAudioInputStream(thing);
+                        InputStream geluid = getClass().getResourceAsStream("/be/kdg/spel/resources/move2.wav");
+                        //buffer toegevoegd voor mark/reset support
+                        InputStream bufferedGeluid = new BufferedInputStream(geluid);
+                        AudioInputStream inputStream = AudioSystem.getAudioInputStream(bufferedGeluid);
+
                         clip.open(inputStream);
                         clip.start();
                     } catch (Exception e) {
                         System.out.println("Error met playMove()");
                         e.printStackTrace();
+
                     }
                 }
             }).start();
         }
     }
-    public void playMusic(){
-        if(muziek) {
+
+    public void playMusic() {
+        if (muziek) {
             System.out.println("muziek speelt");
             new Thread(new Runnable() {
                 public void run() {
                     try {
-                        AudioInputStream inputStream =
-                                AudioSystem.getAudioInputStream(
-                                        GeluidUI.class.getResourceAsStream("/be/kdg/spel" + File.separator + "resources" + File.separator + "music.wav"));
+                        InputStream muziek = getClass().getResourceAsStream("/be/kdg/spel/resources/music.wav");
+                        InputStream bufferedMuziek = new BufferedInputStream(muziek);
+                        AudioInputStream inputStream = AudioSystem.getAudioInputStream(bufferedMuziek);
                         achtergrondMuziek = AudioSystem.getClip();
                         achtergrondMuziek.open(inputStream);
                         achtergrondMuziek.start();
@@ -69,8 +73,8 @@ public class GeluidUI {
         }
     }
 
-    public void stopAchtergrondMuziek(){
-        if(achtergrondMuziek != null){
+    public void stopAchtergrondMuziek() {
+        if (achtergrondMuziek != null) {
             achtergrondMuziek.stop();
         }
     }
@@ -84,7 +88,7 @@ public class GeluidUI {
         return muziek;
     }
 
-    public void setGeluid(boolean geluid){
+    public void setGeluid(boolean geluid) {
         this.geluid = geluid;
     }
 

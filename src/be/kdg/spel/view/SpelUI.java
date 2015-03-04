@@ -22,11 +22,9 @@ public class SpelUI extends JFrame {
     private JLabel lblTitel;
     private JLabel lblScore;
     private JLabel lblBest;
-
     private JButton btnHerstart;
     private JButton btnRanglijst;
     private JButton btnInstellingen;
-
     private JPanel pnlSuper;
     private JPanel pnlLeft;
     private JPanel pnlLeftTop;
@@ -34,13 +32,7 @@ public class SpelUI extends JFrame {
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
     private JPanel pnlEchtSpelbord;
-    private InstellingenUI instellingenUI;
-
-
-    // private Color achtergrondKleur = new Color(0xfaf8ef);
     private Color achtergrondKleur;
-
-
     private Controller controller;
 
     public SpelUI(Controller controller) throws HeadlessException {

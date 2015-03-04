@@ -48,12 +48,13 @@ public class Controller {
         this.fntLettertype = new Font(Font.SANS_SERIF, Font.PLAIN, 52);
 
         try {
-            InputStream is = SpelUI.class.getResourceAsStream("../resources/Ubuntu-R.ttf");
+            InputStream is = SpelUI.class.getResourceAsStream("/be/kdg/spel/resources/Ubuntu-R.ttf");
             this.fntLettertype = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (FontFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Fout bij het laden van het Ubuntu font\n Het programma is automatisch overschakeld naar het standaart font!");
         }
     }
 
