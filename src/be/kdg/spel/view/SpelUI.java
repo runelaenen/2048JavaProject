@@ -34,8 +34,6 @@ public class SpelUI extends JFrame {
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
     private Font fntLettertype;
-    private Icon icnLogo;
-    private Icon icnGewonnen;
     private InstellingenUI instellingenUI;
 
 
@@ -56,9 +54,6 @@ public class SpelUI extends JFrame {
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.achtergrondKleur = new Color(0xfaf8ef);
         this.tegels = controller.getTegelArray();
-
-        icnGewonnen = new ImageIcon("../sources/gewonnen.png");
-        icnLogo = new ImageIcon("../sources/logo.png");
 
         this.fntLettertype = new Font(Font.SANS_SERIF, Font.PLAIN, 52);
         ;
