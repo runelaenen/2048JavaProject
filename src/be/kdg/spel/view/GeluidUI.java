@@ -5,6 +5,7 @@ import be.kdg.spel.controller.Controller;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.*;
 import java.io.File;
 import java.io.InputStream;
 
@@ -29,7 +30,7 @@ public class GeluidUI {
                 public void run() {
                     try {
                         Clip clip = AudioSystem.getClip();
-                        InputStream thing = GeluidUI.class.getResourceAsStream(".." + File.separator + "resources" + File.separator + "move2.wav");
+                        InputStream thing = GeluidUI.class.getResourceAsStream("/be/kdg/spel/resources/move2.wav");
                         AudioInputStream inputStream = AudioSystem.getAudioInputStream(thing);
                         clip.open(inputStream);
                         clip.start();
@@ -49,7 +50,7 @@ public class GeluidUI {
                     try {
                         AudioInputStream inputStream =
                                 AudioSystem.getAudioInputStream(
-                                        GeluidUI.class.getResourceAsStream(".." + File.separator + "resources" + File.separator + "music.wav"));
+                                        GeluidUI.class.getResourceAsStream("/be/kdg/spel" + File.separator + "resources" + File.separator + "music.wav"));
                         achtergrondMuziek = AudioSystem.getClip();
                         achtergrondMuziek.open(inputStream);
                         achtergrondMuziek.start();
@@ -62,6 +63,7 @@ public class GeluidUI {
                         System.out.println("Error met playMusic()");
                         e.printStackTrace();
                     }
+
                 }
             }).start();
         }
