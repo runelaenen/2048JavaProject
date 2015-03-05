@@ -10,9 +10,6 @@ public class ThemaUI {
     private Color knopKleur;
 
 
-
-
-
     public static Color Achtergrondkleur(int waarde) {
         switch (waarde) {
             case 2: return new Color(0xeee4da);

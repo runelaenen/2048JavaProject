@@ -48,7 +48,6 @@ public class GeluidUI {
 
     public void playMusic() {
         if (muziek) {
-            System.out.println("muziek speelt");
             new Thread(new Runnable() {
                 public void run() {
                     try {

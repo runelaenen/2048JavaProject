@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by Rune on 4/02/2015.
@@ -22,13 +20,16 @@ public class SpelUI extends JFrame {
     private JLabel lblTitel;
     private JLabel lblScore;
     private JLabel lblBest;
+    private JLabel lblScoreTitel;
+    private JLabel lblBestTitel;
     private JButton btnHerstart;
     private JButton btnRanglijst;
     private JButton btnInstellingen;
     private JPanel pnlSuper;
     private JPanel pnlLeft;
     private JPanel pnlLeftTop;
-    private JPanel pnlScores;
+    private JPanel pnlScoreBest;
+    private JPanel pnlScore;
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
     private JPanel pnlEchtSpelbord;
@@ -59,12 +60,16 @@ public class SpelUI extends JFrame {
 
     private void maakComponenten() {
         lblTitel = new JLabel("2048");
-        lblScore = new JLabel("Score: \n 0");
-        lblBest = new JLabel("Beste: \n 0");
-        //btn maken
-        btnHerstart = new JButton("Herstart");
-        btnRanglijst = new JButton("Ranglijst");
-        btnInstellingen = new JButton("Instellingen");
+        lblScore = new JLabel();
+        setScore(0);
+        lblBest = new JLabel();
+
+        lblScoreTitel = new JLabel("SCORE");
+        lblBestTitel = new JLabel("BESTE");
+
+        btnHerstart = new JButton("HERSTART");
+        btnRanglijst = new JButton("RANGLIJST");
+        btnInstellingen = new JButton("INSTELLINGEN");
     }
 
     private void maakLayout() {
@@ -90,7 +95,7 @@ public class SpelUI extends JFrame {
 
         // Fonts
         Font fntTitel = controller.getFont().deriveFont(Font.BOLD).deriveFont(64f);
-        Font fntLabel = controller.getFont().deriveFont(23f);
+        Font fntLabel = controller.getFont().deriveFont(Font.BOLD).deriveFont(23f);
         Font fntButton = controller.getFont().deriveFont(Font.BOLD).deriveFont(16f);
 
         //buttons
@@ -99,29 +104,20 @@ public class SpelUI extends JFrame {
         btnInstellingen.setRequestFocusEnabled(false);
         btnRanglijst.setRequestFocusEnabled(false);
 
-        btnHerstart.setBackground(new Color(0xed995b));
-        btnInstellingen.setBackground(new Color(0xed995b));
-        btnRanglijst.setBackground(new Color(0xed995b));
-
-        btnHerstart.setForeground(Color.WHITE);
-        btnInstellingen.setForeground(Color.WHITE);
-        btnRanglijst.setForeground(Color.WHITE);
-
-        btnHerstart.setFont(fntButton);
-        btnInstellingen.setFont(fntButton);
-        btnRanglijst.setFont(fntButton);
-
         btnHerstart.setBorder(new EmptyBorder(5,5,5,5));
-        btnHerstart.setBackground(new Color(0xEEE4DA));
-        btnHerstart.setForeground(new Color(0xed995b));
+        btnHerstart.setBackground(new Color(0xED995B));
+        btnHerstart.setForeground(new Color(0xffffff));
+        btnHerstart.setFont(fntButton);
 
         btnInstellingen.setBorder(new EmptyBorder(5,5,5,5));
-        btnInstellingen.setBackground(new Color(0xEEE4DA));
-        btnInstellingen.setForeground(new Color(0xed995b));
+        btnInstellingen.setBackground(new Color(0xED995B));
+        btnInstellingen.setForeground(new Color(0xffffff));
+        btnInstellingen.setFont(fntButton);
 
         btnRanglijst.setBorder(new EmptyBorder(5,5,5,5));
-        btnRanglijst.setBackground(new Color(0xEEE4DA));
-        btnRanglijst.setForeground(new Color(0xed995b));
+        btnRanglijst.setBackground(new Color(0xED995B));
+        btnRanglijst.setForeground(new Color(0xffffff));
+        btnRanglijst.setFont(fntButton);
         //labels
 
         //lblTitel
@@ -140,29 +136,41 @@ public class SpelUI extends JFrame {
 
         //lblBest
         lblBest.setFont(fntLabel);
-        //lblBest.setForeground(new Color(0xf5f5f5));
         lblBest.setHorizontalAlignment(SwingConstants.CENTER);
         lblBest.setVerticalTextPosition(SwingConstants.CENTER);
+        lblBest.setForeground(Color.WHITE);
 
 
         //lblScore
         lblScore.setFont(fntLabel);
-        //lblScore.setForeground(new Color(0xf5f5f5));
         lblScore.setHorizontalAlignment(SwingConstants.CENTER);
         lblScore.setVerticalTextPosition(SwingConstants.CENTER);
+        lblScore.setForeground(Color.WHITE);
+
+        // lblScore en lblBest Titels
+        lblScoreTitel.setFont(fntLabel.deriveFont(14f));
+        lblScoreTitel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblScoreTitel.setVerticalTextPosition(SwingConstants.CENTER);
+        lblScoreTitel.setForeground(new Color(0xF8ECDE));
+
+        lblBestTitel.setFont(fntLabel.deriveFont(14f));
+        lblBestTitel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblBestTitel.setVerticalTextPosition(SwingConstants.CENTER);
+        lblBestTitel.setForeground(new Color(0xF8ECDE));
 
         //panels
 
-        //pnlScores
+        //pnlScoreBest
 
-        pnlScores = new JPanel();
-        pnlScores.setLayout(new GridLayout(2, 1, 5, 5));
-        pnlScores.setBorder(BorderFactory.createLineBorder(new Color(0x7a8a99)));
-        pnlScores.add(lblScore, BorderLayout.NORTH);
-        pnlScores.add(lblBest, BorderLayout.SOUTH);
-        //pnlScores.setBackground(new Color(0xbbada0));
-        pnlScores.setBackground(Color.WHITE);
-        pnlScores.setOpaque(true);
+        pnlScoreBest = new JPanel();
+        pnlScoreBest.setLayout(new GridLayout(2, 2,5, 5));
+        pnlScoreBest.setBorder(BorderFactory.createLineBorder(new Color(0x7a8a99)));
+        pnlScoreBest.setBackground(new Color(0xBBADA0));
+
+        pnlScoreBest.add(lblScoreTitel);
+        pnlScoreBest.add(lblBestTitel);
+        pnlScoreBest.add(lblScore);
+        pnlScoreBest.add(lblBest);
 
 
         //pnlKnopjes
@@ -176,7 +184,7 @@ public class SpelUI extends JFrame {
 
         pnlLeftTop = new JPanel(new BorderLayout(10, 10));
         pnlLeftTop.add(lblTitel, BorderLayout.NORTH);
-        pnlLeftTop.add(pnlScores, BorderLayout.SOUTH);
+        pnlLeftTop.add(pnlScoreBest, BorderLayout.SOUTH);
         pnlLeftTop.setBackground(achtergrondKleur);
         pnlLeftTop.setOpaque(true);
 
@@ -238,11 +246,11 @@ public class SpelUI extends JFrame {
     }
 
     public void setScore(int score) {
-        lblScore.setText("Score: " + String.valueOf(score));
+        lblScore.setText(String.valueOf(score));
     }
 
     public void updateBest() {
-        lblBest.setText("Beste: " + controller.getBest());
+        lblBest.setText(String.valueOf(controller.getBest()));
     }
 
     public void refreshBackground() {
