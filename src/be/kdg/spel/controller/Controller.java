@@ -103,7 +103,7 @@ public class Controller {
     public void setScore(int score){
         scores.setScore(score);
         spelUI.setScore(scores.getScore());
-        spelUI.updateBest();
+        //spelUI.updateBest();
     }
     public int getScore() { return scores.getScore(); }
     public void addToHighscore(){

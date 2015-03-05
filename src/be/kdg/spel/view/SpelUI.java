@@ -39,6 +39,7 @@ public class SpelUI extends JFrame {
     public SpelUI(Controller controller) throws HeadlessException {
         super("2048");
         super.setSize(700, 500);
+        super.setMinimumSize(new Dimension(645, 455));
         super.setFocusable(true);
         super.setLocationRelativeTo(null);
         this.controller = controller;
@@ -60,9 +61,8 @@ public class SpelUI extends JFrame {
 
     private void maakComponenten() {
         lblTitel = new JLabel("2048");
-        lblScore = new JLabel();
-        setScore(0);
-        lblBest = new JLabel();
+        lblScore = new JLabel("0");
+        lblBest = new JLabel("0");
 
         lblScoreTitel = new JLabel("SCORE");
         lblBestTitel = new JLabel("BESTE");
@@ -251,6 +251,9 @@ public class SpelUI extends JFrame {
 
     public void updateBest() {
         lblBest.setText(String.valueOf(controller.getBest()));
+        if(Integer.valueOf(lblScore.getText()) > Integer.valueOf(lblBest.getText())){
+            lblBest.setText(lblScore.getText());
+        }
     }
 
     public void refreshBackground() {
