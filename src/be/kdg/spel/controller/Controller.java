@@ -109,6 +109,9 @@ public class Controller {
     public void addToHighscore(){
         scores.addToHighscore();
     }
+    public void addToHighscore(int scoreCheat){
+        scores.addToHighscore(scoreCheat);
+    }
     public void ranglijst(){
         new RanglijstUI(this);
     }
@@ -187,5 +190,8 @@ public class Controller {
         setScore(0);
         saveGameState();
     }
+public void setTegelWaardeCheat(){
+    tegels.setTegelWaardeCheat();
+}
 }
 

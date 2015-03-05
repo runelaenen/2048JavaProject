@@ -44,6 +44,7 @@ public class SpelUI extends JFrame {
         super.setLocationRelativeTo(null);
         this.controller = controller;
 
+
         super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.achtergrondKleur = new Color(0xfaf8ef);
@@ -109,7 +110,7 @@ public class SpelUI extends JFrame {
         btnHerstart.setForeground(new Color(0xffffff));
         btnHerstart.setFont(fntButton);
 
-        btnInstellingen.setBorder(new EmptyBorder(5,5,5,5));
+        btnInstellingen.setBorder(new EmptyBorder(5, 5, 5, 5));
         btnInstellingen.setBackground(new Color(0xED995B));
         btnInstellingen.setForeground(new Color(0xffffff));
         btnInstellingen.setFont(fntButton);
@@ -266,8 +267,7 @@ public class SpelUI extends JFrame {
     }
 
     public void gewonnen() {
-        Thread t = new Thread(new Runnable() {
-            public void run() {
+
                 Object[] options1 = {"Verder spelen",
                         "Opnieuw spelen",
                         "Stop spel"};
@@ -292,10 +292,6 @@ public class SpelUI extends JFrame {
                     System.exit(0);
                 }
             }
-        });
-        t.start();
-
-    }
 
     public void verloren() {
         Object[] options1 = {"Opnieuw spelen",
@@ -325,22 +321,42 @@ public class SpelUI extends JFrame {
     private void behandelEvents() {
         super.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    System.out.println("VK_UP");
+                if (e.getKeyCode() == KeyEvent.VK_UP ||e.getKeyCode() == KeyEvent.VK_NUMPAD8 ||e.getKeyCode() == KeyEvent.VK_Z ) {
+
                     controller.geluid().playMove();
                     controller.keyUP();
-                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    System.out.println("VK_DOWN");
+                } else if (e.getKeyCode() == KeyEvent.VK_DOWN||e.getKeyCode() == KeyEvent.VK_NUMPAD5||e.getKeyCode() == KeyEvent.VK_S) {
+
                     controller.geluid().playMove();
                     controller.keyDOWN();
-                } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    System.out.println("VK_LEFT");
+                } else if (e.getKeyCode() == KeyEvent.VK_LEFT||e.getKeyCode() == KeyEvent.VK_NUMPAD4||e.getKeyCode() == KeyEvent.VK_Q) {
+
                     controller.geluid().playMove();
                     controller.keyLEFT();
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    System.out.println("VK_RIGHT");
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT||e.getKeyCode() == KeyEvent.VK_NUMPAD6 ||e.getKeyCode() == KeyEvent.VK_D) {
+
                     controller.geluid().playMove();
                     controller.keyRIGHT();
+                }else if(e.getKeyCode() == KeyEvent.VK_C){
+                    String cheat ="";
+                    boolean vragen = true;
+                    while(vragen){
+                        cheat = (String)JOptionPane.showInputDialog(null,"Welkom op het cheat-screen gij deugeniet!\nVul hieronder uw cheat code in","Cheat FTW",JOptionPane.PLAIN_MESSAGE);
+                        if(cheat != null){
+                            if(!cheat.isEmpty()){
+                                vragen = false;
+                            }
+                        }
+                        switch (cheat){
+                            case "letmewin":gewonnenCheat() ;
+                        }
+                    }
+
+
+
+
+
+
                 }
             }
         });
@@ -364,11 +380,39 @@ public class SpelUI extends JFrame {
         });
     }
 
+    private void gewonnenCheat() {
+        controller.setTegelWaardeCheat();
+        updateSpelUI(tegels);
+
+        Object[] options1 = {
+                "Opnieuw spelen",
+                "Stop spel"};
+
+        int antwoord = JOptionPane.showOptionDialog(null,
+                "U bent gewonnen met behulp van cheat! Wat wilt u nu doen?",
+                "Gewonnen!",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options1,
+                null);
+       if (antwoord == 0) {
+            controller.addToHighscore(99999);
+            controller.opnieuw();
+        } else if(antwoord == 1) {
+            controller.addToHighscore();
+            controller.resetGameState();
+            System.exit(0);
+        }
+    }
+
+
 
     public void setAchtergrondsKleur(Color kleur) {
         achtergrondKleur = kleur;
         refreshBackground();
     }
+
 
 
 }

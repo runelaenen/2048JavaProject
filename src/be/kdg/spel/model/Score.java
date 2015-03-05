@@ -37,13 +37,23 @@ public class Score {
         try {
             String gebruikersnaam = controller.gebruikersnaam();
 
-            //String bestand = bs.lees("highscores");
             String inhoud = gebruikersnaam + ";" + getScore();
             bs.schrijf("highscores.txt", inhoud);
 
         } catch (FileNotFoundException e) {
             //TODO: add file exception error shizzle
         }
+    }
+    public void addToHighscore(int scoreCheat){
+        String gebruikersnaam = "Valsspeler";
+
+        String inhoud = gebruikersnaam + ";" + scoreCheat;
+        try {
+            bs.schrijf("highscores.txt", inhoud);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setBest(int best) {

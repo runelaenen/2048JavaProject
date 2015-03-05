@@ -275,4 +275,10 @@ public class Tegels {
         }
         return tegelWaardes;
     }
+    public void setTegelWaardeCheat(){
+        for(int i =0 ;i<controller.BORDGROOTTE;i++){
+            tegels[i]=new Tegel(2048);
+        }
+    }
 }
+
