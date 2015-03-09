@@ -105,7 +105,7 @@ public class SpelUI extends JFrame {
         btnInstellingen.setRequestFocusEnabled(false);
         btnRanglijst.setRequestFocusEnabled(false);
 
-        btnHerstart.setBorder(new EmptyBorder(5,5,5,5));
+        btnHerstart.setBorder(new EmptyBorder(5, 5, 5, 5));
         btnHerstart.setBackground(new Color(0xED995B));
         btnHerstart.setForeground(new Color(0xffffff));
         btnHerstart.setFont(fntButton);
@@ -115,7 +115,7 @@ public class SpelUI extends JFrame {
         btnInstellingen.setForeground(new Color(0xffffff));
         btnInstellingen.setFont(fntButton);
 
-        btnRanglijst.setBorder(new EmptyBorder(5,5,5,5));
+        btnRanglijst.setBorder(new EmptyBorder(5, 5, 5, 5));
         btnRanglijst.setBackground(new Color(0xED995B));
         btnRanglijst.setForeground(new Color(0xffffff));
         btnRanglijst.setFont(fntButton);
@@ -164,7 +164,7 @@ public class SpelUI extends JFrame {
         //pnlScoreBest
 
         pnlScoreBest = new JPanel();
-        pnlScoreBest.setLayout(new GridLayout(2, 2,5, 5));
+        pnlScoreBest.setLayout(new GridLayout(2, 2, 5, 5));
         pnlScoreBest.setBorder(BorderFactory.createLineBorder(new Color(0x7a8a99)));
         pnlScoreBest.setBackground(new Color(0xBBADA0));
 
@@ -206,7 +206,7 @@ public class SpelUI extends JFrame {
         pnlSpelbord = new JPanel(new GridBagLayout());
         pnlEchtSpelbord = new SquarePanel();
         pnlEchtSpelbord.setLayout(new GridLayout(Controller.ZIJDEGROOTTE, Controller.ZIJDEGROOTTE, 9, 9));
-        pnlEchtSpelbord.setBorder(new EmptyBorder(9,9,9,9));
+        pnlEchtSpelbord.setBorder(new EmptyBorder(9, 9, 9, 9));
 
 
         pnlSpelbord.setBackground(achtergrondKleur);
@@ -252,7 +252,7 @@ public class SpelUI extends JFrame {
 
     public void updateBest() {
         lblBest.setText(String.valueOf(controller.getBest()));
-        if(Integer.valueOf(lblScore.getText()) > Integer.valueOf(lblBest.getText())){
+        if (Integer.valueOf(lblScore.getText()) > Integer.valueOf(lblBest.getText())) {
             lblBest.setText(lblScore.getText());
         }
     }
@@ -268,30 +268,30 @@ public class SpelUI extends JFrame {
 
     public void gewonnen() {
 
-                Object[] options1 = {"Verder spelen",
-                        "Opnieuw spelen",
-                        "Stop spel"};
+        Object[] options1 = {"Verder spelen",
+                "Opnieuw spelen",
+                "Stop spel"};
 
-                int antwoord = JOptionPane.showOptionDialog(null,
-                        "U bent gewonnen, wat wilt u doen?",
-                        "Gewonnen!",
-                        JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null,
-                        options1,
-                        null);
+        int antwoord = JOptionPane.showOptionDialog(null,
+                "U bent gewonnen, wat wilt u doen?",
+                "Gewonnen!",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options1,
+                null);
 
-                if (antwoord == 0) {
-                    // Verder spelen, dus niets speciaals doen
-                } else if (antwoord == 1) {
-                    controller.addToHighscore();
-                    controller.opnieuw();
-                } else if (antwoord == 2) {
-                    controller.addToHighscore();
-                    controller.resetGameState();
-                    System.exit(0);
-                }
-            }
+        if (antwoord == 0) {
+            // Verder spelen, dus niets speciaals doen
+        } else if (antwoord == 1) {
+            controller.addToHighscore();
+            controller.opnieuw();
+        } else if (antwoord == 2) {
+            controller.addToHighscore();
+            controller.resetGameState();
+            System.exit(0);
+        }
+    }
 
     public void verloren() {
         Object[] options1 = {"Opnieuw spelen",
@@ -312,7 +312,7 @@ public class SpelUI extends JFrame {
             controller.opnieuw();
         } else if (antwoord == 1 || antwoord == -1) {
 
-           controller.addToHighscore();
+            controller.addToHighscore();
             controller.resetGameState();
             System.exit(0);
         }
@@ -321,41 +321,49 @@ public class SpelUI extends JFrame {
     private void behandelEvents() {
         super.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_UP ||e.getKeyCode() == KeyEvent.VK_NUMPAD8 ||e.getKeyCode() == KeyEvent.VK_Z ) {
+                if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_NUMPAD8 || e.getKeyCode() == KeyEvent.VK_Z) {
 
                     controller.geluid().playMove();
                     controller.keyUP();
-                } else if (e.getKeyCode() == KeyEvent.VK_DOWN||e.getKeyCode() == KeyEvent.VK_NUMPAD5||e.getKeyCode() == KeyEvent.VK_S) {
+                } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_NUMPAD5 || e.getKeyCode() == KeyEvent.VK_S) {
 
                     controller.geluid().playMove();
                     controller.keyDOWN();
-                } else if (e.getKeyCode() == KeyEvent.VK_LEFT||e.getKeyCode() == KeyEvent.VK_NUMPAD4||e.getKeyCode() == KeyEvent.VK_Q) {
+                } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_NUMPAD4 || e.getKeyCode() == KeyEvent.VK_Q) {
 
                     controller.geluid().playMove();
                     controller.keyLEFT();
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT||e.getKeyCode() == KeyEvent.VK_NUMPAD6 ||e.getKeyCode() == KeyEvent.VK_D) {
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_NUMPAD6 || e.getKeyCode() == KeyEvent.VK_D) {
 
                     controller.geluid().playMove();
                     controller.keyRIGHT();
-                }else if(e.getKeyCode() == KeyEvent.VK_C){
-                    String cheat ="";
+                } else if (e.getKeyCode() == KeyEvent.VK_C) {
+                    String cheat = "";
                     boolean vragen = true;
-                    while(vragen){
-                        cheat = (String)JOptionPane.showInputDialog(null,"Welkom op het cheat-screen gij deugeniet!\nVul hieronder uw cheat code in","Cheat FTW",JOptionPane.PLAIN_MESSAGE);
-                        if(cheat != null){
-                            if(!cheat.isEmpty()){
+                    while (vragen) {
+                        cheat = (String) JOptionPane.showInputDialog(
+                                null,
+                                "Welkom op het cheat-screen gij deugeniet!\nVul hieronder uw cheat code in",
+                                "Cheat FTW",
+                                JOptionPane.PLAIN_MESSAGE,
+                                null,
+                                null,
+                                "Vul u code in of druk nu op ok om te sluiten");
+
+                        if (cheat != null) {
+                            if (!cheat.isEmpty()) {
                                 vragen = false;
                             }
                         }
-                        switch (cheat){
-                            case "letmewin":gewonnenCheat() ;
-                        }
                     }
 
-
-
-
-
+                    switch (cheat) {
+                        case "":
+                            break;
+                        case "letmewin":
+                            gewonnenCheat();
+                            break;
+                    }
 
                 }
             }
@@ -396,10 +404,10 @@ public class SpelUI extends JFrame {
                 null,
                 options1,
                 null);
-       if (antwoord == 0) {
+        if (antwoord == 0) {
             controller.addToHighscore(99999);
             controller.opnieuw();
-        } else if(antwoord == 1) {
+        } else if (antwoord == 1) {
             controller.addToHighscore();
             controller.resetGameState();
             System.exit(0);
@@ -407,12 +415,10 @@ public class SpelUI extends JFrame {
     }
 
 
-
     public void setAchtergrondsKleur(Color kleur) {
         achtergrondKleur = kleur;
         refreshBackground();
     }
-
 
 
 }

@@ -39,13 +39,11 @@ public class GeluidUI {
                     } catch (Exception e) {
                         System.out.println("Error met playMove()");
                         e.printStackTrace();
-
                     }
                 }
             }).start();
         }
     }
-
     public void playMusic() {
         if (muziek) {
             new Thread(new Runnable() {
