@@ -23,20 +23,15 @@ public class Instellingen {
 
     public void instellingenOpslaan(Color kleur, boolean geluid, boolean muziek) {
 
-        try {
             BestandsSysteem.maakLeeg("instellingen.txt"); // maak bestand leeg voordat er in te schrijven
             BestandsSysteem.schrijf("instellingen.txt", "kleur;0x" + String.format("%02x%02x%02x", kleur.getRed(), kleur.getGreen(), kleur.getBlue()));
             BestandsSysteem.schrijf("instellingen.txt", "geluid;" + geluid);
             BestandsSysteem.schrijf("instellingen.txt", "muziek;" + muziek);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het wegschrijven van uw instellingen! Gelieve uw spel opnieuw op te starten !", "Fout bij het wegschrijven", JOptionPane.ERROR_MESSAGE, null);
-        }
-
 
     }
 
     public void leesEnActiveerInstellingen() {
-        try {
+
             String bestand = BestandsSysteem.lees("instellingen.txt");
             if (bestand.equals("")) {
                 setDefault();
@@ -69,8 +64,6 @@ public class Instellingen {
                 }
             }
 
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het inlezen van uw instellingen. Gelieve het spel opnieuw op te starten.", "Fout bij inlezen", JOptionPane.ERROR_MESSAGE, null);
-        }
+
     }
 }

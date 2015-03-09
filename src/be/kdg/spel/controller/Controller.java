@@ -28,10 +28,12 @@ public class Controller {
 
     public Controller() {
         loadFont();
-        this.tegels = new Tegels(this);
-        geluidUI = new GeluidUI(this);
-        spelUI = new SpelUI(this);
         scores = new Score(this);
+        this.tegels = new Tegels(this);
+        spelUI = new SpelUI(this);
+        geluidUI = new GeluidUI(this);
+
+
         instellingen = new Instellingen(this);
 
         //geluid().playMusic();
@@ -102,7 +104,7 @@ public class Controller {
 
     public void setScore(int score) {
         scores.setScore(score);
-        spelUI.setScore(scores.getScore());
+        if(spelUI!=null) spelUI.setScore(scores.getScore());
         //spelUI.updateBest();
     }
 

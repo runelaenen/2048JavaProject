@@ -3,10 +3,10 @@ package be.kdg.spel.model;
 import be.kdg.spel.controller.Controller;
 
 import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -82,6 +82,14 @@ public class Tegels {
 
     public void saveGameState() {
         try {
+            Path gameStateFile = Paths.get("." + File.separator + "files" + File.separator + "gamestate.txt");
+            if (!Files.exists(gameStateFile.getParent())) {
+                Files.createDirectory(gameStateFile.getParent());
+            }
+            if (!Files.exists(gameStateFile)) {
+                Files.createFile(gameStateFile);
+            }
+
             FileOutputStream fileStream = new FileOutputStream("./files/gamestate.txt");
             ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
 
@@ -92,6 +100,7 @@ public class Tegels {
             fileStream.close();
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het wegschrijven van uw opgeslagen spel! Gelieve uw gamestate.txt file te verwijderen en het spel opnieuw op te starten", "Fout met de game state", JOptionPane.ERROR_MESSAGE, null);
         }
 
@@ -99,6 +108,17 @@ public class Tegels {
 
     public void loadGameState() {
         try {
+            Path gameStateFile = Paths.get("." + File.separator + "files" + File.separator + "gamestate.txt");
+            if (!Files.exists(gameStateFile.getParent())) {
+                Files.createDirectory(gameStateFile.getParent());
+            }
+            if (!Files.exists(gameStateFile)) {
+                return;
+                // stop method als er niks is om te laden
+            }
+
+
+
             FileInputStream fileStream = new FileInputStream("./files/gamestate.txt");
             ObjectInputStream objectStream = new ObjectInputStream(fileStream);
 
@@ -110,6 +130,7 @@ public class Tegels {
             }
             controller.setScore((int) objectStream.readObject());
         } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het inlezen van uw opgeslagen spel! Gelieve uw gamestate.txt file te verwijderen en het spel opnieuw op te starten", "Fout met de game state", JOptionPane.ERROR_MESSAGE, null);
             //TODO: deze error komt er elke keer bij het opstarten dit zou niet mogen!
         }
