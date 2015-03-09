@@ -23,28 +23,29 @@ public class RanglijstUI extends JDialog {
     private JLabel[] lblScore;
 
 
-   public RanglijstUI(Controller controller){
-       setModal(true);
-       setSize(500, 500);
-       setTitle("Ranglijst");
-       setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-       setLocationRelativeTo(null);
+    public RanglijstUI(Controller controller) {
+        setModal(true);
+        setSize(500, 500);
+        setTitle("Ranglijst");
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-       this.achtergrondKleur = controller.getAchtergrondsKleur();
+        this.achtergrondKleur = controller.getAchtergrondsKleur();
 
-       this.controller = controller;
+        this.controller = controller;
 
-       maakComponenten();
-       maakLayout();
-       behandelEvents();
+        maakComponenten();
+        maakLayout();
+        behandelEvents();
 
 
-       setVisible(true);
+        setVisible(true);
 
-   }
+    }
+
     private void maakComponenten() {
         btnResetten = new JButton("Resetten");
-        lblTitel= new JLabel();
+        lblTitel = new JLabel();
         lblNaam = new JLabel[10];
         lblScore = new JLabel[10];
     }
@@ -52,18 +53,18 @@ public class RanglijstUI extends JDialog {
     private void maakLayout() {
 
         // Panels
-        JPanel pnlSuper = new JPanel(new BorderLayout(5,5));
-        JPanel pnlNaamScores = new JPanel(new BorderLayout(5,5));
-        JPanel pnlNamen = new JPanel(new GridLayout(10,1));
-        JPanel pnlScores = new JPanel(new GridLayout(10,1));
+        JPanel pnlSuper = new JPanel(new BorderLayout(5, 5));
+        JPanel pnlNaamScores = new JPanel(new BorderLayout(5, 5));
+        JPanel pnlNamen = new JPanel(new GridLayout(10, 1));
+        JPanel pnlScores = new JPanel(new GridLayout(10, 1));
 
         pnlSuper.setBackground(achtergrondKleur);
         pnlNamen.setBackground(achtergrondKleur);
         pnlScores.setBackground(achtergrondKleur);
         pnlNaamScores.setBackground(achtergrondKleur);
         pnlNaamScores.setBorder(new EmptyBorder(10, 10, 10, 10));
-        pnlNaamScores.add(pnlNamen,BorderLayout.WEST);
-        pnlNaamScores.add(pnlScores,BorderLayout.EAST);
+        pnlNaamScores.add(pnlNamen, BorderLayout.WEST);
+        pnlNaamScores.add(pnlScores, BorderLayout.EAST);
         pnlSuper.add(pnlNaamScores, BorderLayout.CENTER);
 
         super.add(pnlSuper);
@@ -85,9 +86,9 @@ public class RanglijstUI extends JDialog {
         pnlSuper.add(btnResetten, BorderLayout.SOUTH);
 
         //lblNaam en lblScore invullen
-        int index=0;
-        for(String[] regel: controller.getHighscoreList()){
-            if(index<10) {
+        int index = 0;
+        for (String[] regel : controller.getHighscoreList()) {
+            if (index < 10) {
                 lblNaam[index] = new JLabel(regel[0]);
                 lblScore[index] = new JLabel(regel[1], SwingConstants.RIGHT);
 
@@ -95,8 +96,8 @@ public class RanglijstUI extends JDialog {
             }
         }
 
-        for(int i=0; i<10; i++){
-            if(lblNaam[i] != null) { // check of er écht een label in de arrayplaats zit
+        for (int i = 0; i < 10; i++) {
+            if (lblNaam[i] != null) { // check of er écht een label in de arrayplaats zit
                 lblNaam[i].setFont(fntScore);
                 lblScore[i].setFont(fntScore);
 
@@ -106,6 +107,7 @@ public class RanglijstUI extends JDialog {
         }
 
     }
+
     private void behandelEvents() {
         JDialog ranglijstDialoog = this;
         btnResetten.addActionListener(new ActionListener() {

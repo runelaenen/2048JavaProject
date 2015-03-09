@@ -87,8 +87,7 @@ public class Tegels {
             fileStream.close();
 
         } catch(Exception ex){
-            System.out.println("GameState save error");
-            ex.printStackTrace();
+           JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het wegschrijven van uw opgeslagen spel! Gelieve uw gamestate.txt file te verwijderen en het spel opnieuw op te starten","Fout met de game state",JOptionPane.ERROR_MESSAGE,null);
         }
 
     }
@@ -105,6 +104,7 @@ public class Tegels {
             }
             controller.setScore((int)objectStream.readObject());
         } catch(Exception ex){
+            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het inlezen van uw opgeslagen spel! Gelieve uw gamestate.txt file te verwijderen en het spel opnieuw op te starten","Fout met de game state",JOptionPane.ERROR_MESSAGE,null);
 
         }
     }

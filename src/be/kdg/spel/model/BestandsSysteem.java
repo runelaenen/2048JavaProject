@@ -1,5 +1,6 @@
 package be.kdg.spel.model;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,8 +37,7 @@ public class BestandsSysteem {
             gegevens.add(inhoud);
             Files.write(nieuwBestand, gegevens, StandardOpenOption.APPEND);
         } catch(Exception ex){
-            //TODO: exception uitwerken
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het wegschrijven van bestanden! Gelieve het spel opnieuw op te starten!","Fout bij het wegschrijven",JOptionPane.ERROR_MESSAGE,null);
         }
     }
 
@@ -55,8 +55,7 @@ public class BestandsSysteem {
                 result += regel + "\n";
             }
         }catch(Exception ex){
-            //TODO: exception uitwerken
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het lezen van uw bestanden! Gelieve het spel opnieuw op te starten","Fout bij het inlezen",JOptionPane.ERROR_MESSAGE,null);
         }
 
         return result;
@@ -76,8 +75,7 @@ public class BestandsSysteem {
             List<String> gegevens = new ArrayList<String>();
             Files.write(nieuwBestand, gegevens);
         } catch(Exception ex){
-            //TODO: exception uitwerken
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het verwerken van uw bestanden! Gelieve het spel opnieuw op te starten en de bestanden uit de map files te verwijderen!");
         }
     }
 }

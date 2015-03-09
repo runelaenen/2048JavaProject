@@ -7,7 +7,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -29,7 +28,7 @@ public class GeluidUI {
                 public void run() {
                     try {
                         Clip clip = AudioSystem.getClip();
-                        InputStream geluid = getClass().getResourceAsStream("/be/kdg/spel/resources/move2.wav");
+                        InputStream geluid = getClass().getResourceAsStream("/be/kdg/spel/resources/move.wav");
                         //buffer toegevoegd voor mark/reset support
                         InputStream bufferedGeluid = new BufferedInputStream(geluid);
                         AudioInputStream inputStream = AudioSystem.getAudioInputStream(bufferedGeluid);
@@ -37,13 +36,13 @@ public class GeluidUI {
                         clip.open(inputStream);
                         clip.start();
                     } catch (Exception e) {
-                        System.out.println("Error met playMove()");
-                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het inladen van een geluidsfragment! Gelieve het spel opnieuw op te starten", "Fout bij geluidsfragment", JOptionPane.ERROR_MESSAGE, null);
                     }
                 }
             }).start();
         }
     }
+
     public void playMusic() {
         if (muziek) {
             new Thread(new Runnable() {
@@ -60,8 +59,7 @@ public class GeluidUI {
                             Thread.sleep(100);
                         }
                     } catch (Exception e) {
-                        System.out.println("Error met playMusic()");
-                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het inladen van het achtergrondmuziek! Gelieve het spel opnieuw op te starten", "Fout bij achtergrondmuziek", JOptionPane.ERROR_MESSAGE, null);
                     }
 
                 }

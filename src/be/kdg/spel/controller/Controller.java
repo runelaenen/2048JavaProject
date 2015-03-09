@@ -53,7 +53,6 @@ public class Controller {
         } catch (FontFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null,"Fout bij het laden van het Ubuntu font\n Het programma is automatisch overschakeld naar het standaart font!");
         }
     }

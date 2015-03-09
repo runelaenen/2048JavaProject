@@ -2,6 +2,7 @@ package be.kdg.spel.model;
 
 import be.kdg.spel.controller.Controller;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -41,7 +42,7 @@ public class Score {
             bs.schrijf("highscores.txt", inhoud);
 
         } catch (FileNotFoundException e) {
-            //TODO: add file exception error shizzle
+            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het wegschrijven van uw highscores! Het spijt ons zeer !");
         }
     }
     public void addToHighscore(int scoreCheat){
@@ -51,7 +52,7 @@ public class Score {
         try {
             bs.schrijf("highscores.txt", inhoud);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het wegschrijven van uw highscores! Het spijt ons zeer !");
         }
 
     }
@@ -77,7 +78,7 @@ public class Score {
             }
             return best;
         } catch (FileNotFoundException e) {
-            //TODO: add file exception error shizzle
+            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het inlezen van uw highscores! Gelieve het spel opnieuw op te starten!");
         }
         return 0;
     }
@@ -98,7 +99,8 @@ public class Score {
 
             }
         } catch (FileNotFoundException e) {
-            //TODO: add file exception error
+            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het inlezen van uw highscores! Gelieve het spel opnieuw op te starten!");
+
         }
 
         String[][] highscore = new String[uitbestand.size()][2];
@@ -122,7 +124,8 @@ public class Score {
         try {
             bs.maakLeeg("highscores.txt");
         } catch (FileNotFoundException e) {
-            //TODO: add file exception error shizzle
+            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het resetten van uw highscore! Gelieve het spel opnieuw op te starten en nog eens te proberen!");
+
         }
     }
 }
