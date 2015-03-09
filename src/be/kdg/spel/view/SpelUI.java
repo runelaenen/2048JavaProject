@@ -6,10 +6,7 @@ import be.kdg.spel.model.Tegel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 /**
  * Created by Rune on 4/02/2015.
@@ -43,13 +40,9 @@ public class SpelUI extends JFrame {
         super("2048");
         super.setSize(700, 500);
         super.setMinimumSize(new Dimension(645, 455));
-        super.setFocusable(true);
         super.setLocationRelativeTo(null);
         this.controller = controller;
-
         super.setIconImage(icnSpel.getImage());
-
-
         super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.achtergrondKleur = new Color(0xfaf8ef);
@@ -59,10 +52,17 @@ public class SpelUI extends JFrame {
         this.maakLayout();
         this.behandelEvents();
         super.setVisible(true);
+
+
     }
 
     public Color getAchtergrondsKleur() {
         return achtergrondKleur;
+    }
+
+    public void setAchtergrondsKleur(Color kleur) {
+        achtergrondKleur = kleur;
+        refreshBackground();
     }
 
     private void maakComponenten() {
@@ -109,6 +109,7 @@ public class SpelUI extends JFrame {
         btnHerstart.setRequestFocusEnabled(false);
         btnInstellingen.setRequestFocusEnabled(false);
         btnRanglijst.setRequestFocusEnabled(false);
+
 
         btnHerstart.setBorder(new EmptyBorder(5, 5, 5, 5));
         btnHerstart.setBackground(new Color(0xED995B));
@@ -417,12 +418,6 @@ public class SpelUI extends JFrame {
             controller.resetGameState();
             System.exit(0);
         }
-    }
-
-
-    public void setAchtergrondsKleur(Color kleur) {
-        achtergrondKleur = kleur;
-        refreshBackground();
     }
 
 
