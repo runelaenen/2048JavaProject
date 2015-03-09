@@ -23,6 +23,8 @@ public class InstellingenUI extends JDialog {
     private JCheckBox cboGeluid;
     private JLabel lblMuziek;
     private JCheckBox cboMuziek;
+    private ImageIcon icnInstellingen = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnSettings.png"));
+    ImageIcon icnKleur = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnKleur.png"));
 
 
     public InstellingenUI(Controller controller) throws HeadlessException {
@@ -31,6 +33,7 @@ public class InstellingenUI extends JDialog {
         setSize(350, 200);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        setIconImage(icnInstellingen.getImage());
 
         this.controller = controller;
         this.kleur = controller.getAchtergrondsKleur();

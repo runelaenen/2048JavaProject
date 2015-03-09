@@ -29,12 +29,15 @@ public class SpelUI extends JFrame {
     private JPanel pnlLeft;
     private JPanel pnlLeftTop;
     private JPanel pnlScoreBest;
-    private JPanel pnlScore;
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
     private JPanel pnlEchtSpelbord;
     private Color achtergrondKleur;
     private Controller controller;
+    private ImageIcon icnSpel = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnSpel.png"));
+    private ImageIcon icnGewonnen = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnWin.png"));
+    private ImageIcon icnVerloren = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnVerloren.png"));
+
 
     public SpelUI(Controller controller) throws HeadlessException {
         super("2048");
@@ -43,6 +46,8 @@ public class SpelUI extends JFrame {
         super.setFocusable(true);
         super.setLocationRelativeTo(null);
         this.controller = controller;
+
+        super.setIconImage(icnSpel.getImage());
 
 
         super.setBackground(achtergrondKleur);
@@ -277,7 +282,7 @@ public class SpelUI extends JFrame {
                 "Gewonnen!",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
-                null,
+                icnGewonnen,
                 options1,
                 null);
 
@@ -302,7 +307,7 @@ public class SpelUI extends JFrame {
                 "Verloren!",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
-                null,
+                icnVerloren,
                 options1,
                 null);
 
@@ -401,14 +406,14 @@ public class SpelUI extends JFrame {
                 "Gewonnen!",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
-                null,
+                icnGewonnen,
                 options1,
                 null);
         if (antwoord == 0) {
             controller.addToHighscore(99999);
             controller.opnieuw();
         } else if (antwoord == 1) {
-            controller.addToHighscore();
+            controller.addToHighscore(99999);
             controller.resetGameState();
             System.exit(0);
         }

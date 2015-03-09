@@ -13,14 +13,12 @@ import java.io.InputStream;
  * Created by Rune on 28/02/2015.
  */
 public class GeluidUI {
-    private Controller controller;
+
     private boolean geluid = true;
     private boolean muziek = true;
     private Clip achtergrondMuziek = null;
 
     public GeluidUI(Controller controller) {
-        this.controller = controller;
-        //TODO: wrm nog controller maken hier, want het wordt toch niet gebruikt in deze klasse
     }
 
     public void playMove() {

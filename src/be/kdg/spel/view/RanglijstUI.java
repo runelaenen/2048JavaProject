@@ -18,6 +18,7 @@ public class RanglijstUI extends JDialog {
     private JLabel lblTitel;
     private JLabel[] lblNaam;
     private JLabel[] lblScore;
+    private ImageIcon icnRanglijst = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnRanglijst.png"));
 
 
     public RanglijstUI(Controller controller) {
@@ -26,6 +27,7 @@ public class RanglijstUI extends JDialog {
         setTitle("Ranglijst");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        setIconImage(icnRanglijst.getImage());
         this.achtergrondKleur = controller.getAchtergrondsKleur();
         this.controller = controller;
         maakComponenten();
