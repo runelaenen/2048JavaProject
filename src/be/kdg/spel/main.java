@@ -1,7 +1,6 @@
 package be.kdg.spel;
 
 import be.kdg.spel.controller.Controller;
-import be.kdg.spel.view.SpelUI;
 import be.kdg.spel.view.SplashScreen;
 
 /**

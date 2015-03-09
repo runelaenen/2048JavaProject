@@ -20,6 +20,7 @@ public class GeluidUI {
 
     public GeluidUI(Controller controller) {
         this.controller = controller;
+        //TODO: wrm nog controller maken hier, want het wordt toch niet gebruikt in deze klasse
     }
 
     public void playMove() {

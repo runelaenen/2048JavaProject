@@ -3,9 +3,7 @@ package be.kdg.spel.view;
 import be.kdg.spel.controller.Controller;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +14,6 @@ import java.awt.event.ActionListener;
 public class RanglijstUI extends JDialog {
     private Controller controller;
     private Color achtergrondKleur;
-
     private JButton btnResetten;
     private JLabel lblTitel;
     private JLabel[] lblNaam;
@@ -29,18 +26,12 @@ public class RanglijstUI extends JDialog {
         setTitle("Ranglijst");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-
         this.achtergrondKleur = controller.getAchtergrondsKleur();
-
         this.controller = controller;
-
         maakComponenten();
         maakLayout();
         behandelEvents();
-
-
         setVisible(true);
-
     }
 
     private void maakComponenten() {

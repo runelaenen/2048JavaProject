@@ -29,7 +29,7 @@ public class Tegel {
     }
 
     public Color tekstKleur() {
-        if(waarde < 16) {
+        if (waarde < 16) {
             return new Color(0x776e65);
         } else {
             return new Color(0xf9f6f2);

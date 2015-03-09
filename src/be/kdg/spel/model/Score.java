@@ -42,10 +42,11 @@ public class Score {
             bs.schrijf("highscores.txt", inhoud);
 
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het wegschrijven van uw highscores! Het spijt ons zeer !");
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het wegschrijven van uw highscores! Het spijt ons zeer !");
         }
     }
-    public void addToHighscore(int scoreCheat){
+
+    public void addToHighscore(int scoreCheat) {
         String gebruikersnaam = "Valsspeler";
 
         String inhoud = gebruikersnaam + ";" + scoreCheat;
@@ -57,40 +58,36 @@ public class Score {
 
     }
 
-    public void setBest(int best) {
-        this.best = best;
-    }
-
     public int getBest() {
         try {
             int best = 0;
 
             String bestand = bs.lees("highscores.txt");
             StringTokenizer st = new StringTokenizer(bestand, "\n");
-            while(st.hasMoreTokens()){
+            while (st.hasMoreTokens()) {
                 String regel = st.nextToken();
-                if(regel != ""){
+                if (!regel.equals("")) {
                     String[] regelArray = regel.split("[;]");
-                    if(Integer.parseInt(regelArray[1]) > best){
+                    if (Integer.parseInt(regelArray[1]) > best) {
                         best = Integer.parseInt(regelArray[1]);
                     }
                 }
             }
             return best;
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het inlezen van uw highscores! Gelieve het spel opnieuw op te starten!");
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het inlezen van uw highscores! Gelieve het spel opnieuw op te starten!");
         }
         return 0;
     }
 
-    public String[][] getHighscoresList(){
+    public String[][] getHighscoresList() {
         List<String[]> uitbestand = new ArrayList<String[]>();
         try {
             String bestand = bs.lees("highscores.txt");
 
             StringTokenizer st = new StringTokenizer(bestand, "\n");
 
-            while(st.hasMoreTokens()){
+            while (st.hasMoreTokens()) {
 
                 String regel = st.nextToken();
                 if (!regel.isEmpty()) {
@@ -99,7 +96,7 @@ public class Score {
 
             }
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het inlezen van uw highscores! Gelieve het spel opnieuw op te starten!");
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het inlezen van uw highscores! Gelieve het spel opnieuw op te starten!");
 
         }
 
@@ -116,7 +113,6 @@ public class Score {
         });
 
 
-
         return highscore;
     }
 
@@ -124,7 +120,7 @@ public class Score {
         try {
             bs.maakLeeg("highscores.txt");
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het resetten van uw highscore! Gelieve het spel opnieuw op te starten en nog eens te proberen!");
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het resetten van uw highscore! Gelieve het spel opnieuw op te starten en nog eens te proberen!");
 
         }
     }

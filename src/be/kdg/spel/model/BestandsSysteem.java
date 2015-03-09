@@ -3,8 +3,6 @@ package be.kdg.spel.model;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,10 +23,10 @@ public class BestandsSysteem {
             inhoud = new String(Base64.getEncoder().encode(inhoud.getBytes()));
 
             // enkele checks doen
-            if(!Files.exists(nieuwBestand.getParent())){
+            if (!Files.exists(nieuwBestand.getParent())) {
                 Files.createDirectory(nieuwBestand.getParent());
             }
-            if(!Files.exists(nieuwBestand)){
+            if (!Files.exists(nieuwBestand)) {
                 Files.createFile(nieuwBestand);
             }
 
@@ -36,26 +34,26 @@ public class BestandsSysteem {
             List<String> gegevens = new ArrayList<String>();
             gegevens.add(inhoud);
             Files.write(nieuwBestand, gegevens, StandardOpenOption.APPEND);
-        } catch(Exception ex){
-            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het wegschrijven van bestanden! Gelieve het spel opnieuw op te starten!","Fout bij het wegschrijven",JOptionPane.ERROR_MESSAGE,null);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het wegschrijven van bestanden! Gelieve het spel opnieuw op te starten!", "Fout bij het wegschrijven", JOptionPane.ERROR_MESSAGE, null);
         }
     }
 
     public static String lees(String filename) throws FileNotFoundException {
         // eerst geencrypteerde bestand uitlezen
         String result = "";
-        try(Scanner sc = new Scanner(Paths.get("." + File.separator + "files" + File.separator + filename))){
+        try (Scanner sc = new Scanner(Paths.get("." + File.separator + "files" + File.separator + filename))) {
             while (sc.hasNext()) {
                 String regel = sc.nextLine();
-                if(!regel.isEmpty()){
+                if (!regel.isEmpty()) {
                     regel = new String(Base64.getDecoder().decode(regel.getBytes()));
                 } else {
                     regel = "";
                 }
                 result += regel + "\n";
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het lezen van uw bestanden! Gelieve het spel opnieuw op te starten","Fout bij het inlezen",JOptionPane.ERROR_MESSAGE,null);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het lezen van uw bestanden! Gelieve het spel opnieuw op te starten", "Fout bij het inlezen", JOptionPane.ERROR_MESSAGE, null);
         }
 
         return result;
@@ -65,17 +63,17 @@ public class BestandsSysteem {
 
         Path nieuwBestand = Paths.get("." + File.separator + "files" + File.separator + filename);
         try {
-            if(!Files.exists(nieuwBestand.getParent())){
+            if (!Files.exists(nieuwBestand.getParent())) {
                 Files.createDirectory(nieuwBestand.getParent());
             }
-            if(!Files.exists(nieuwBestand)){
+            if (!Files.exists(nieuwBestand)) {
                 Files.createFile(nieuwBestand);
             }
 
             List<String> gegevens = new ArrayList<String>();
             Files.write(nieuwBestand, gegevens);
-        } catch(Exception ex){
-            JOptionPane.showMessageDialog(null,"Er is een fout opgetreden bij het verwerken van uw bestanden! Gelieve het spel opnieuw op te starten en de bestanden uit de map files te verwijderen!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het verwerken van uw bestanden! Gelieve het spel opnieuw op te starten en de bestanden uit de map files te verwijderen!");
         }
     }
 }
