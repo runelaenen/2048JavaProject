@@ -38,7 +38,7 @@ public class SplashScreen extends JWindow {
         for (int i = 1; i < 21; i++) {
             progressBar.setValue(5 * i);
             try {
-                Thread.sleep((int)((Math.random() * 101) + 50));
+                Thread.sleep((int) ((Math.random() * 101) + 50));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

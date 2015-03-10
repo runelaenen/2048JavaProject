@@ -14,8 +14,8 @@ import java.io.InputStream;
  */
 public class TegelUI extends JLabel {
 
-    public TegelUI(Tegel tegel, Controller controller){
-        if(!tegel.isLeeg()) {
+    public TegelUI(Tegel tegel, Controller controller) {
+        if (!tegel.isLeeg()) {
             super.setText(String.valueOf(tegel.getWaarde()));
         } else {
             super.setText("");

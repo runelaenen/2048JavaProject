@@ -2,13 +2,11 @@ package be.kdg.spel.controller;
 
 import be.kdg.spel.model.*;
 import be.kdg.spel.view.*;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.awt.*;
-import java.io.FileNotFoundException;
+
 
 /**
  * Created by Rune on 4/02/2015.
@@ -22,7 +20,7 @@ public class Controller {
     private Font fntLettertype;
 
     public static int ZIJDEGROOTTE = 4;
-    public static int BORDGROOTTE = ZIJDEGROOTTE*ZIJDEGROOTTE;
+    public static int BORDGROOTTE = ZIJDEGROOTTE * ZIJDEGROOTTE;
 
     public static void main(String[] args) {
         new Controller();
@@ -30,31 +28,29 @@ public class Controller {
 
     public Controller() {
         loadFont();
-
-        this.tegels = new Tegels(this);
-        geluidUI = new GeluidUI(this);
-        spelUI = new SpelUI(this);
         scores = new Score(this);
+        this.tegels = new Tegels(this);
+        spelUI = new SpelUI(this);
+        geluidUI = new GeluidUI(this);
+
+
         instellingen = new Instellingen(this);
 
         //geluid().playMusic();
         tegels.loadGameState(); // laad bestaande tegels en scores
-
         spelUI.updateBest();
     }
 
     private void loadFont() {
         // font initialiseren
         this.fntLettertype = new Font(Font.SANS_SERIF, Font.PLAIN, 52);
-
         try {
             InputStream is = SpelUI.class.getResourceAsStream("/be/kdg/spel/resources/Ubuntu-R.ttf");
             this.fntLettertype = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (FontFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Fout bij het laden van het Ubuntu font\n Het programma is automatisch overschakeld naar het standaart font!");
+            JOptionPane.showMessageDialog(null, "Fout bij het laden van het Ubuntu font\n Het programma is automatisch overschakeld naar het standaart font!");
         }
     }
 
@@ -62,76 +58,91 @@ public class Controller {
         return tegels.getTegelArray();
     }
 
-    public void keyLEFT(){
+    public void keyLEFT() {
         tegels.left();
         spelUI.updateSpelUI(tegels.getTegelArray());
     }
-    public void keyRIGHT(){
+
+    public void keyRIGHT() {
         tegels.right();
         spelUI.updateSpelUI(tegels.getTegelArray());
 
     }
-    public void keyUP(){
+
+    public void keyUP() {
         tegels.up();
         spelUI.updateSpelUI(tegels.getTegelArray());
 
     }
-    public void keyDOWN(){
+
+    public void keyDOWN() {
         tegels.down();
         spelUI.updateSpelUI(tegels.getTegelArray());
 
     }
 
-    public void gewonnen(){
+    public void gewonnen() {
         spelUI.gewonnen();
     }
-    public void verloren(){
+
+    public void verloren() {
         spelUI.verloren();
     }
-    public void opnieuw(){
+
+    public void opnieuw() {
         resetGameState();
         this.tegels = new Tegels(this);
-
         spelUI.updateBest();
         spelUI.updateSpelUI(tegels.getTegelArray());
     }
-    public void addScore(int score){
+
+    public void addScore(int score) {
         scores.addScore(score);
         spelUI.setScore(scores.getScore());
         spelUI.updateBest();
     }
-    public void setScore(int score){
+
+    public void setScore(int score) {
         scores.setScore(score);
-        spelUI.setScore(scores.getScore());
+        if(spelUI!=null) spelUI.setScore(scores.getScore());
         //spelUI.updateBest();
     }
-    public int getScore() { return scores.getScore(); }
-    public void addToHighscore(){
+
+    public int getScore() {
+        return scores.getScore();
+    }
+
+    public void addToHighscore() {
         scores.addToHighscore();
     }
-    public void addToHighscore(int scoreCheat){
+
+    public void addToHighscore(int scoreCheat) {
         scores.addToHighscore(scoreCheat);
     }
-    public void ranglijst(){
+
+    public void ranglijst() {
         new RanglijstUI(this);
     }
+
     public void resetHighscore() {
         scores.resetHighscore();
         spelUI.updateBest();
     }
-    public String[][] getHighscoreList(){
+
+    public String[][] getHighscoreList() {
         return scores.getHighscoresList();
     }
+
     public int getBest() {
         return scores.getBest();
     }
 
 
-    public String gebruikersnaam(){
+    public String gebruikersnaam() {
         boolean vragen = true;
         String antwoord = "";
-        while(vragen){
-            antwoord = (String)JOptionPane.showInputDialog(
+        while (vragen) {
+            antwoord = (String) JOptionPane.showInputDialog(
                     spelUI,
                     "Wat is jouw naam?",
                     "Naam",
@@ -139,8 +150,8 @@ public class Controller {
                     null,
                     null,
                     "");
-            if(antwoord != null){
-                if(!antwoord.isEmpty()){
+            if (antwoord != null) {
+                if (!antwoord.isEmpty()) {
                     vragen = false;
                 }
             }
@@ -153,45 +164,49 @@ public class Controller {
         instellingen.instellingenOpslaan(kleur, geluid, muziek);
         instellingen.leesEnActiveerInstellingen();
     }
+
     public void instellingenDefault() {
         instellingen.setDefault();
         instellingen.leesEnActiveerInstellingen();
     }
-    public void instellingen(){
+
+    public void instellingen() {
         new InstellingenUI(this);
     }
 
-    public GeluidUI geluid(){
+    public GeluidUI geluid() {
         return geluidUI;
     }
 
-    public Color getAchtergrondsKleur(){
+    public Color getAchtergrondsKleur() {
         return spelUI.getAchtergrondsKleur();
     }
-    public void setAchtergrondsKleur(Color kleur){
+
+    public void setAchtergrondsKleur(Color kleur) {
         spelUI.setAchtergrondsKleur(kleur);
     }
-    public Font getFont(){
+
+    public Font getFont() {
         return fntLettertype;
     }
 
     public void newGameState() {
         tegels.newGameState();
     }
-    public void loadGameState() {
-        tegels.loadGameState();
-    }
+
     public void saveGameState() {
         tegels.saveGameState();
     }
-    public void resetGameState(){
+
+    public void resetGameState() {
         setScore(0);
         newGameState();
         setScore(0);
         saveGameState();
     }
-public void setTegelWaardeCheat(){
-    tegels.setTegelWaardeCheat();
-}
+
+    public void setTegelWaardeCheat() {
+        tegels.setTegelWaardeCheat();
+    }
 }
 

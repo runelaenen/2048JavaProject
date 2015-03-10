@@ -6,10 +6,7 @@ import be.kdg.spel.model.Tegel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 /**
  * Created by Rune on 4/02/2015.
@@ -29,22 +26,23 @@ public class SpelUI extends JFrame {
     private JPanel pnlLeft;
     private JPanel pnlLeftTop;
     private JPanel pnlScoreBest;
-    private JPanel pnlScore;
     private JPanel pnlKnopjes;
     private JPanel pnlSpelbord;
     private JPanel pnlEchtSpelbord;
     private Color achtergrondKleur;
     private Controller controller;
+    private ImageIcon icnSpel = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnSpel.png"));
+    private ImageIcon icnGewonnen = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnWin.png"));
+    private ImageIcon icnVerloren = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnVerloren.png"));
+
 
     public SpelUI(Controller controller) throws HeadlessException {
         super("2048");
         super.setSize(700, 500);
         super.setMinimumSize(new Dimension(645, 455));
-        super.setFocusable(true);
         super.setLocationRelativeTo(null);
         this.controller = controller;
-
-
+        super.setIconImage(icnSpel.getImage());
         super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.achtergrondKleur = new Color(0xfaf8ef);
@@ -54,10 +52,17 @@ public class SpelUI extends JFrame {
         this.maakLayout();
         this.behandelEvents();
         super.setVisible(true);
+
+
     }
 
     public Color getAchtergrondsKleur() {
         return achtergrondKleur;
+    }
+
+    public void setAchtergrondsKleur(Color kleur) {
+        achtergrondKleur = kleur;
+        refreshBackground();
     }
 
     private void maakComponenten() {
@@ -104,6 +109,7 @@ public class SpelUI extends JFrame {
         btnHerstart.setRequestFocusEnabled(false);
         btnInstellingen.setRequestFocusEnabled(false);
         btnRanglijst.setRequestFocusEnabled(false);
+
 
         btnHerstart.setBorder(new EmptyBorder(5, 5, 5, 5));
         btnHerstart.setBackground(new Color(0xED995B));
@@ -277,7 +283,7 @@ public class SpelUI extends JFrame {
                 "Gewonnen!",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
-                null,
+                icnGewonnen,
                 options1,
                 null);
 
@@ -302,7 +308,7 @@ public class SpelUI extends JFrame {
                 "Verloren!",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
-                null,
+                icnVerloren,
                 options1,
                 null);
 
@@ -401,7 +407,7 @@ public class SpelUI extends JFrame {
                 "Gewonnen!",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
-                null,
+                icnGewonnen,
                 options1,
                 null);
         if (antwoord == 0) {
@@ -412,12 +418,6 @@ public class SpelUI extends JFrame {
             controller.resetGameState();
             System.exit(0);
         }
-    }
-
-
-    public void setAchtergrondsKleur(Color kleur) {
-        achtergrondKleur = kleur;
-        refreshBackground();
     }
 
 

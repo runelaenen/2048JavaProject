@@ -23,7 +23,8 @@ public class InstellingenUI extends JDialog {
     private JCheckBox cboGeluid;
     private JLabel lblMuziek;
     private JCheckBox cboMuziek;
-
+    private ImageIcon icnInstellingen = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnSettings.png"));
+    ImageIcon icnKleur = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnKleur.png"));
 
 
     public InstellingenUI(Controller controller) throws HeadlessException {
@@ -32,6 +33,7 @@ public class InstellingenUI extends JDialog {
         setSize(350, 200);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        setIconImage(icnInstellingen.getImage());
 
         this.controller = controller;
         this.kleur = controller.getAchtergrondsKleur();
@@ -66,10 +68,6 @@ public class InstellingenUI extends JDialog {
         JPanel pnlKnoppen = new JPanel(new FlowLayout());
 
 
-
-
-
-
         //pnlInstellingen
         pnlInstellingen.setBackground(controller.getAchtergrondsKleur());
         pnlInstellingen.add(lblAchtergrondKleur);
@@ -89,7 +87,7 @@ public class InstellingenUI extends JDialog {
         pnlKnoppen.add(btnReset);
 
         //pnlSuper
-        pnlSuper.setBorder(new EmptyBorder(10,10,10,10));
+        pnlSuper.setBorder(new EmptyBorder(10, 10, 10, 10));
         pnlSuper.setBackground(controller.getAchtergrondsKleur());
 
         pnlSuper.add(pnlInstellingen, BorderLayout.NORTH);
@@ -99,10 +97,10 @@ public class InstellingenUI extends JDialog {
         add(pnlSuper, BorderLayout.CENTER);
 
         //checkboxen
-        if(controller.geluid().isGeluid()) {
+        if (controller.geluid().isGeluid()) {
             cboGeluid.setSelected(true);
         }
-        if(controller.geluid().isMuziek()) {
+        if (controller.geluid().isMuziek()) {
             cboMuziek.setSelected(true);
         }
     }
@@ -126,7 +124,7 @@ public class InstellingenUI extends JDialog {
         btnKleur.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                 kleur = JColorChooser.showDialog(null, "Kies een kleur voor de achtergrond", controller.getAchtergrondsKleur());
+                kleur = JColorChooser.showDialog(null, "Kies een kleur voor de achtergrond", controller.getAchtergrondsKleur());
             }
         });
         btnReset.addActionListener(new ActionListener() {

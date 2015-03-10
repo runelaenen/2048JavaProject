@@ -2,6 +2,7 @@ package be.kdg.spel.model;
 
 import be.kdg.spel.controller.Controller;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -34,62 +35,52 @@ public class Score {
     }
 
     public void addToHighscore() {
-        try {
+
             String gebruikersnaam = controller.gebruikersnaam();
 
             String inhoud = gebruikersnaam + ";" + getScore();
             bs.schrijf("highscores.txt", inhoud);
 
-        } catch (FileNotFoundException e) {
-            //TODO: add file exception error shizzle
-        }
+
     }
-    public void addToHighscore(int scoreCheat){
+
+    public void addToHighscore(int scoreCheat) {
         String gebruikersnaam = "Valsspeler";
 
         String inhoud = gebruikersnaam + ";" + scoreCheat;
-        try {
-            bs.schrijf("highscores.txt", inhoud);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
-    }
+        bs.schrijf("highscores.txt", inhoud);
 
-    public void setBest(int best) {
-        this.best = best;
+
     }
 
     public int getBest() {
-        try {
-            int best = 0;
 
-            String bestand = bs.lees("highscores.txt");
-            StringTokenizer st = new StringTokenizer(bestand, "\n");
-            while(st.hasMoreTokens()){
-                String regel = st.nextToken();
-                if(regel != ""){
-                    String[] regelArray = regel.split("[;]");
-                    if(Integer.parseInt(regelArray[1]) > best){
-                        best = Integer.parseInt(regelArray[1]);
-                    }
+        int best = 0;
+
+        String bestand = bs.lees("highscores.txt");
+        StringTokenizer st = new StringTokenizer(bestand, "\n");
+        while (st.hasMoreTokens()) {
+            String regel = st.nextToken();
+            if (!regel.equals("")) {
+                String[] regelArray = regel.split("[;]");
+                if (Integer.parseInt(regelArray[1]) > best) {
+                    best = Integer.parseInt(regelArray[1]);
                 }
             }
-            return best;
-        } catch (FileNotFoundException e) {
-            //TODO: add file exception error shizzle
         }
-        return 0;
+        return best;
+
     }
 
-    public String[][] getHighscoresList(){
+    public String[][] getHighscoresList() {
         List<String[]> uitbestand = new ArrayList<String[]>();
-        try {
+
             String bestand = bs.lees("highscores.txt");
 
             StringTokenizer st = new StringTokenizer(bestand, "\n");
 
-            while(st.hasMoreTokens()){
+            while (st.hasMoreTokens()) {
 
                 String regel = st.nextToken();
                 if (!regel.isEmpty()) {
@@ -97,9 +88,7 @@ public class Score {
                 }
 
             }
-        } catch (FileNotFoundException e) {
-            //TODO: add file exception error
-        }
+
 
         String[][] highscore = new String[uitbestand.size()][2];
         uitbestand.toArray(highscore);
@@ -114,15 +103,12 @@ public class Score {
         });
 
 
-
         return highscore;
     }
 
     public void resetHighscore() {
-        try {
+
             bs.maakLeeg("highscores.txt");
-        } catch (FileNotFoundException e) {
-            //TODO: add file exception error shizzle
-        }
+
     }
 }

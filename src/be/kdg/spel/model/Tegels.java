@@ -3,10 +3,10 @@ package be.kdg.spel.model;
 import be.kdg.spel.controller.Controller;
 
 import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,20 +21,21 @@ public class Tegels {
     private Random random = new Random();
     private Controller controller;
     private boolean gewonnen;
-    private boolean speeltVerder;
     private boolean checkVerloren;
 
     public Tegels(Controller controller) {
         this.controller = controller;
-        this.tegels = new Tegel[controller.BORDGROOTTE];
+        this.tegels = new Tegel[Controller.BORDGROOTTE];
         this.checkVerloren = false;
 
         newGameState();
         loadGameState();
     }
+
     public Tegel[] getTegelArray() {
         return tegels;
     }
+
     public void voegTegelToe() {
         List<Tegel> list = legePlaatsen();
         if (!list.isEmpty()) {
@@ -48,18 +49,21 @@ public class Tegels {
         beweegLijn();
         saveGameState();
     }
+
     public void right() {
         this.roteerBord(2);
         beweegLijn();
         this.roteerBord(2);
         saveGameState();
     }
+
     public void up() {
         this.roteerBord(3);
         beweegLijn();
         this.roteerBord();
         saveGameState();
     }
+
     public void down() {
         this.roteerBord();
         beweegLijn();
@@ -67,16 +71,25 @@ public class Tegels {
         saveGameState();
     }
 
-    public void newGameState(){
-        for (int i = 0; i < controller.BORDGROOTTE; i++) {
+    public void newGameState() {
+        for (int i = 0; i < Controller.BORDGROOTTE; i++) {
             tegels[i] = new Tegel();
         }
 
         voegTegelToe();
         voegTegelToe();
     }
-    public void saveGameState(){
+
+    public void saveGameState() {
         try {
+            Path gameStateFile = Paths.get("." + File.separator + "files" + File.separator + "gamestate.txt");
+            if (!Files.exists(gameStateFile.getParent())) {
+                Files.createDirectory(gameStateFile.getParent());
+            }
+            if (!Files.exists(gameStateFile)) {
+                Files.createFile(gameStateFile);
+            }
+
             FileOutputStream fileStream = new FileOutputStream("./files/gamestate.txt");
             ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
 
@@ -86,36 +99,50 @@ public class Tegels {
             objectStream.close();
             fileStream.close();
 
-        } catch(Exception ex){
-            System.out.println("GameState save error");
+        } catch (Exception ex) {
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het wegschrijven van uw opgeslagen spel! Gelieve uw gamestate.txt file te verwijderen en het spel opnieuw op te starten", "Fout met de game state", JOptionPane.ERROR_MESSAGE, null);
         }
 
     }
-    public void loadGameState(){
+
+    public void loadGameState() {
         try {
+            Path gameStateFile = Paths.get("." + File.separator + "files" + File.separator + "gamestate.txt");
+            if (!Files.exists(gameStateFile.getParent())) {
+                Files.createDirectory(gameStateFile.getParent());
+            }
+            if (!Files.exists(gameStateFile)) {
+                return;
+                // stop method als er niks is om te laden
+            }
+
+
+
             FileInputStream fileStream = new FileInputStream("./files/gamestate.txt");
             ObjectInputStream objectStream = new ObjectInputStream(fileStream);
 
             // create tegelarray
-            int[] tegelWaardes = (int[])objectStream.readObject();
+            int[] tegelWaardes = (int[]) objectStream.readObject();
 
-            for (int i = 0; i < controller.BORDGROOTTE; i++) {
+            for (int i = 0; i < Controller.BORDGROOTTE; i++) {
                 tegels[i] = new Tegel(tegelWaardes[i]);
             }
-            controller.setScore((int)objectStream.readObject());
-        } catch(Exception ex){
-
+            controller.setScore((int) objectStream.readObject());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het inlezen van uw opgeslagen spel! Gelieve uw gamestate.txt file te verwijderen en het spel opnieuw op te starten", "Fout met de game state", JOptionPane.ERROR_MESSAGE, null);
+            //TODO: deze error komt er elke keer bij het opstarten dit zou niet mogen!
         }
     }
 
     public void beweegLijn() {
         boolean tegelToevoegen = false;
-        for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
+        for (int i = 0; i < Controller.ZIJDEGROOTTE; i++) {
             Tegel[] gewoneLijn = lijn(i);
             Tegel[] verwerkt = verwerkLijn(gewoneLijn);
 
-            for (int j = i * controller.ZIJDEGROOTTE, k = 0; j < (i * controller.ZIJDEGROOTTE) + controller.ZIJDEGROOTTE; j++, k++) {
+            for (int j = i * Controller.ZIJDEGROOTTE, k = 0; j < (i * Controller.ZIJDEGROOTTE) + Controller.ZIJDEGROOTTE; j++, k++) {
                 tegels[j] = verwerkt[k];
             }
 
@@ -125,8 +152,8 @@ public class Tegels {
             }
         }
 
-        if(checkVerloren == false){
-            if(checkVerloren()){
+        if (!checkVerloren) {
+            if (checkVerloren()) {
                 controller.verloren();
             }
 
@@ -136,6 +163,7 @@ public class Tegels {
             voegTegelToe();
         }
     }
+
     private List<Tegel> legePlaatsen() {
         List<Tegel> legetegels = new ArrayList<Tegel>(16);
         for (Tegel t : tegels) {
@@ -145,11 +173,12 @@ public class Tegels {
         }
         return legetegels;
     }
-    private boolean checkVerloren(){
+
+    private boolean checkVerloren() {
         checkVerloren = true;
 
-        Tegel[] kopie = new Tegel[controller.BORDGROOTTE];
-        for(int i=0; i<tegels.length; i++){
+        Tegel[] kopie = new Tegel[Controller.BORDGROOTTE];
+        for (int i = 0; i < tegels.length; i++) {
             kopie[i] = new Tegel(tegels[i].getWaarde());
         }
 
@@ -159,13 +188,13 @@ public class Tegels {
         down();
 
         boolean isVeranderd = false;
-        for(int i=0; i<tegels.length; i++){
-            if(kopie[i].getWaarde() != tegels[i].getWaarde()){
+        for (int i = 0; i < tegels.length; i++) {
+            if (kopie[i].getWaarde() != tegels[i].getWaarde()) {
                 isVeranderd = true;
             }
         }
 
-        for(int i=0; i<tegels.length; i++){
+        for (int i = 0; i < tegels.length; i++) {
             tegels[i] = new Tegel(kopie[i].getWaarde());
         }
 
@@ -175,17 +204,19 @@ public class Tegels {
         return !isVeranderd;
 
     }
+
     public Tegel[] lijn(int rij) {
-        Tegel[] lijn = new Tegel[controller.ZIJDEGROOTTE];
-        for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
-            lijn[i] = tegels[rij * controller.ZIJDEGROOTTE + i];
+        Tegel[] lijn = new Tegel[Controller.ZIJDEGROOTTE];
+        for (int i = 0; i < Controller.ZIJDEGROOTTE; i++) {
+            lijn[i] = tegels[rij * Controller.ZIJDEGROOTTE + i];
         }
         return lijn;
     }
+
     public List<Tegel> schuifLijn(Tegel[] lijn) {
         List<Tegel> nieuweLijn = new ArrayList<Tegel>();
 
-        for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
+        for (int i = 0; i < Controller.ZIJDEGROOTTE; i++) {
             if (!lijn[i].isLeeg()) {
                 nieuweLijn.add(lijn[i]);
             }
@@ -201,27 +232,28 @@ public class Tegels {
         }
         return nieuweLijn;
     }
+
     public Tegel[] verwerkLijn(Tegel[] lijn) {
         List<Tegel> nieuweLijn = new ArrayList<Tegel>();
         nieuweLijn = schuifLijn(lijn);
 
-        //return nieuweLijn.toArray(new Tegel[4]);
 
-        Tegel[] mergeLijn = new Tegel[controller.ZIJDEGROOTTE];
-        for (int i = 0; i < controller.ZIJDEGROOTTE; i++) {
+
+        Tegel[] mergeLijn = new Tegel[Controller.ZIJDEGROOTTE];
+        for (int i = 0; i < Controller.ZIJDEGROOTTE; i++) {
 
             if (
-                    i < controller.ZIJDEGROOTTE - 1 // als i +1 nog in de array past
+                    i < Controller.ZIJDEGROOTTE - 1 // als i +1 nog in de array past
                             && !nieuweLijn.get(i).isLeeg() // en als het vakje i in de nieuwe lijn niet leeg is (0)
                     ) {
                 if (nieuweLijn.get(i).getWaarde() == nieuweLijn.get(i + 1).getWaarde()) {
                     nieuweLijn.get(i + 1).setWaarde(0);
                     nieuweLijn.get(i).setWaarde(nieuweLijn.get(i).getWaarde() * 2);
-                    
-                    if(!checkVerloren) {
+
+                    if (!checkVerloren) {
                         controller.addScore(nieuweLijn.get(i).getWaarde() * 2);
 
-                        if (nieuweLijn.get(i).getWaarde() == 2048 && gewonnen == false) {
+                        if (nieuweLijn.get(i).getWaarde() == 2048 && !gewonnen) {
                             gewonnen = true;
                             controller.gewonnen();
                         }
@@ -235,49 +267,52 @@ public class Tegels {
         return schuifLijn(mergeLijn).toArray(new Tegel[4]);
 
     }
+
     public void roteerBord(int rotaties) {
         for (int i = 0; i < rotaties; i++) {
             this.roteerBord();
         }
     }
-    public void roteerBord() {
-        Tegel[][] tegels2D = new Tegel[controller.ZIJDEGROOTTE][controller.ZIJDEGROOTTE];
 
-        for (int rij = 0; rij < controller.ZIJDEGROOTTE; rij++) {
-            for (int kolom = 0; kolom < controller.ZIJDEGROOTTE; kolom++) {
+    public void roteerBord() {
+        Tegel[][] tegels2D = new Tegel[Controller.ZIJDEGROOTTE][Controller.ZIJDEGROOTTE];
+
+        for (int rij = 0; rij < Controller.ZIJDEGROOTTE; rij++) {
+            for (int kolom = 0; kolom < Controller.ZIJDEGROOTTE; kolom++) {
                 tegels2D[rij][kolom] = tegels[(rij * 4) + kolom];
             }
         }
 
-        Tegel[][] grTegels = new Tegel[controller.ZIJDEGROOTTE][controller.ZIJDEGROOTTE];
+        Tegel[][] grTegels = new Tegel[Controller.ZIJDEGROOTTE][Controller.ZIJDEGROOTTE];
 
-        for (int i = 0; i < controller.ZIJDEGROOTTE; ++i) {
-            for (int j = 0; j < controller.ZIJDEGROOTTE; ++j) {
-                grTegels[i][j] = tegels2D[controller.ZIJDEGROOTTE - j - 1][i];
+        for (int i = 0; i < Controller.ZIJDEGROOTTE; ++i) {
+            for (int j = 0; j < Controller.ZIJDEGROOTTE; ++j) {
+                grTegels[i][j] = tegels2D[Controller.ZIJDEGROOTTE - j - 1][i];
             }
         }
 
 
         // terug in tegels zetten
-        for (int rij = 0; rij < controller.ZIJDEGROOTTE; rij++) {
-            for (int kolom = 0; kolom < controller.ZIJDEGROOTTE; kolom++) {
+        for (int rij = 0; rij < Controller.ZIJDEGROOTTE; rij++) {
+            for (int kolom = 0; kolom < Controller.ZIJDEGROOTTE; kolom++) {
                 tegels[(rij * 4) + kolom] = grTegels[rij][kolom];
             }
         }
     }
 
     public Object getTegelWaardeArray() {
-        int[] tegelWaardes = new int[controller.BORDGROOTTE];
+        int[] tegelWaardes = new int[Controller.BORDGROOTTE];
         int i = 0;
-        for(Tegel tegel : tegels){
+        for (Tegel tegel : tegels) {
             tegelWaardes[i] = tegel.getWaarde();
             i++;
         }
         return tegelWaardes;
     }
-    public void setTegelWaardeCheat(){
-        for(int i =0 ;i<controller.BORDGROOTTE;i++){
-            tegels[i]=new Tegel(2048);
+
+    public void setTegelWaardeCheat() {
+        for (int i = 0; i < Controller.BORDGROOTTE; i++) {
+            tegels[i] = new Tegel(2048);
         }
     }
 }
