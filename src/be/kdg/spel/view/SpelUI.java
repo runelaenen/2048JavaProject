@@ -408,7 +408,7 @@ public class SpelUI extends JFrame {
             controller.addToHighscore(99999);
             controller.opnieuw();
         } else if (antwoord == 1) {
-            controller.addToHighscore();
+            controller.addToHighscore(99999);
             controller.resetGameState();
             System.exit(0);
         }
