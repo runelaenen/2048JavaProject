@@ -32,7 +32,7 @@ public class SplashScreen extends JWindow {
         setSize(400, 400);
         pack();
         setLocationRelativeTo(null);
-        setAlwaysOnTop(true);
+        //setAlwaysOnTop(true);
         setVisible(true);
 
         for (int i = 1; i < 21; i++) {

@@ -53,7 +53,6 @@ public class SpelUI extends JFrame {
         this.behandelEvents();
         super.setVisible(true);
 
-
     }
 
     public Color getAchtergrondsKleur() {
@@ -106,9 +105,9 @@ public class SpelUI extends JFrame {
 
         //buttons
         //hierdoor gaat de focus niet naar de knopjes als er op wordt geklikt
-        btnHerstart.setRequestFocusEnabled(false);
-        btnInstellingen.setRequestFocusEnabled(false);
-        btnRanglijst.setRequestFocusEnabled(false);
+        btnHerstart.setFocusable(false);
+        btnInstellingen.setFocusable(false);
+        btnRanglijst.setFocusable(false);
 
 
         btnHerstart.setBorder(new EmptyBorder(5, 5, 5, 5));
