@@ -2,29 +2,26 @@ package be.kdg.spel.controller;
 
 import be.kdg.spel.model.*;
 import be.kdg.spel.view.*;
+
 import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.awt.*;
+import java.util.StringTokenizer;
 
 
 /**
  * Created by Rune on 4/02/2015.
  */
 public class Controller {
+    public static int ZIJDEGROOTTE = 4;
+    public static int BORDGROOTTE = ZIJDEGROOTTE * ZIJDEGROOTTE;
     private Tegels tegels;
     private GeluidUI geluidUI;
     private SpelUI spelUI;
     private Score scores;
     private Instellingen instellingen;
     private Font fntLettertype;
-
-    public static int ZIJDEGROOTTE = 4;
-    public static int BORDGROOTTE = ZIJDEGROOTTE * ZIJDEGROOTTE;
-
-    public static void main(String[] args) {
-        new Controller();
-    }
 
     public Controller() {
         loadFont();
@@ -36,9 +33,13 @@ public class Controller {
 
         instellingen = new Instellingen(this);
 
-        //geluid().playMusic();
+
         tegels.loadGameState(); // laad bestaande tegels en scores
         spelUI.updateBest();
+    }
+
+    public static void main(String[] args) {
+        new Controller();
     }
 
     private void loadFont() {
@@ -102,14 +103,14 @@ public class Controller {
         spelUI.updateBest();
     }
 
-    public void setScore(int score) {
-        scores.setScore(score);
-        if(spelUI!=null) spelUI.setScore(scores.getScore());
-        //spelUI.updateBest();
-    }
-
     public int getScore() {
         return scores.getScore();
+    }
+
+    public void setScore(int score) {
+        scores.setScore(score);
+        if (spelUI != null) spelUI.setScore(scores.getScore());
+        //spelUI.updateBest();
     }
 
     public void addToHighscore() {
@@ -170,6 +171,7 @@ public class Controller {
         instellingen.leesEnActiveerInstellingen();
     }
 
+
     public void instellingen() {
         new InstellingenUI(this);
     }
@@ -198,6 +200,7 @@ public class Controller {
         tegels.saveGameState();
     }
 
+
     public void resetGameState() {
         setScore(0);
         newGameState();
@@ -207,6 +210,11 @@ public class Controller {
 
     public void setTegelWaardeCheat() {
         tegels.setTegelWaardeCheat();
+    }
+    public String getSpelregels(){
+       String regels= BestandsSysteem.lees("speluitleg.txt");
+        return regels;
+
     }
 }
 

@@ -1,7 +1,6 @@
 package be.kdg.spel.view;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
@@ -9,10 +8,11 @@ import java.awt.*;
  * @version 1.0 4/03/2015 11:29
  */
 public class SplashScreen extends JWindow {
+    JProgressBar progressBar;
     public SplashScreen() {
 
         //progressbar
-        JProgressBar progressBar = new JProgressBar();
+        progressBar = new JProgressBar();
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
         progressBar.setBorderPainted(false);
@@ -32,7 +32,6 @@ public class SplashScreen extends JWindow {
         setSize(400, 400);
         pack();
         setLocationRelativeTo(null);
-        //setAlwaysOnTop(true);
         setVisible(true);
 
         for (int i = 1; i < 21; i++) {
@@ -40,14 +39,14 @@ public class SplashScreen extends JWindow {
             try {
                 Thread.sleep((int) ((Math.random() * 101) + 50));
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //Doe niets
             }
 
         }
         try {
             Thread.sleep(250);
         } catch (InterruptedException e) {
-
+            //Doe niets
         }
         this.dispose();
     }

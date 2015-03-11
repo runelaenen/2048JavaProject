@@ -132,7 +132,6 @@ public class Tegels {
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het inlezen van uw opgeslagen spel! Gelieve uw gamestate.txt file te verwijderen en het spel opnieuw op te starten", "Fout met de game state", JOptionPane.ERROR_MESSAGE, null);
-            //TODO: deze error komt er elke keer bij het opstarten dit zou niet mogen!
         }
     }
 

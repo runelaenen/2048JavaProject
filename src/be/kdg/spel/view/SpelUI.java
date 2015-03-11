@@ -31,9 +31,12 @@ public class SpelUI extends JFrame {
     private JPanel pnlEchtSpelbord;
     private Color achtergrondKleur;
     private Controller controller;
-    private ImageIcon icnSpel = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnSpel.png"));
-    private ImageIcon icnGewonnen = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnWin.png"));
-    private ImageIcon icnVerloren = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnVerloren.png"));
+    private ImageIcon icnSpel;
+    private ImageIcon icnGewonnen;
+    private ImageIcon icnVerloren;
+    private JMenuBar menuBar;
+    private JMenu mnuSpel, mnuHelp;
+    private JMenuItem mnuiNieuwSpel, mnuiAfsluiten, mnuiInstellingen, mnuiSpelregels, mnuiInfo, mnuiCheats;
 
 
     public SpelUI(Controller controller) throws HeadlessException {
@@ -42,6 +45,7 @@ public class SpelUI extends JFrame {
         super.setMinimumSize(new Dimension(645, 455));
         super.setLocationRelativeTo(null);
         this.controller = controller;
+        icnSpel = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnSpel.png"));
         super.setIconImage(icnSpel.getImage());
         super.setBackground(achtergrondKleur);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -75,6 +79,22 @@ public class SpelUI extends JFrame {
         btnHerstart = new JButton("HERSTART");
         btnRanglijst = new JButton("RANGLIJST");
         btnInstellingen = new JButton("INSTELLINGEN");
+
+        icnGewonnen = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnWin.png"));
+        icnVerloren = new ImageIcon(getClass().getResource("/be/kdg/spel/resources/icnVerloren.png"));
+
+        menuBar = new JMenuBar();
+        mnuSpel = new JMenu("Spel");
+        mnuHelp = new JMenu("Help");
+
+        mnuiNieuwSpel = new JMenuItem("Nieuw Spel");
+        mnuiAfsluiten = new JMenuItem("Afsluiten");
+        mnuiCheats = new JMenuItem("Cheat venster");
+        mnuiInfo = new JMenuItem("Info");
+        mnuiInstellingen = new JMenuItem("Instellingen");
+        mnuiSpelregels = new JMenuItem("Spelregels");
+
+
     }
 
     private void maakLayout() {
@@ -164,6 +184,51 @@ public class SpelUI extends JFrame {
         lblBestTitel.setVerticalTextPosition(SwingConstants.CENTER);
         lblBestTitel.setForeground(new Color(0xF8ECDE));
 
+        /*
+        *       Menubalk
+        *
+         */
+        //Toevoegen van menu's aan menubalk
+        menuBar.add(mnuSpel);
+        menuBar.add(mnuHelp);
+
+
+        //menuItems eigenschappen
+        mnuiNieuwSpel.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
+        mnuiNieuwSpel.getAccessibleContext().setAccessibleDescription("Begin opnieuw");
+
+        mnuiCheats.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
+        mnuiCheats.getAccessibleContext().setAccessibleDescription("Open het cheat venster");
+
+        mnuiInstellingen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+        mnuiInstellingen.getAccessibleContext().setAccessibleDescription("Open het instellingen venster");
+
+        mnuiAfsluiten.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
+        mnuiAfsluiten.getAccessibleContext().setAccessibleDescription("Sluit het spel");
+
+        mnuiSpelregels.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
+        mnuiSpelregels.getAccessibleContext().setAccessibleDescription("Bekijk de spelregels");
+
+        mnuiInfo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
+        mnuiInfo.getAccessibleContext().setAccessibleDescription("Bekijk de credits");
+
+        //toevoegen van menuItems
+        mnuSpel.add(mnuiNieuwSpel);
+        mnuSpel.addSeparator();
+
+        mnuSpel.add(mnuiCheats);
+        mnuSpel.add(mnuiInstellingen);
+
+        mnuSpel.addSeparator();
+        mnuSpel.add(mnuiAfsluiten);
+
+        mnuHelp.add(mnuiSpelregels);
+        mnuHelp.add(mnuiInfo);
+
+
+        super.setJMenuBar(menuBar);
+
+
         //panels
 
         //pnlScoreBest
@@ -224,6 +289,7 @@ public class SpelUI extends JFrame {
         }
         pnlSpelbord.add(pnlEchtSpelbord);
 
+
         /*
         *
         *   pnlSuper
@@ -272,7 +338,7 @@ public class SpelUI extends JFrame {
     }
 
     public void gewonnen() {
-
+        controller.geluid().playFirework();
         Object[] options1 = {"Verder spelen",
                 "Opnieuw spelen",
                 "Stop spel"};
@@ -326,50 +392,22 @@ public class SpelUI extends JFrame {
     private void behandelEvents() {
         super.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_NUMPAD8 || e.getKeyCode() == KeyEvent.VK_Z) {
+                if (e.getKeyCode() == KeyEvent.VK_UP ||e.getKeyCode() == KeyEvent.VK_Z) {
 
                     controller.geluid().playMove();
                     controller.keyUP();
-                } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_NUMPAD5 || e.getKeyCode() == KeyEvent.VK_S) {
+                } else if (e.getKeyCode() == KeyEvent.VK_DOWN ||e.getKeyCode() == KeyEvent.VK_S) {
 
                     controller.geluid().playMove();
                     controller.keyDOWN();
-                } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_NUMPAD4 || e.getKeyCode() == KeyEvent.VK_Q) {
+                } else if (e.getKeyCode() == KeyEvent.VK_LEFT ||e.getKeyCode() == KeyEvent.VK_Q) {
 
                     controller.geluid().playMove();
                     controller.keyLEFT();
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_NUMPAD6 || e.getKeyCode() == KeyEvent.VK_D) {
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT ||e.getKeyCode() == KeyEvent.VK_D) {
 
                     controller.geluid().playMove();
                     controller.keyRIGHT();
-                } else if (e.getKeyCode() == KeyEvent.VK_C) {
-                    String cheat = "";
-                    boolean vragen = true;
-                    while (vragen) {
-                        cheat = (String) JOptionPane.showInputDialog(
-                                null,
-                                "Welkom op het cheat-screen gij deugeniet!\nVul hieronder uw cheat code in",
-                                "Cheat FTW",
-                                JOptionPane.PLAIN_MESSAGE,
-                                null,
-                                null,
-                                "Vul u code in of druk nu op ok om te sluiten");
-
-                        if (cheat != null) {
-                            if (!cheat.isEmpty()) {
-                                vragen = false;
-                            }
-                        }
-                    }
-
-                    switch (cheat) {
-                        case "":
-                            break;
-                        case "letmewin":
-                            gewonnenCheat();
-                            break;
-                    }
-
                 }
             }
         });
@@ -391,11 +429,76 @@ public class SpelUI extends JFrame {
                 controller.opnieuw();
             }
         });
+        mnuiNieuwSpel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.opnieuw();
+            }
+        });
+        mnuiCheats.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cheat = "";
+                boolean vragen = true;
+                while (vragen) {
+                    cheat = (String) JOptionPane.showInputDialog(
+                            null,
+                            "Welkom op het cheat-screen gij deugeniet!\nVul hieronder uw cheat code in",
+                            "Cheat FTW",
+                            JOptionPane.PLAIN_MESSAGE,
+                            null,
+                            null,
+                            "Vul u code in of druk nu op ok om te sluiten");
+
+                    if (cheat != null) {
+                        if (!cheat.isEmpty()) {
+                            vragen = false;
+                        }
+                    }
+                }
+
+                switch (cheat) {
+                    case "":
+                        break;
+                    case "letmewin":
+                        gewonnenCheat();
+                        break;
+                }
+            }
+        });
+        mnuiInstellingen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.instellingen();
+            }
+        });
+        mnuiAfsluiten.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        mnuiInfo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO:dit zou het infoSplashScreen moeten tonen , maar het is niet zichtbaar
+                new SplashScreenInfo();
+
+
+            }
+        });
+        mnuiSpelregels.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SpelregelsUI(controller);
+            }
+        });
     }
 
-    private void gewonnenCheat() {
+    public void gewonnenCheat() {
         controller.setTegelWaardeCheat();
         updateSpelUI(tegels);
+        controller.geluid().playFirework();
 
         Object[] options1 = {
                 "Opnieuw spelen",

@@ -28,7 +28,7 @@ public class GeluidUI {
                     try {
                         Clip clip = AudioSystem.getClip();
                         InputStream geluid = getClass().getResourceAsStream("/be/kdg/spel/resources/move.wav");
-                        //buffer toegevoegd voor mark/reset support
+                        //buffer voor mark/reset support
                         InputStream bufferedGeluid = new BufferedInputStream(geluid);
                         AudioInputStream inputStream = AudioSystem.getAudioInputStream(bufferedGeluid);
 
@@ -66,6 +66,28 @@ public class GeluidUI {
         }
     }
 
+
+    public void playFirework() {
+        if (geluid) {
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Clip clip = AudioSystem.getClip();
+                        InputStream geluid = getClass().getResourceAsStream("/be/kdg/spel/resources/firework.wav");
+                        //buffer voor mark/reset support
+                        InputStream bufferedGeluid = new BufferedInputStream(geluid);
+                        AudioInputStream inputStream = AudioSystem.getAudioInputStream(bufferedGeluid);
+
+                        clip.open(inputStream);
+                        clip.start();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Er is een fout opgetreden bij het inladen van een geluidsfragment! Gelieve het spel opnieuw op te starten", "Fout bij geluidsfragment", JOptionPane.ERROR_MESSAGE, null);
+                    }
+                }
+            }).start();
+        }
+    }
+
     public void stopAchtergrondMuziek() {
         if (achtergrondMuziek != null) {
             achtergrondMuziek.stop();
@@ -77,12 +99,12 @@ public class GeluidUI {
         return geluid;
     }
 
-    public boolean isMuziek() {
-        return muziek;
-    }
-
     public void setGeluid(boolean geluid) {
         this.geluid = geluid;
+    }
+
+    public boolean isMuziek() {
+        return muziek;
     }
 
     public void setMuziek(boolean muziek) {

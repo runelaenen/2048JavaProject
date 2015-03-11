@@ -1,0 +1,5 @@
+De 2048 spelregels zijn simpel. Je begint het spel met een raster met daarin vakjes. In sommige vakjes staat een nummer je begint met 2 vakjes met het nummer 2. Je kan deze nummers combineren door de vakjes over elkaar heen te schuiven (of ‘swipen’). Wanneer je 2 dezelfde getallen over elkaar heen schuift, dan verdubbelen ze. Dus bijvoorbeeld: Je schruift een vakje met nummer 2 over een ander vakje met nummer 2: dan krijg je één vakje met 4 (2+2).;
+Het einddoel is dus om zoveel mogelijk vakjes te verdubbelen om uiteindelijk het getal 2048 te krijgen.;
+Lijkt makkelijk toch? Nou, dat is het niet! Want bij elke verschuiving (swipe) die je doet, komt er een extra vakje met een nummer. Wanneer je teveel vakjes hebt en het vol staat, dan is het: Game over! Het is dus belangrijk om zoveel mogelijk vakjes te verdubbelen.;
+Je kan de vakjes verplaatsen met de volgende toetsen;
+Een belangrijke tip! Schuif NOOIT naar beneden!;
