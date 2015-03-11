@@ -2,6 +2,10 @@ package be.kdg.spel.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * @author Alex Buze
@@ -11,8 +15,8 @@ public class SplashScreenInfo extends JWindow {
 
     public SplashScreenInfo() {
         //labels
-        JLabel lblSplashscreen = new JLabel(new ImageIcon(getClass().getResource("/be/kdg/spel/resources/splash.png")));
-        JLabel lblInfo = new JLabel("Versie 2.0 \n© 2015 Rune Laenen & Alex Buze. All rights reserved.");
+        JLabel lblSplashscreen = new JLabel(new ImageIcon(getClass().getResource("/be/kdg/spel/resources/splash_info.png")));
+        JLabel lblInfo = new JLabel("© 2015 Rune Laenen & Alex Buze. All rights reserved.");
 
 
         //panel
@@ -27,11 +31,25 @@ public class SplashScreenInfo extends JWindow {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+
+        /*
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             //Doe niets
         }
         this.dispose();
+        */
+
+        JWindow dit = this;
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                dit.dispose();
+            }
+        });
     }
+
+
 }
